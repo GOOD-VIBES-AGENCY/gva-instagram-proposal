@@ -441,8 +441,8 @@ function tSim(){
         <div class="alloc-legend"><span>① リール ${c.reelPct}%</span><span>② UGC ${c.ugcPct}%</span></div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:2px solid var(--border)">
           <div>
-            <div style="font-size:12px;color:var(--gray);margin-bottom:2px">月額合計（管理費・ディレクション費込）</div>
-            <div style="font-size:10px;color:#9aa5be">①${fYenK(c.reelCost)} ＋ ②${fYenK(c.ugcCost)}</div>
+            <div style="font-size:12px;color:var(--gray);margin-bottom:2px">月額合計</div>
+            <div style="font-size:10px;color:#9aa5be">①キャスティング費 ${fYenK(c.reelCost)} ＋ ②UGC・管理費 ${fYenK(c.ugcCost)}</div>
           </div>
           <span style="font-size:26px;font-weight:900;color:var(--navy)">${fYenK(c.cost)}</span>
         </div>
@@ -539,7 +539,7 @@ function tSim(){
             </td>
             <td>${cc.reel}名</td><td>${cc.ugc}名</td>
             <td style="font-weight:700">${cc.total}名</td>
-            <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}<small style="color:var(--gray);font-size:10px">（管理費込）</small></td>
+            <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}</td>
             <td style="font-weight:700">${fYenK(cc.cost)}</td>
             <td style="font-weight:700;color:var(--gold)">${fImpD(cc.imp)}</td>
             <td>¥${cc.cpm}</td><td>${cc.total}点</td>
@@ -701,14 +701,19 @@ function tKpi(){
 function tMenu(){
   return`
 <div class="section animate-in">
-  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">① インフルエンサーショート動画タイアップ</div></div>
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">各メニューの詳細仕様と料金体系</div></div>
+  <div class="warn-box" style="margin-bottom:20px">※ キャスティング単価はインフルエンサーのFW数・カテゴリにより変動します。下記は標準的な試算です。実際の見積もりはヒアリングにて提示いたします。</div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">① インフルエンサーショート動画タイアップ
   <div class="g2">
     <div class="card">
       <div class="card-ttl">仕様</div>
       <table class="dtbl"><tbody>
         <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>リール（60秒以内）＋ ストーリーズ 1枚</strong></td></tr>
         <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
-        <tr><td class="L" style="color:var(--gray)">FW単価</td><td class="L"><strong class="pos">¥2.0〜/FW（業界最安水準）</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">FW単価</td><td class="L"><strong class="pos">¥2.0〜/FW</strong>（業界標準の最低水準）</td></tr>
         <tr><td class="L" style="color:var(--gray)">最低FW数</td><td class="L">10,000人〜</td></tr>
         <tr><td class="L" style="color:var(--gray)">過去実績 avg FW</td><td class="L"><strong>35,000人</strong>（avg費用¥70,000/名）</td></tr>
         <tr><td class="L" style="color:var(--gray)">インフルエンサー選定</td><td class="L">GVAキャスティング込み</td></tr>
@@ -738,7 +743,7 @@ function tMenu(){
       <table class="dtbl"><tbody>
         <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>フィードカルーセル（詳細レビュー）</strong></td></tr>
         <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
-        <tr><td class="L" style="color:var(--gray)">単価</td><td class="L"><strong class="pos">¥5,600/名（全管理込み）</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">単価</td><td class="L"><strong>¥5,600／名を目安</strong>（選定・原稿確認・レポート込み）</td></tr>
         <tr><td class="L" style="color:var(--gray)">ネットワーク規模</td><td class="L"><strong>3,000名以上</strong>（GVA独自・審査済み）</td></tr>
         <tr><td class="L" style="color:var(--gray)">対象FW数</td><td class="L">1,000〜10,000人（ナノ）</td></tr>
         <tr><td class="L" style="color:var(--gray)">選定基準</td><td class="L">ENG率3%以上・親和性・品質・コンプライアンス</td></tr>
@@ -803,7 +808,7 @@ function tResult(){
   <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">GVAの強み 6項目</div></div>
   <div class="g3">
     ${[['3,000+','ナノネットワーク規模','ENG率3%以上・品質・コンプライアンス4軸で厳選。「売れる口コミ」を生む人材だけ。','var(--navy)'],
-       ['¥2/FW','業界最安FW単価','業界相場¥2〜5/FWに対しGVAは最安¥2.0/FW。ディレクション込みでこの価格。','var(--gold)'],
+       ['¥2/FW','FW単価の優位性','業界相場¥2〜5/FWに対しGVAは¥2.0/FWを実現。インフルエンサー選定・ディレクション・レポートまで込み。','var(--gold)'],
        ['0件','ステマ規制トラブル','2023年規制施行以来ゼロ。全投稿PR表記を徹底管理しクライアントの法的リスクを排除。','var(--green)'],
        ['150名','最大同時稼働','リール×UGC複合で業界最大クラス。単体施策では不可能な口コミ量産が1ヶ月で実現。','var(--blue)'],
        ['月次','PDCA レポート','imp・リーチ・ENG・保存数を月次可視化。次回施策の改善提案もセット。','var(--orange)'],
