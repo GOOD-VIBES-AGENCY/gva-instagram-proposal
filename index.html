@@ -193,9 +193,30 @@ canvas{display:block}
   #tabbar{padding:0 16px}
   .tab-btn{padding:12px 10px;font-size:11px}
   #main{padding:16px}
+  /* グリッド全てを1列に */
+  .kpi-grid,.kpi-grid-3,.g2,.g3,.g12{grid-template-columns:1fr}
+  /* 4列グリッド（選定プロセス等）→ 1列 */
+  [style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr !important}
+  /* flowは縦のままなので変更なし */
+  /* 実績カードのcase-nums→2列キープ */
+  .case-nums{grid-template-columns:1fr 1fr}
+  /* ファネル幅調整 */
+  .funnel-step{width:100%!important}
+  /* テーブルラップ */
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* カード余白縮小 */
+  .card{padding:16px}
+  .chart-wrap{padding:14px}
+  /* プロセス4列→2列 */
+  .process-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:480px){
   .kpi-grid,.kpi-grid-3{grid-template-columns:1fr 1fr}
-  .g2,.g3,.g12{grid-template-columns:1fr}
-  /* flow-list は縦方向固定のためモバイル追加対応なし */
+  .hdr-title{font-size:15px}
+  .bgt-btn{padding:5px 10px;font-size:11px}
+  [style*="repeat(4,1fr)"]{grid-template-columns:1fr !important}
+  [style*="repeat(3,1fr)"]{grid-template-columns:1fr !important}
+  .case-nums{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -560,7 +581,7 @@ function tSim(){
           <tr><td class="L">YouTube広告</td><td>¥400〜1,200</td><td class="neg">〃</td></tr>
           <tr><td class="L">Twitter/X広告</td><td>¥300〜800</td><td class="neg">〃</td></tr>
           <tr class="hl-row"><td class="L"><strong>GVA ①リール</strong></td><td><strong>¥${calc(state.bgt).cpm}前後</strong></td><td class="pos"><strong>Meta比 最大▼73%</strong><div style="font-size:9px;color:var(--gray)">Meta上限¥2,000比</div></td></tr>
-          <tr class="hl-row"><td class="L"><strong>GVA ②UGC口コミ</strong></td><td><strong>¥280前後</strong></td><td class="pos"><strong>Meta比 最大▼86%</strong><div style="font-size:9px;color:var(--gray)">Meta上限¥2,000比</div></td></tr>
+          <tr class="hl-row"><td class="L"><strong>GVA ②UGC口コミ</strong></td><td><strong>¥280前後</strong></td><td class="pos"><strong>Meta比 最大▼86%</strong><div style="font-size:9px;color:var(--gray)">Meta CPM上限¥2,000との比較。平均値比では変動あり</div></td></tr>
         </tbody>
       </table>
       <div class="green-box" style="margin-top:12px">
@@ -823,7 +844,7 @@ function tKpi(){
       </table>
       <div class="green-box" style="margin-top:12px">
         <strong>継続することで精度が上がる</strong><br>
-        月次データが蓄積されるほどキャスティング精度・投稿品質が向上。3ヶ月以上継続でCPMが平均15〜20%改善する傾向があります。
+        月次データが蓄積されるほどキャスティング精度・投稿品質が向上。継続運用により高ENG投稿のパターンが明確になり、翌月の選定・設計に反映されます。
       </div>
     </div>
   </div>
