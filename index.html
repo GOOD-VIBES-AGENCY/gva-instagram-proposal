@@ -313,6 +313,39 @@ function destroyAll(){
 function tOverview(){
   return`
 <div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">00</div><div class="sec-title">提案先情報</div></div>
+  <div class="card" style="border-top:3px solid var(--gold);margin-bottom:0">
+    <div class="card-ttl">ご提案先・商材・目的　（ヒアリング後に記入）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">クライアント名</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="client-name">株式会社　　　　　　　</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">商材カテゴリ</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="product-cat">　　　　　　　　　　</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">キャンペーン目的</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="campaign-goal">認知拡大 ／ 購買促進 ／ UGC蓄積</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">ターゲット</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="target">　　　　　　　　　　</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">現在の課題</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="challenge">　　　　　　　　　　</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">希望開始時期</div>
+        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="start-timing">　　年　月〜</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section animate-in">
   <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">施策概要</div></div>
   <div class="info-box" style="margin-bottom:0">
     <p style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px">インフルエンサーリール × ナノインフルエンサー UGC口コミ — Instagram特化 複合施策</p>
@@ -867,7 +900,39 @@ function tMenu(){
 </div>
 
 <div class="section animate-in">
-  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">よくある質問 / FAQ</div></div>
+  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">GVA ナノインフルエンサー選定プロセス</div></div>
+  <div class="card">
+    <div class="card-ttl">なぜGVAのナノが「質が高い」と言えるのか — 4ステップ選定フロー</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4px">
+      <div style="padding:20px 16px;border-right:1px solid var(--border);position:relative">
+        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 1</div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">ENG率スコアリング</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.8">フォロワー数ではなく「いいね＋保存÷リーチ」で計算したENG率が1.5%以上のアカウントのみ通過。フォロワー水増しアカウントを排除。</div>
+      </div>
+      <div style="padding:20px 16px;border-right:1px solid var(--border)">
+        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 2</div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">商材親和性マッチング</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.8">フォロワーの年齢・性別・興味関心と商材ターゲットの一致度をスコア化。「とりあえず人数を揃える」ではなく、売れる相性を重視。</div>
+      </div>
+      <div style="padding:20px 16px;border-right:1px solid var(--border)">
+        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 3</div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">コンテンツ品質審査</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.8">写真・文章・投稿頻度・コメント欄の質をGVA担当者が人の目で確認。AIスコアでは捕捉できない「リアリティ」と「自然さ」を審査。</div>
+      </div>
+      <div style="padding:20px 16px">
+        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 4</div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">コンプライアンス確認</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.8">過去のPR表記遵守歴・炎上歴・ガイドライン認知を確認。PR表記研修を実施し、採用後もGVAが全投稿をモニタリング。</div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:16px">
+      <p style="font-size:12px;color:#374151;line-height:1.9">この4ステップを通過したインフルエンサーのみがGVAの3,000名ネットワークに登録されます。登録後も定期的に再審査を実施し、品質を維持しています。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">04</div><div class="sec-title">よくある質問 / FAQ</div></div>
   <div class="g2">
     <div class="card">
       <table class="kpi-tbl">
@@ -886,8 +951,7 @@ function tMenu(){
         <tbody>
           <tr><td style="font-weight:700;color:var(--navy);padding-bottom:4px">商品のギフティング費用は含まれますか？</td></tr>
           <tr><td style="color:var(--gray);font-size:12px;padding-bottom:14px">含まれません。商品のギフティングコストは別途クライアント様にご負担いただきます。</td></tr>
-          <tr><td style="font-weight:700;color:var(--navy);padding-bottom:4px">GVAのタレントと組み合わせられますか？</td></tr>
-          <tr><td style="color:var(--gray);font-size:12px;padding-bottom:14px">はい、GVA所属タレント（9名）との複合施策も提案できます。</td></tr>
+
           <tr><td style="font-weight:700;color:var(--navy);padding-bottom:4px">UGC素材の広告転用は？</td></tr>
           <tr><td style="color:var(--gray);font-size:12px;padding-bottom:0">Meta広告・EC等への転用支援を行います。許諾取得サポートは別途ご相談ください。</td></tr>
         </tbody>
@@ -995,7 +1059,7 @@ function tCompare(){
       </tbody>
     </table>
   </div>
-  <div class="warn-box" style="margin-top:16px">※ 他社情報は公開情報に基づく一般的な相場感です。各社サービス内容は異なります。</div>
+  <div class="warn-box" style="margin-top:16px">※ 他社情報は公開情報・一般的な業界目安に基づく参考値です。各社サービス内容・実態は異なります。</div>
 </div>`;
 }
 
@@ -1042,8 +1106,8 @@ function tFlow(){
       <table class="dtbl">
         <thead><tr>
           <th class="L">フェーズ</th>
-          <th>一般インフルエンサー会社</th>
-          <th>UGCプラットフォーム</th>
+          <th>一般インフルエンサー会社<div style="font-size:9px;font-weight:400;opacity:.7">（業界目安）</div></th>
+          <th>UGCプラットフォーム<div style="font-size:9px;font-weight:400;opacity:.7">（業界目安）</div></th>
           <th class="hl" style="background:var(--navy);color:#fff">GVA</th>
         </tr></thead>
         <tbody>
@@ -1075,8 +1139,7 @@ function tFlow(){
         <p style="color:var(--gray);margin-bottom:10px">1ヶ月から。効果実感には3ヶ月以上継続を推奨。</p>
         <p style="font-weight:700;color:var(--navy)">Q. 投稿内容の確認・修正はできますか？</p>
         <p style="color:var(--gray);margin-bottom:10px">全投稿を公開前にご確認いただけます。</p>
-        <p style="font-weight:700;color:var(--navy)">Q. GVAタレントと組み合わせられますか？</p>
-        <p style="color:var(--gray)">はい、GVA所属タレント9名との複合施策も提案できます。</p>
+
       </div>
     </div>
   </div>
