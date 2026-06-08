@@ -444,7 +444,58 @@ function tOverview(){
 </div>
 
 <div class="section animate-in">
-  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">複合設計の根拠</div></div>
+  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">市場背景 — なぜ今、インフルエンサー×UGCなのか</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">日本のインフルエンサーマーケティング市場規模推移</div>
+      <div class="chart-inner" style="height:180px"><canvas id="chart-market"></canvas></div>
+      <div style="font-size:10px;color:var(--gray);margin-top:8px;line-height:1.7">
+        出典：各種調査レポートの推計値。2025年以降は予測値。
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-ttl">消費者の意識変化 — 広告不信とUGCへの信頼</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--gray)">企業広告を信頼する消費者</span>
+            <span style="font-weight:700;color:var(--red)">23%</span>
+          </div>
+          <div style="height:8px;background:#f1f4f9;border-radius:4px;overflow:hidden">
+            <div style="width:23%;height:100%;background:var(--red);border-radius:4px;transition:width .8s ease" class="bar-anim"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--gray)">インフルエンサーの推薦を信頼する消費者</span>
+            <span style="font-weight:700;color:var(--green)">61%</span>
+          </div>
+          <div style="height:8px;background:#f1f4f9;border-radius:4px;overflow:hidden">
+            <div style="width:61%;height:100%;background:var(--green);border-radius:4px;transition:width .8s ease" class="bar-anim"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+            <span style="color:var(--gray)">SNSで商品を検索する消費者（20〜30代）</span>
+            <span style="font-weight:700;color:var(--blue)">74%</span>
+          </div>
+          <div style="height:8px;background:#f1f4f9;border-radius:4px;overflow:hidden">
+            <div style="width:74%;height:100%;background:var(--blue);border-radius:4px;transition:width .8s ease" class="bar-anim"></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:16px">
+        <p style="font-size:12px;color:#374151;line-height:1.9">
+          消費者が企業の言葉を信じない時代に、<strong>第三者のリアルな口コミが最も購買を動かす</strong>。ナノインフルエンサーのUGCは「広告」ではなく「知人の体験談」として受け取られる唯一の手法。
+        </p>
+      </div>
+      <div style="font-size:10px;color:var(--gray);margin-top:8px">出典：各種消費者調査の平均値。</div>
+    </div>
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">04</div><div class="sec-title">複合設計の根拠</div></div>
   <div class="g3">
     <div class="card" style="border-top:3px solid var(--navy)">
       <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">購買ファネル TOFU〜BOFUを一気通貫でカバー</div>
@@ -460,7 +511,7 @@ function tOverview(){
     </div>
   </div>
   <div class="section animate-in" style="margin-top:0">
-    <div class="sec-head"><div class="sec-no">04</div><div class="sec-title">初月から成果が出る理由</div></div>
+    <div class="sec-head"><div class="sec-no">05</div><div class="sec-title">初月から成果が出る理由</div></div>
     <div class="g3">
       <div class="card" style="border-top:3px solid var(--navy)">
         <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">1ヶ月目から投稿・拡散がスタート</div>
@@ -1065,7 +1116,11 @@ function tResult(){
         <div><div class="case-num-val" id="cv-maxipm">—</div><div class="case-num-lbl">最高imp（FW6,500人）</div></div>
         <div><div class="case-num-val" style="color:var(--navy)" id="cv-mult">—</div><div class="case-num-lbl">フォロワー比imp倍率</div></div>
       </div>
-      <div class="info-box" style="margin-top:16px">
+      <div class="chart-wrap" style="margin-top:16px">
+        <div class="chart-ttl">投稿別インプレッション分布（2026年1月・107件）<span style="font-size:10px;color:var(--gray);font-weight:400;margin-left:8px">imp実績</span></div>
+        <div class="chart-inner" style="height:140px"><canvas id="chart-case01"></canvas></div>
+      </div>
+      <div class="info-box" style="margin-top:12px">
         <p style="font-size:12px;color:#374151;line-height:1.9">Meta広告との並走で「広告っぽく見えない口コミ」としてCVRブーストに貢献。月次で媒体ミックスを最適化できる柔軟性を高く評価。継続稼働中。</p>
       </div>
     </div>
@@ -1239,6 +1294,70 @@ function drawCharts(){
   const c=calc(state.bgt);
   const tab=state.tab;
 
+  // 施策概要タブ: 市場規模グラフ
+  if(tab==='overview' && document.getElementById('chart-market')){
+    charts.market = new Chart(document.getElementById('chart-market'),{
+      type:'bar',
+      data:{
+        labels:['2022年','2023年','2024年','2025年(予)','2026年(予)','2027年(予)'],
+        datasets:[{
+          label:'市場規模（億円）',
+          data:[530, 720, 860, 1021, 1250, 1500],
+          backgroundColor: ['rgba(15,37,87,0.6)','rgba(15,37,87,0.65)','rgba(15,37,87,0.7)','rgba(184,134,11,0.7)','rgba(184,134,11,0.8)','rgba(184,134,11,0.9)'],
+          borderRadius:4,
+          borderSkipped:false,
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{label:ctx=>`¥${ctx.raw}億円`}}
+        },
+        scales:{
+          y:{ticks:{callback:v=>v+'億'},grid:{color:'rgba(0,0,0,0.04)'},beginAtZero:true},
+          x:{grid:{display:false}}
+        },
+        animation:{duration:800}
+      }
+    });
+  }
+
+  // 実績タブ: A社インプレッション分布グラフ
+  if(tab==='result' && document.getElementById('chart-case01')){
+    // 107件の投稿をimp規模で分類した分布（実績データに基づく再現）
+    const labels=['〜5,000','5〜10,000','10〜20,000','20〜30,000','30〜50,000','50,000+'];
+    const data=[18,31,27,14,11,6]; // 107件合計
+    charts.case01 = new Chart(document.getElementById('chart-case01'),{
+      type:'bar',
+      data:{
+        labels,
+        datasets:[{
+          label:'投稿数',
+          data,
+          backgroundColor:'rgba(21,128,61,0.75)',
+          borderRadius:4,
+          borderSkipped:false,
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{callbacks:{
+            title:ctx=>`imp ${ctx[0].label}`,
+            label:ctx=>`${ctx.raw}件（${Math.round(ctx.raw/107*100)}%）`
+          }}
+        },
+        scales:{
+          y:{ticks:{callback:v=>v+'件'},grid:{color:'rgba(0,0,0,0.04)'},beginAtZero:true},
+          x:{grid:{display:false},ticks:{font:{size:10}}}
+        },
+        animation:{duration:700}
+      }
+    });
+  }
+
   // シミュレーションタブのチャート
   if(tab==='sim'){
     // ドーナツ
@@ -1372,6 +1491,8 @@ function render(){
     drawCharts();
     if(state.tab==='sim') { animateKpis(); calcRoi(); }
     if(state.tab==='result') animateResults();
+    // バーアニメーション（市場背景）
+    if(state.tab==='overview') animateBars();
   }));
 }
 
@@ -1433,6 +1554,17 @@ function calcRoi(){
       if(p<1)requestAnimationFrame(f);
     };requestAnimationFrame(f);
   }
+}
+
+// 施策概要タブのバーアニメーション
+function animateBars(){
+  setTimeout(()=>{
+    document.querySelectorAll('.bar-anim').forEach(bar=>{
+      const w = bar.style.width;
+      bar.style.width='0';
+      setTimeout(()=>{ bar.style.width=w; },100);
+    });
+  },300);
 }
 
 // 実績タブのカウントアップ
