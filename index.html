@@ -228,15 +228,15 @@ canvas{display:block}
 // ───────────────────────────
 // データ定義
 // ───────────────────────────
-const MENU = {
-  reel: { unitCost:70000, impPerPerson:100000 },
-  ugc:  { unitCost: 5600, impPerPerson: 20000 },
-};
-const BUDGETS = {
-  500:  { reel:2,  ugc:64,  reelCost:140000, ugcCost:358400  },
-  1000: { reel:5,  ugc:116, reelCost:350000, ugcCost:649600  },
-  1500: { reel:10, ugc:140, reelCost:700000, ugcCost:784000  },
-};
+const REEL_UNIT  = 70000; // ¥/名（FW avg 35,000人 × ¥2/FW）
+const UGC_UNIT   =  5600; // ¥/名（名目単価）
+const REEL_IMP   = 100000;
+const UGC_IMP    =  20000;
+const MAX_PEOPLE = 150;
+
+// 予算キー → リール人数のみ定義。残額は全てUGCへ充当し合計=予算ぴったり
+const REEL_COUNT = { 500:2, 1000:5, 1500:10 };
+
 // Meta広告等のCPM参考値（¥）
 const BENCH_CPM = { 'Meta広告':900, 'YouTube広告':700, 'Twitter広告':600, 'GVAリール':340, 'GVA UGC':280 };
 
@@ -251,14 +251,19 @@ const fImp  = v => v>=10000000?`${(v/10000000).toFixed(1)}千万`:v>=10000?`${(v
 const fImpD = v => v>=10000000?`${(v/10000000).toFixed(1)}千万imp`:v>=10000?`${(v/10000).toFixed(0)}万imp`:v.toLocaleString()+'imp';
 
 function calc(bgt){
-  const d=BUDGETS[bgt];
-  const total=d.reel+d.ugc, cost=d.reelCost+d.ugcCost;
-  const imp=d.reel*MENU.reel.impPerPerson+d.ugc*MENU.ugc.impPerPerson;
-  const cpm=Math.round(cost/imp*1000);
-  return{...d,total,cost,imp,cpm,
-    reelPct:Math.round(d.reelCost/cost*100),
-    ugcPct:100-Math.round(d.reelCost/cost*100),
-    costPerPerson:Math.round(cost/total)};
+  const budget   = bgt * 1000;                  // 予算をぴったりの金額に
+  const reel     = REEL_COUNT[bgt];
+  const reelCost = reel * REEL_UNIT;
+  const ugcBudget= budget - reelCost;           // 残額をまるごとUGCへ
+  const ugc      = Math.min(Math.floor(ugcBudget / UGC_UNIT), MAX_PEOPLE - reel);
+  const ugcCost  = ugcBudget;                   // 合計=予算ぴったり（管理費込み）
+  const total    = reel + ugc;
+  const imp      = reel*REEL_IMP + ugc*UGC_IMP;
+  const cpm      = Math.round(budget/imp*1000);
+  const reelPct  = Math.round(reelCost/budget*100);
+  return{reel,ugc,reelCost,ugcCost,total,cost:budget,imp,cpm,
+    reelPct,ugcPct:100-reelPct,
+    costPerPerson:Math.round(budget/total)};
 }
 
 // ───────────────────────────
@@ -321,8 +326,11 @@ function tSim(){
         </div>
         <div class="alloc-legend"><span>① リール ${c.reelPct}%</span><span>② UGC ${c.ugcPct}%</span></div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:2px solid var(--border)">
-          <span style="font-size:12px;color:var(--gray)">月額合計</span>
-          <span style="font-size:22px;font-weight:900;color:var(--navy)">${fYenK(c.cost)}</span>
+          <div>
+            <div style="font-size:12px;color:var(--gray);margin-bottom:2px">月額合計（管理費・ディレクション費込）</div>
+            <div style="font-size:10px;color:#9aa5be">①${fYenK(c.reelCost)} ＋ ②${fYenK(c.ugcCost)}</div>
+          </div>
+          <span style="font-size:26px;font-weight:900;color:var(--navy)">${fYenK(c.cost)}</span>
         </div>
       </div>
       <!-- ドーナツチャート -->
@@ -344,7 +352,7 @@ function tSim(){
         <div class="kpi" style="--ac:var(--gold)">
           <div class="kpi-lbl">推定インプレッション</div>
           <div class="kpi-val" id="kv-imp">${fImpD(c.imp)}</div>
-          <div class="kpi-sub">① ${fImp(c.reel*MENU.reel.impPerPerson)} ＋ ② ${fImp(c.ugc*MENU.ugc.impPerPerson)}</div>
+          <div class="kpi-sub">① ${fImp(c.reel*REEL_IMP)} ＋ ② ${fImp(c.ugc*UGC_IMP)}</div>
         </div>
         <div class="kpi" style="--ac:var(--green)">
           <div class="kpi-lbl">CPM（参考）</div>
@@ -417,7 +425,7 @@ function tSim(){
             </td>
             <td>${cc.reel}名</td><td>${cc.ugc}名</td>
             <td style="font-weight:700">${cc.total}名</td>
-            <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}</td>
+            <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}<small style="color:var(--gray);font-size:10px">（管理費込）</small></td>
             <td style="font-weight:700">${fYenK(cc.cost)}</td>
             <td style="font-weight:700;color:var(--gold)">${fImpD(cc.imp)}</td>
             <td>¥${cc.cpm}</td><td>${cc.total}点</td>
@@ -844,8 +852,8 @@ function drawCharts(){
         data:{
           labels:['インプレッション内訳'],
           datasets:[
-            {label:'① リール',data:[c.reel*MENU.reel.impPerPerson],backgroundColor:'rgba(212,160,23,0.85)',borderRadius:4},
-            {label:'② UGC フィード',data:[c.ugc*MENU.ugc.impPerPerson],backgroundColor:'rgba(21,128,61,0.85)',borderRadius:4}
+            {label:'① リール',data:[c.reel*REEL_IMP],backgroundColor:'rgba(212,160,23,0.85)',borderRadius:4},
+            {label:'② UGC フィード',data:[c.ugc*UGC_IMP],backgroundColor:'rgba(21,128,61,0.85)',borderRadius:4}
           ]
         },
         options:{
@@ -891,8 +899,8 @@ function drawCharts(){
   // KPIタブ: 時系列チャート
   if(tab==='kpi'&&document.getElementById('chart-timeline')){
     const months=['M1','M2','M3','M4','M5','M6'];
-    const reelData=[c.reel*MENU.reel.impPerPerson*0.8,c.reel*MENU.reel.impPerPerson,c.reel*MENU.reel.impPerPerson*1.1,c.reel*MENU.reel.impPerPerson*1.15,c.reel*MENU.reel.impPerPerson*1.2,c.reel*MENU.reel.impPerPerson*1.3];
-    const ugcData=[c.ugc*MENU.ugc.impPerPerson*0.6,c.ugc*MENU.ugc.impPerPerson*0.85,c.ugc*MENU.ugc.impPerPerson,c.ugc*MENU.ugc.impPerPerson*1.1,c.ugc*MENU.ugc.impPerPerson*1.2,c.ugc*MENU.ugc.impPerPerson*1.35];
+    const reelData=[c.reel*REEL_IMP*0.8,c.reel*REEL_IMP,c.reel*REEL_IMP*1.1,c.reel*REEL_IMP*1.15,c.reel*REEL_IMP*1.2,c.reel*REEL_IMP*1.3];
+    const ugcData=[c.ugc*UGC_IMP*0.6,c.ugc*UGC_IMP*0.85,c.ugc*UGC_IMP,c.ugc*UGC_IMP*1.1,c.ugc*UGC_IMP*1.2,c.ugc*UGC_IMP*1.35];
     charts.timeline=new Chart(document.getElementById('chart-timeline'),{
       type:'line',
       data:{
