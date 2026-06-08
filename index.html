@@ -209,8 +209,9 @@ canvas{display:block}
 </div>
 
 <div id="tabbar">
-  <button class="tab-btn" data-tab="sim">シミュレーション</button>
-  <button class="tab-btn" data-tab="kpi">KPI設計 <span class="tag tag-new">NEW</span></button>
+  <button class="tab-btn" data-tab="overview">📌 施策概要</button>
+  <button class="tab-btn" data-tab="sim">📊 シミュレーション</button>
+  <button class="tab-btn" data-tab="kpi">KPI設計</button>
   <button class="tab-btn" data-tab="menu">メニュー詳細</button>
   <button class="tab-btn" data-tab="result">実績・事例</button>
   <button class="tab-btn" data-tab="compare">他社比較</button>
@@ -240,7 +241,7 @@ const REEL_COUNT = { 500:2, 1000:5, 1500:10 };
 // Meta広告等のCPM参考値（¥）
 const BENCH_CPM = { 'Meta広告':900, 'YouTube広告':700, 'Twitter広告':600, 'GVAリール':340, 'GVA UGC':280 };
 
-let state = { bgt:1000, tab:'sim' };
+let state = { bgt:1000, tab:'overview' };
 let charts = {};
 
 // ───────────────────────────
@@ -288,6 +289,119 @@ function countUp(el,target,duration=700,prefix='',suffix=''){
 function destroyAll(){
   Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}});
   charts={};
+}
+
+// ───────────────────────────
+// タブ: 施策概要（トップ）
+// ───────────────────────────
+function tOverview(){
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">提案概要</div></div>
+  <div class="info-box" style="margin-bottom:20px">
+    <p style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:10px">インフルエンサーリール × ナノUGC口コミ　Instagram複合施策</p>
+    <p style="font-size:12px;color:#374151;line-height:2">
+      「広告っぽい」と思われた瞬間、その投稿は終わる。<br>
+      GVAは <strong>① インフルエンサーのリール投稿で認知を爆発させ</strong>、<br>
+      <strong>② 3,000名以上のナノインフルエンサーのUGCフィード投稿で口コミを量産する</strong>、<br>
+      2つの施策を組み合わせたInstagram特化の複合プランを提案します。<br>
+      Instagramのみ・最大150名同時稼働・ステマ規制対応・全ディレクション込み。
+    </p>
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">2つのメニュー</div></div>
+  <div class="g2">
+
+    <!-- MENU 1 -->
+    <div class="card" style="border-top:4px solid var(--gold)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="background:var(--gold);color:#fff;font-size:22px;font-weight:900;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0">①</div>
+        <div>
+          <div style="font-size:15px;font-weight:900;color:var(--navy)">インフルエンサーショート動画タイアップ</div>
+          <div style="font-size:11px;color:var(--gray);margin-top:2px">リール ＋ ストーリーズ　／　Instagram のみ</div>
+        </div>
+      </div>
+      <div style="background:#fffbeb;border-radius:6px;padding:14px 16px;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="text-align:center">
+            <div style="font-size:11px;color:var(--gray);margin-bottom:3px">FW 単価</div>
+            <div style="font-size:24px;font-weight:900;color:var(--gold)">¥2<small style="font-size:14px">.0〜/FW</small></div>
+            <div style="font-size:10px;color:var(--gray)">業界最安水準</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:11px;color:var(--gray);margin-bottom:3px">過去実績 avg FW</div>
+            <div style="font-size:24px;font-weight:900;color:var(--gold)">35,000<small style="font-size:14px">人</small></div>
+            <div style="font-size:10px;color:var(--gray)">avg ¥70,000/名</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#374151;line-height:2">
+        <div style="margin-bottom:6px">📹 <strong>投稿形式：</strong>リール（60秒以内）＋ ストーリーズ 1枚セット</div>
+        <div style="margin-bottom:6px">📡 <strong>拡散力：</strong>発見タブ経由でFW外にリーチ。推定impはFW数の2〜3倍</div>
+        <div style="margin-bottom:6px">✅ <strong>込み：</strong>インフルエンサー選定・ディレクション・PR表記管理・原稿確認</div>
+        <div>🎯 <strong>役割：</strong>認知の爆発的拡大（購買ファネル TOFU）</div>
+      </div>
+    </div>
+
+    <!-- MENU 2 -->
+    <div class="card" style="border-top:4px solid var(--green)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="background:var(--green);color:#fff;font-size:22px;font-weight:900;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0">②</div>
+        <div>
+          <div style="font-size:15px;font-weight:900;color:var(--navy)">ナノインフルエンサー UGC口コミ試作</div>
+          <div style="font-size:11px;color:var(--gray);margin-top:2px">フィード カルーセル投稿　／　Instagram のみ</div>
+        </div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:6px;padding:14px 16px;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="text-align:center">
+            <div style="font-size:11px;color:var(--gray);margin-bottom:3px">1名あたり単価</div>
+            <div style="font-size:24px;font-weight:900;color:var(--green)">¥5,600<small style="font-size:14px">/名〜</small></div>
+            <div style="font-size:10px;color:var(--gray)">全管理込み</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:11px;color:var(--gray);margin-bottom:3px">ネットワーク規模</div>
+            <div style="font-size:24px;font-weight:900;color:var(--green)">3,000+<small style="font-size:14px">名</small></div>
+            <div style="font-size:10px;color:var(--gray)">最大150名同時稼働</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#374151;line-height:2">
+        <div style="margin-bottom:6px">📸 <strong>投稿形式：</strong>フィードカルーセル（詳細レビュー・検索キーワード設計込み）</div>
+        <div style="margin-bottom:6px">💬 <strong>口コミ力：</strong>FW1,000〜10,000人のナノが「友達の本音」として受け取られる</div>
+        <div style="margin-bottom:6px">✅ <strong>込み：</strong>選定・原稿確認・PR表記・UGC二次利用許諾取得サポート</div>
+        <div>🎯 <strong>役割：</strong>購買転換・口コミ蓄積（購買ファネル MOFU〜BOFU）</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">なぜこの組み合わせが最強なのか</div></div>
+  <div class="g3">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div style="font-size:24px;margin-bottom:8px">📈</div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">認知 × 口コミで購買ファネルを完全カバー</div>
+      <div style="font-size:11px;color:var(--gray);line-height:1.9">リールで認知を爆発させ、UGCフィードで検索口コミを蓄積。1施策でTOFU〜BOFUを一気通貫でカバーできる唯一の設計。</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div style="font-size:24px;margin-bottom:8px">💰</div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">Meta広告比 最大▼86%のCPM</div>
+      <div style="font-size:11px;color:var(--gray);line-height:1.9">Meta広告のCPM ¥500〜2,000に対し、GVA複合施策は¥280〜400前後。さらにUGC素材は広告クリエイティブとして転用でき制作費も削減。</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <div style="font-size:24px;margin-bottom:8px">🛡</div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">ステマ規制・ブランドセーフティ</div>
+      <div style="font-size:11px;color:var(--gray);line-height:1.9">2023年規制施行以来トラブルゼロ。全投稿のPR表記・原稿確認をGVAが管理。炎上リスクを最小化しながら自然な口コミ感を最大化。</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:16px">
+    📌 右上の予算ボタンで「¥50万円 / ¥100万円 / ¥150万円」を選択し、「📊 シミュレーション」タブで詳細な数値をご確認いただけます。
+  </div>
+</div>`;
 }
 
 // ───────────────────────────
@@ -946,7 +1060,7 @@ function drawCharts(){
 // ───────────────────────────
 function render(){
   destroyAll();
-  const fns={sim:tSim,kpi:tKpi,menu:tMenu,result:tResult,compare:tCompare,flow:tFlow};
+  const fns={overview:tOverview,sim:tSim,kpi:tKpi,menu:tMenu,result:tResult,compare:tCompare,flow:tFlow};
   document.getElementById('main').innerHTML=(fns[state.tab]||tSim)();
   requestAnimationFrame(()=>requestAnimationFrame(drawCharts));
 }
