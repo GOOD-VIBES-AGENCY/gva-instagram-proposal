@@ -129,14 +129,16 @@ canvas{display:block}
 .kpi-tbl tr:hover td{background:#fafbff}
 
 /* ── フロー ── */
-.flow-row{display:flex;align-items:flex-start;gap:0}
-.flow-step{flex:1;text-align:center;position:relative;padding:0 8px}
-.flow-step::after{content:'→';position:absolute;right:-8px;top:16px;font-size:16px;color:#b0bcd4;font-weight:700}
-.flow-step:last-child::after{display:none}
-.flow-no{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
-.flow-ttl{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px}
-.flow-txt{font-size:10px;color:var(--gray);line-height:1.7}
-.flow-time{font-size:10px;color:var(--gold);font-weight:700;margin-top:4px}
+.flow-list{display:flex;flex-direction:column;gap:0}
+.flow-item{display:flex;gap:20px;align-items:flex-start;padding:0 0 28px;position:relative}
+.flow-item:last-child{padding-bottom:0}
+.flow-item:not(:last-child)::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--border)}
+.flow-left{flex-shrink:0}
+.flow-no{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.flow-right{flex:1;padding-top:8px}
+.flow-ttl{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.flow-txt{font-size:11px;color:var(--gray);line-height:1.7}
+.flow-time{display:inline-block;font-size:10px;color:var(--gold);font-weight:700;margin-top:6px;background:#fffbeb;padding:2px 8px;border-radius:2px}
 
 /* ── 実績 ── */
 .case-card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:22px 24px;border-top:3px solid var(--ac,var(--navy))}
@@ -193,8 +195,7 @@ canvas{display:block}
   #main{padding:16px}
   .kpi-grid,.kpi-grid-3{grid-template-columns:1fr 1fr}
   .g2,.g3,.g12{grid-template-columns:1fr}
-  .flow-row{flex-direction:column;gap:12px}
-  .flow-step::after{display:none}
+  /* flow-list は縦方向固定のためモバイル追加対応なし */
 }
 </style>
 </head>
@@ -915,13 +916,15 @@ function tFlow(){
 <div class="section animate-in">
   <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">依頼から稼働まで 5ステップ</div></div>
   <div class="card" style="margin-bottom:24px">
-    <div class="flow-row">
+    <div class="flow-list">
       ${steps.map(([no,ttl,txt,time])=>`
-      <div class="flow-step">
-        <div class="flow-no">${no}</div>
-        <div class="flow-ttl">${ttl}</div>
-        <div class="flow-txt">${txt}</div>
-        <div class="flow-time">${time}</div>
+      <div class="flow-item">
+        <div class="flow-left"><div class="flow-no">${no}</div></div>
+        <div class="flow-right">
+          <div class="flow-ttl">${ttl}</div>
+          <div class="flow-txt">${txt}</div>
+          <div class="flow-time">${time}</div>
+        </div>
       </div>`).join('')}
     </div>
   </div>
