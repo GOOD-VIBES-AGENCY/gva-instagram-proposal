@@ -238,7 +238,7 @@ canvas{display:block}
 
 <div style="padding:14px 32px;background:#fff;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:10px;color:#9aa5be;margin-top:8px">
   <span>株式会社 GOOD VIBES AGENCY　|　Instagram複合施策 PRシミュレーション</span>
-  <span>推定数値は過去実績に基づく参考値です。効果保証ではありません。商品ギフティングコストは別途。</span>
+  <span>本資料の推定インプレッション・UGC数・CPM等はGVA過去実績に基づく参考値であり、効果・成果を保証するものではありません。実際の数値は商材カテゴリ・ターゲット・競合環境等により変動します。商品ギフティングコストは別途クライアント様のご負担となります。記載の費用はすべて税別です。</span>
 </div>
 
 <script>
@@ -404,6 +404,23 @@ function tOverview(){
       <div style="font-size:11px;color:var(--gray);line-height:1.9">2023年規制施行以来トラブル実績ゼロ。全投稿のPR表記・原稿確認・インフルエンサーへのガイドライン教育までGVAが一元管理する。</div>
     </div>
   </div>
+  <div class="section animate-in" style="margin-top:0">
+    <div class="sec-head"><div class="sec-no">04</div><div class="sec-title">初月から成果が出る理由</div></div>
+    <div class="g3">
+      <div class="card" style="border-top:3px solid var(--navy)">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">1ヶ月目から投稿・拡散がスタート</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.9">稼働開始後、最短2週間以内に全インフルエンサーの投稿が開始。1ヶ月目から選択プランの全人数分が稼働し、その月のうちにインプレッションとUGC投稿数が確認できる。</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">1ヶ月目の目安成果（参考）</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.9">¥100万円プランの場合、1ヶ月目に推定200〜300万imp・116件のUGC投稿・3,000〜6,000件の保存数が発生。口コミ資産がゼロから116件まで積み上がる。</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--green)">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">3ヶ月以降で検索流入が自走</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.9">蓄積されたUGCカルーセルがInstagram検索で上位表示され始め、広告費をかけずに新規ユーザーへのリーチが継続発生する。口コミ資産は投稿終了後も残り続ける。</div>
+      </div>
+    </div>
+  </div>
   <div class="warn-box" style="margin-top:16px">上部の予算ボタンで予算規模を切り替え、「シミュレーション」タブで詳細数値をご確認いただけます。</div>
 </div>`;
 }
@@ -479,8 +496,8 @@ function tSim(){
         </div>
         <div class="kpi" style="--ac:var(--blue)">
           <div class="kpi-lbl">UGC素材獲得</div>
-          <div class="kpi-val" id="kv-assets">${c.total}点</div>
-          <div class="kpi-sub">広告・EC転用可能</div>
+          <div class="kpi-val" id="kv-assets">${c.ugc}点</div>
+          <div class="kpi-sub">UGCカルーセル素材 広告転用可能</div>
         </div>
       </div>
       <!-- インプ積み上げバーチャート -->
@@ -509,8 +526,8 @@ function tSim(){
           <tr><td class="L">Meta（FB/IG）広告</td><td>¥500〜2,000</td><td class="neg">基準</td></tr>
           <tr><td class="L">YouTube広告</td><td>¥400〜1,200</td><td class="neg">〃</td></tr>
           <tr><td class="L">Twitter/X広告</td><td>¥300〜800</td><td class="neg">〃</td></tr>
-          <tr class="hl-row"><td class="L"><strong>GVA ①リール</strong></td><td><strong>¥${calc(state.bgt).cpm}前後</strong></td><td class="pos"><strong>Meta比 最大▼73%</strong></td></tr>
-          <tr class="hl-row"><td class="L"><strong>GVA ②UGC口コミ</strong></td><td><strong>¥280前後</strong></td><td class="pos"><strong>Meta比 最大▼86%</strong></td></tr>
+          <tr class="hl-row"><td class="L"><strong>GVA ①リール</strong></td><td><strong>¥${calc(state.bgt).cpm}前後</strong></td><td class="pos"><strong>Meta比 最大▼73%</strong><div style="font-size:9px;color:var(--gray)">Meta上限¥2,000比</div></td></tr>
+          <tr class="hl-row"><td class="L"><strong>GVA ②UGC口コミ</strong></td><td><strong>¥280前後</strong></td><td class="pos"><strong>Meta比 最大▼86%</strong><div style="font-size:9px;color:var(--gray)">Meta上限¥2,000比</div></td></tr>
         </tbody>
       </table>
       <div class="green-box" style="margin-top:12px">
@@ -528,7 +545,7 @@ function tSim(){
       <thead><tr>
         <th class="L">プラン</th>
         <th>①リール</th><th>②UGC</th><th>合計</th>
-        <th>①費用</th><th>②費用</th><th>合計費用</th>
+        <th>①費用（税別）</th><th>②費用（税別）</th><th>合計費用（税別）</th>
         <th>推定imp</th><th>CPM</th><th>UGC素材</th>
       </tr></thead>
       <tbody>
@@ -546,7 +563,7 @@ function tSim(){
             <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}</td>
             <td style="font-weight:700">${fYenK(cc.cost)}</td>
             <td style="font-weight:700;color:var(--gold)">${fImpD(cc.imp)}</td>
-            <td>¥${cc.cpm}</td><td>${cc.total}点</td>
+            <td>¥${cc.cpm}</td><td style="color:var(--green)">${cc.ugc}点</td>
           </tr>`;
         }).join('')}
       </tbody>
@@ -803,7 +820,7 @@ function tMenu(){
       </tbody></table>
     </div>
     <div class="card">
-      <div class="card-ttl">FW数別 費用目安</div>
+      <div class="card-ttl">FW数別 費用目安（税別）</div>
       <table class="dtbl">
         <thead><tr><th class="L">FW数（目安）</th><th>単価目安</th><th>推定imp</th><th>推奨シーン</th></tr></thead>
         <tbody>
@@ -835,7 +852,7 @@ function tMenu(){
       </tbody></table>
     </div>
     <div class="card">
-      <div class="card-ttl">人数別 費用目安（参考）</div>
+      <div class="card-ttl">人数別 費用目安（税別・参考）</div>
       <table class="dtbl">
         <thead><tr><th class="L">稼働人数</th><th>費用目安</th><th>推定imp</th><th>UGC素材</th></tr></thead>
         <tbody>
@@ -889,9 +906,9 @@ function tResult(){
   <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">GVA支援 実績事例</div></div>
   <div class="g2">
     <div class="case-card" style="--ac:var(--navy)">
-      <div class="case-type">CASE STUDY 01 — 大手アパレルブランド A社 ／ 継続稼働中</div>
+      <div class="case-type">CASE STUDY 01 — 大手アパレルブランド A社 ／ 2026年1月実績・継続稼働中</div>
       <div class="case-ttl">UGC×Instagram 口コミ量産施策</div>
-      <div class="case-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働</div>
+      <div class="case-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働 ／ 計測月：2026年1月</div>
       <div class="case-nums">
         <div><div class="case-num-val" id="cv-imp1">—</div><div class="case-num-lbl">月間合計インプレッション</div></div>
         <div><div class="case-num-val" id="cv-ugc">—</div><div class="case-num-lbl">月間UGC獲得数</div></div>
@@ -903,17 +920,17 @@ function tResult(){
       </div>
     </div>
     <div class="case-card" style="--ac:var(--green)">
-      <div class="case-type">CASE STUDY 02 — 大手ヘアケアブランド B社 ／ リブランディング成功</div>
+      <div class="case-type">CASE STUDY 02 — 大手ヘアケアブランド B社 ／ Instagram集中施策</div>
       <div class="case-ttl">若年層離れを逆転・ブランドシェア1位奪還</div>
-      <div class="case-sub">業種：ヘアケア ／ 施策：Instagram × TikTok 長期横断UGC（参考事例）</div>
+      <div class="case-sub">業種：ヘアケア ／ 施策：Instagram ナノUGC長期集中施策</div>
       <div class="case-nums">
-        <div><div class="case-num-val" style="color:var(--green)" id="cv-x">—</div><div class="case-num-lbl">X発話量（前年比）</div></div>
+        <div><div class="case-num-val" style="color:var(--green)" id="cv-x">—</div><div class="case-num-lbl">SNS発話量（前年比）</div></div>
         <div><div class="case-num-val" style="color:var(--green)" id="cv-ig">—</div><div class="case-num-lbl">Instagram発話量（前年比）</div></div>
         <div><div class="case-num-val" style="color:var(--green)" id="cv-sales">—</div><div class="case-num-lbl">売上伸長（施策翌月比）</div></div>
         <div><div class="case-num-val" style="color:var(--green)" id="cv-rank">—</div><div class="case-num-lbl">10〜20代シェアランキング</div></div>
       </div>
       <div class="info-box" style="margin-top:16px;border-left-color:var(--green);background:#f0fdf4">
-        <p style="font-size:12px;color:#374151;line-height:1.9">49年ブランドの若年層認知を劇的刷新。ナノUGCの口コミ量産が購買転換まで一気通貫で機能。X/Instagram/TikTok横断設計が発話量を爆発させた。</p>
+        <p style="font-size:12px;color:#374151;line-height:1.9">49年ブランドの若年層認知を劇的刷新。InstagramナノUGCの口コミ量産が検索流入・購買転換まで一気通貫で機能した長期施策の実証事例。</p>
       </div>
     </div>
   </div>
@@ -942,7 +959,7 @@ function tResult(){
 // ───────────────────────────
 function tCompare(){
   const rows=[
-    ['インフルエンサーFW単価','¥2〜5/FW','非対応','¥2.0〜/FW（最安水準）'],
+    ['インフルエンサーFW単価','¥2〜5/FW','非対応','¥2.0〜/FW（業界標準の最低水準）'],
     ['UGC口コミ単価','非対応・別途','¥5,000〜15,000/名','¥5,600〜/名（選定・管理・レポート込）'],
     ['ナノネットワーク規模','数百名程度','マッチングのみ','3,000名以上（審査済み）'],
     ['最大同時稼働人数','30名程度','人数制限あり','150名（複合設計）'],
@@ -1018,6 +1035,25 @@ function tFlow(){
       ・効果測定・レポーティング（月次詳細レポート ＋ 改善提案）<br>
       ・UGC二次利用サポート（Meta広告クリエイティブへの転用支援、許諾取得は別途相談）
     </p>
+  </div>
+  <div class="section animate-in" style="margin-top:24px">
+    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">GVAのスピード感</div></div>
+    <div class="tbl-wrap">
+      <table class="dtbl">
+        <thead><tr>
+          <th class="L">フェーズ</th>
+          <th>一般インフルエンサー会社</th>
+          <th>UGCプラットフォーム</th>
+          <th class="hl" style="background:var(--navy);color:#fff">GVA</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="L">初回提案まで</td><td>1〜2週間</td><td>即日〜3日</td><td class="hl" style="background:#fffbeb;font-weight:700;color:var(--navy)"><strong>3営業日以内</strong></td></tr>
+          <tr><td class="L">インフルエンサー選定</td><td>1〜3週間</td><td>自動マッチング（品質管理なし）</td><td class="hl" style="background:#fffbeb;font-weight:700;color:var(--navy)"><strong>5営業日以内</strong>（4軸審査済）</td></tr>
+          <tr><td class="L">初回投稿開始まで</td><td>1ヶ月〜</td><td>2〜4週間</td><td class="hl" style="background:#fffbeb;font-weight:700;color:var(--navy)"><strong>最短2週間〜</strong></td></tr>
+          <tr><td class="L">レポート提出</td><td>翌月〜翌々月</td><td>自動生成のみ</td><td class="hl" style="background:#fffbeb;font-weight:700;color:var(--navy)"><strong>投稿月末までに提出</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 <div class="section animate-in">
