@@ -1,1908 +1,718 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram複合施策提案 | GOOD VIBES AGENCY</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans+JP:wght@300;400;500;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #080810;
-      --bg2: #0f0f1a;
-      --card: rgba(255,255,255,0.032);
-      --border: rgba(255,255,255,0.07);
-      --gold: #C9A04E;
-      --gold2: #E8C878;
-      --coral: #FF6040;
-      --text: #E4DDD0;
-      --muted: #7A7570;
-      --white: #F6F2EC;
-      --green: #4EC98A;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Instagram複合施策 PRシミュレーション | GOOD VIBES AGENCY</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f2557;--navy2:#1b3a7a;--gold:#b8860b;--gold2:#d4a017;
+  --green:#15803d;--red:#b91c1c;--blue:#1d4ed8;--orange:#c2410c;
+  --gray:#64748b;--lightgray:#f1f4f9;--border:#dde3ef;--text:#1a1f2e;
+}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0f2f6;color:var(--text);font-size:14px;min-height:100vh}
+button{cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+table{border-collapse:collapse;width:100%}
 
-    /* ====== TYPOGRAPHY ====== */
-    .display {
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 0.04em;
-      line-height: 0.95;
-    }
-    .serif {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-    }
-    .jp { font-family: 'Noto Sans JP', sans-serif; }
+/* ── ヘッダー ── */
+#hdr{background:var(--navy);color:#fff;padding:20px 32px;border-bottom:4px solid var(--gold)}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.hdr-label{font-size:10px;letter-spacing:.2em;color:#8aaad8;margin-bottom:6px;font-weight:500}
+.hdr-title{font-size:20px;font-weight:900;line-height:1.3}
+.hdr-sub{font-size:11px;color:#7a9dc8;margin-top:6px;line-height:1.6}
+.hdr-right{text-align:right;flex-shrink:0}
+.hdr-date{font-size:11px;color:#8aaad8;margin-bottom:6px}
+.badge-conf{background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;letter-spacing:.08em;display:inline-block}
 
-    /* ====== LAYOUT ====== */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-    section { padding: 100px 0; position: relative; }
+/* ── 予算バー ── */
+#budgetbar{background:#f0f4ff;border-bottom:2px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bgt-lbl{font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap}
+.bgt-btn{padding:8px 24px;font-size:13px;font-weight:700;border:2px solid #b0bcd4;background:#fff;color:var(--navy);border-radius:4px;transition:all .15s}
+.bgt-btn.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.bgt-summary{margin-left:auto;font-size:12px;color:var(--gray)}
+.bgt-summary strong{color:var(--navy);font-size:14px}
 
-    /* ====== NOISE TEXTURE ====== */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
+/* ── タブ ── */
+#tabbar{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 32px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#tabbar::-webkit-scrollbar{display:none}
+.tab-btn{padding:14px 20px;font-size:12px;font-weight:600;background:none;border:none;color:var(--gray);border-bottom:3px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.tab-btn.on{color:var(--navy);border-bottom-color:var(--navy)}
 
-    /* ====== COVER ====== */
-    #cover {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding-bottom: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cover-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(201,160,78,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,160,78,0.06) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-    }
-    .cover-glow {
-      position: absolute;
-      width: 900px; height: 900px;
-      background: radial-gradient(circle, rgba(201,160,78,0.12) 0%, transparent 65%);
-      top: -200px; right: -300px;
-      pointer-events: none;
-    }
-    .cover-glow2 {
-      position: absolute;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255,96,64,0.08) 0%, transparent 65%);
-      bottom: 0; left: -100px;
-      pointer-events: none;
-    }
-    .cover-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 40px 40px 0;
-      position: relative;
-      z-index: 1;
-    }
-    .cover-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      opacity: 0.9;
-    }
-    .cover-meta {
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-align: right;
-      line-height: 1.8;
-    }
-    .cover-content {
-      position: relative;
-      z-index: 1;
-      padding: 0 40px;
-    }
-    .cover-label {
-      font-size: 11px;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .cover-label::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-    }
-    .cover-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 130px);
-      line-height: 0.9;
-      letter-spacing: 0.02em;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-    .cover-title em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 50%, var(--coral) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .cover-subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(20px, 2.5vw, 28px);
-      color: var(--muted);
-      font-weight: 300;
-      font-style: italic;
-      margin-bottom: 48px;
-    }
-    .cover-stats {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .cover-stat {
-      border-left: 1px solid var(--border);
-      padding-left: 20px;
-    }
-    .cover-stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      color: var(--gold);
-      letter-spacing: 0.04em;
-    }
-    .cover-stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      margin-top: 2px;
-    }
-    .cover-line {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-      opacity: 0.3;
-    }
+/* ── メイン ── */
+#main{padding:28px 32px;max-width:1080px;margin:0 auto}
+.section{margin-bottom:28px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-no{font-size:22px;font-weight:900;color:var(--gold);line-height:1;min-width:36px}
+.sec-title{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.06em;border-bottom:2px solid var(--navy);padding-bottom:6px;flex:1}
 
-    /* ====== SECTION HEADERS ====== */
-    .sec-label {
-      font-size: 10px;
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .sec-label::after {
-      content: '';
-      display: block;
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      max-width: 60px;
-    }
-    .sec-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(48px, 6vw, 72px);
-      line-height: 1;
-      letter-spacing: 0.02em;
-      color: var(--white);
-      margin-bottom: 16px;
-    }
-    .sec-desc {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 520px;
-      line-height: 1.8;
-    }
-    .sec-header { margin-bottom: 64px; }
+/* ── カード ── */
+.card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:22px 24px}
+.card-ttl{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
-    /* ====== DIVIDER ====== */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
-      margin: 0;
-    }
+/* ── KPI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi-grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:16px 18px;border-top:3px solid var(--ac,var(--navy))}
+.kpi-lbl{font-size:10px;color:var(--gray);font-weight:600;letter-spacing:.04em;margin-bottom:6px}
+.kpi-val{font-size:26px;font-weight:900;color:var(--ac,var(--navy));line-height:1}
+.kpi-sub{font-size:10px;color:#9aa5be;margin-top:5px;line-height:1.5}
 
-    /* ====== CARD ====== */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 40px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s ease;
-    }
-    .card:hover { border-color: rgba(201,160,78,0.2); }
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(201,160,78,0.03) 0%, transparent 50%);
-      pointer-events: none;
-    }
+/* ── テーブル ── */
+.tbl-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08)}
+.dtbl th{background:var(--navy);color:#fff;padding:10px 14px;font-size:11px;font-weight:700;text-align:right;white-space:nowrap;border-right:1px solid var(--navy2)}
+.dtbl th.L{text-align:left}
+.dtbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--border);border-right:1px solid #eef0f6;text-align:right;background:#fff}
+.dtbl td.L{text-align:left}
+.dtbl tr:nth-child(even) td{background:#f8f9fd}
+.dtbl tr:hover td{background:#eef2ff}
+.dtbl .total-row td{background:#e4e9f5;font-weight:700;font-size:13px;color:var(--navy)}
 
-    /* ====== WHY SECTION ====== */
-    #why { background: var(--bg); }
-    .why-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-    .why-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 36px;
-      position: relative;
-    }
-    .why-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 80px;
-      color: rgba(201,160,78,0.1);
-      font-weight: 300;
-      line-height: 1;
-      position: absolute;
-      top: 20px;
-      right: 30px;
-    }
-    .why-icon { font-size: 28px; margin-bottom: 16px; }
-    .why-title {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .why-text { font-size: 13px; color: var(--muted); line-height: 1.8; }
+/* ── 配分バー ── */
+.alloc-bar-wrap{margin:12px 0 6px;height:10px;border-radius:5px;overflow:hidden;background:#e4e9f5;display:flex}
+.alloc-bar-a{background:var(--gold2);transition:width .4s ease}
+.alloc-bar-b{background:#15803d;flex:1}
+.alloc-legend{display:flex;justify-content:space-between;font-size:10px;color:var(--gray);margin-bottom:12px}
 
-    /* ====== MENU SECTION ====== */
-    #menu { background: var(--bg2); }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .menu-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 48px;
-      position: relative;
-      overflow: hidden;
-    }
-    .menu-card.primary { border-color: rgba(201,160,78,0.25); }
-    .menu-card.secondary { border-color: rgba(78,201,138,0.2); }
-    .menu-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 100px;
-      color: rgba(255,255,255,0.03);
-      line-height: 1;
-      position: absolute;
-      top: -10px;
-      right: 20px;
-      letter-spacing: 0;
-    }
-    .menu-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 2px;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      margin-bottom: 24px;
-      font-weight: 500;
-    }
-    .menu-badge.gold { background: rgba(201,160,78,0.15); color: var(--gold); border: 1px solid rgba(201,160,78,0.3); }
-    .menu-badge.green { background: rgba(78,201,138,0.1); color: var(--green); border: 1px solid rgba(78,201,138,0.25); }
-    .menu-title {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-    .menu-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .menu-price-label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .menu-price {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      letter-spacing: 0.02em;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .menu-price.gold { color: var(--gold); }
-    .menu-price.green { color: var(--green); }
-    .menu-price-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .menu-features { list-style: none; }
-    .menu-features li {
-      font-size: 13px;
-      color: var(--text);
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .menu-features li:last-child { border-bottom: none; }
-    .menu-features li::before {
-      content: '—';
-      color: var(--muted);
-      flex-shrink: 0;
-    }
+/* ── メニュー行 ── */
+.menu-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.menu-row:first-child{border-top:1px solid var(--border)}
+.menu-left{display:flex;align-items:center;gap:8px}
+.menu-dot{width:10px;height:10px;border-radius:50%}
+.menu-name{font-size:13px;font-weight:600;color:var(--text)}
+.menu-detail{font-size:11px;color:var(--gray);margin-top:2px}
+.menu-right{text-align:right}
+.menu-cost{font-size:15px;font-weight:700;color:var(--text)}
+.menu-pct{font-size:11px;color:var(--gray)}
 
-    /* ====== SIMULATION SECTION ====== */
-    #sim { background: var(--bg); }
+/* ── グリッド ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 
-    /* Tab buttons */
-    .sim-tab-nav {
-      display: flex;
-      gap: 0;
-      margin-bottom: 0;
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .sim-tab-btn {
-      flex: 1;
-      padding: 22px 20px;
-      background: transparent;
-      border: none;
-      border-right: 1px solid var(--border);
-      color: var(--muted);
-      cursor: pointer;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      letter-spacing: 0.05em;
-      transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .sim-tab-btn:last-child { border-right: none; }
-    .sim-tab-btn .btn-sub {
-      display: block;
-      font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-top: 4px;
-      font-weight: 400;
-    }
-    .sim-tab-btn::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transition: transform 0.25s ease;
-    }
-    .sim-tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.02); }
-    .sim-tab-btn.active {
-      color: var(--gold);
-      background: rgba(201,160,78,0.04);
-    }
-    .sim-tab-btn.active::before { transform: scaleX(1); }
-    .sim-tab-btn .rec-pill {
-      display: inline-block;
-      background: var(--gold);
-      color: #000;
-      font-size: 8px;
-      letter-spacing: 0.15em;
-      padding: 2px 7px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 700;
-      vertical-align: middle;
-      margin-left: 6px;
-      border-radius: 2px;
-    }
-    .sim-tab-btn .max-pill {
-      display: inline-block;
-      background: var(--coral);
-      color: #fff;
-      font-size: 8px;
-      letter-spacing: 0.15em;
-      padding: 2px 7px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 700;
-      vertical-align: middle;
-      margin-left: 6px;
-      border-radius: 2px;
-    }
+/* ── インフォボックス ── */
+.info-box{background:#f0f4ff;border-left:5px solid var(--navy);border-radius:0 8px 8px 0;padding:18px 22px}
+.warn-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:14px 18px;font-size:11px;color:#78350f;line-height:1.8}
+.green-box{background:#f0fdf4;border-left:5px solid var(--green);border-radius:0 8px 8px 0;padding:14px 18px;font-size:12px;color:#14532d;line-height:1.8}
 
-    /* Tab panels */
-    .sim-panels { border: 1px solid var(--border); border-top: none; }
-    .sim-panel {
-      display: none;
-      padding: 48px;
-      animation: panelFadeIn 0.3s ease;
-    }
-    .sim-panel.active { display: block; }
-    @keyframes panelFadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .sim-panel-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-    .sim-panel-left {}
-    .sim-panel-right {}
-    .sim-big-budget {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 88px;
-      line-height: 1;
-      letter-spacing: 0.02em;
-      margin-bottom: 8px;
-    }
-    .sim-big-budget span { font-size: 36px; color: var(--muted); }
-    .sim-big-label {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .sim-alloc-block { margin-bottom: 32px; }
-    .sim-alloc-title {
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-    .sim-alloc-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .sim-alloc-item:first-child { border-top: 1px solid var(--border); }
-    .sim-alloc-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sim-alloc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .dot-gold { background: var(--gold); }
-    .dot-green { background: var(--green); }
-    .sim-alloc-name { font-size: 13px; color: var(--text); }
-    .sim-alloc-detail { font-size: 11px; color: var(--muted); }
-    .sim-alloc-right { text-align: right; }
-    .sim-alloc-cost { font-size: 15px; color: var(--white); font-weight: 500; }
-    .sim-alloc-pct { font-size: 11px; color: var(--muted); }
-    .sim-stacked-bar {
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      margin-bottom: 8px;
-      display: flex;
-    }
-    .sim-bar-a { background: var(--gold); transition: width 0.5s ease; }
-    .sim-bar-b { background: var(--green); flex: 1; }
-    .sim-bar-legend {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-    .sim-kpi-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .sim-kpi {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.05);
-      padding: 20px;
-    }
-    .sim-kpi-label {
-      font-size: 9px;
-      letter-spacing: 0.25em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .sim-kpi-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 40px;
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-    .sim-kpi-val.gold { color: var(--gold); }
-    .sim-kpi-val.green { color: var(--green); }
-    .sim-kpi-val.coral { color: var(--coral); }
-    .sim-kpi-val.white { color: var(--white); }
-    .sim-kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
-    .sim-insight {
-      background: rgba(201,160,78,0.06);
-      border: 1px solid rgba(201,160,78,0.2);
-      border-left: 3px solid var(--gold);
-      padding: 16px 20px;
-      margin-top: 20px;
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.8;
-    }
-    .sim-insight.green-insight {
-      background: rgba(78,201,138,0.05);
-      border-color: rgba(78,201,138,0.2);
-      border-left-color: var(--green);
-    }
-    .sim-insight.coral-insight {
-      background: rgba(255,96,64,0.05);
-      border-color: rgba(255,96,64,0.2);
-      border-left-color: var(--coral);
-    }
+/* ── タグ ── */
+.tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;vertical-align:middle}
+.tag-reel{background:#fef3c7;color:#92400e}
+.tag-feed{background:#dcfce7;color:#14532d}
+.tag-rec{background:var(--navy);color:#fff}
+.tag-max{background:#7c3aed;color:#fff}
 
-    /* legacy card styles (kept for compat) */
-    .sim-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 40px 36px;
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-    }
-    .sim-card.featured {
-      border-color: rgba(201,160,78,0.3);
-      background: linear-gradient(135deg, rgba(201,160,78,0.05) 0%, var(--card) 100%);
-    }
-    .sim-card .rec-badge {
-      position: absolute;
-      top: 20px; right: 20px;
-      background: var(--gold);
-      color: #000;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      padding: 3px 8px;
-      font-weight: 700;
-    }
-    .sim-budget-label {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .sim-budget {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 60px;
-      letter-spacing: 0.02em;
-      line-height: 1;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-    .sim-budget span {
-      font-size: 28px;
-      color: var(--muted);
-    }
-    .sim-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 24px 0;
-    }
-    .sim-alloc {
-      margin-bottom: 24px;
-    }
-    .sim-alloc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .sim-alloc-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--text);
-    }
-    .sim-alloc-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-    }
-    .dot-gold { background: var(--gold); }
-    .dot-green { background: var(--green); }
-    .sim-alloc-val {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--white);
-    }
-    .sim-bar-bg {
-      height: 4px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .sim-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold) 0%, var(--green) 100%);
-      border-radius: 2px;
-    }
-    .sim-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .sim-metric {
-      background: rgba(0,0,0,0.3);
-      padding: 14px;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .sim-metric-label {
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-    .sim-metric-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 26px;
-      letter-spacing: 0.03em;
-      line-height: 1;
-    }
-    .sim-metric-val.gold { color: var(--gold); }
-    .sim-metric-val.green { color: var(--green); }
-    .sim-metric-val.coral { color: var(--coral); }
-    .sim-metric-val.white { color: var(--white); }
-    .sim-metric-sub {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .sim-detail-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 40px;
-    }
-    .sim-detail-table th {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-align: left;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 400;
-    }
-    .sim-detail-table td {
-      padding: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      font-size: 13px;
-    }
-    .sim-detail-table tr:last-child td { border-bottom: none; }
-    .sim-detail-table .total-row td {
-      background: rgba(201,160,78,0.06);
-      border-top: 1px solid rgba(201,160,78,0.2);
-      color: var(--gold);
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .tag-reel {
-      display: inline-block;
-      padding: 2px 8px;
-      background: rgba(201,160,78,0.1);
-      color: var(--gold);
-      border: 1px solid rgba(201,160,78,0.2);
-      font-size: 10px;
-      border-radius: 2px;
-      margin-right: 4px;
-    }
-    .tag-feed {
-      display: inline-block;
-      padding: 2px 8px;
-      background: rgba(78,201,138,0.1);
-      color: var(--green);
-      border: 1px solid rgba(78,201,138,0.2);
-      font-size: 10px;
-      border-radius: 2px;
-      margin-right: 4px;
-    }
+/* ── 比較テーブル ── */
+.cmp th{background:var(--navy);color:#fff;padding:10px 14px;font-size:11px;font-weight:700;text-align:center;border-right:1px solid var(--navy2)}
+.cmp th.L{text-align:left}
+.cmp th.hl{background:var(--gold);color:#fff}
+.cmp td{padding:10px 14px;font-size:12px;border-bottom:1px solid var(--border);text-align:center;background:#fff}
+.cmp td.L{text-align:left;color:var(--gray)}
+.cmp td.hl{background:#fffbeb;font-weight:700;color:var(--gold)}
+.cmp .check{color:var(--green);font-size:16px;font-weight:900}
+.cmp .cross{color:#d1d5db;font-size:14px}
+.cmp tr:hover td{background:#f8f9fd}
 
-    /* ====== RESULTS / CASE SECTION ====== */
-    #results { background: var(--bg2); }
-    .results-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .result-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 44px;
-      position: relative;
-      overflow: hidden;
-    }
-    .result-card::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle at top right, rgba(201,160,78,0.08), transparent 70%);
-    }
-    .result-type {
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .result-title {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-    .result-sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .result-nums {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .result-num { }
-    .result-num-val {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 44px;
-      color: var(--gold);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-    .result-num-label {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-      line-height: 1.5;
-    }
+/* ── 実績カード ── */
+.case-card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:22px 24px;border-top:3px solid var(--ac,var(--navy))}
+.case-type{font-size:10px;letter-spacing:.15em;color:var(--gray);margin-bottom:8px;font-weight:600}
+.case-ttl{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:4px}
+.case-sub{font-size:11px;color:var(--gray);margin-bottom:16px}
+.case-nums{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.case-num-val{font-size:28px;font-weight:900;color:var(--gold);line-height:1}
+.case-num-lbl{font-size:10px;color:var(--gray);margin-top:3px;line-height:1.5}
 
-    /* ====== COMPARISON SECTION ====== */
-    #compare { background: var(--bg); }
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .compare-table th {
-      padding: 16px 24px;
-      text-align: center;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-      font-weight: 400;
-    }
-    .compare-table th.highlight-col {
-      background: rgba(201,160,78,0.05);
-      color: var(--gold);
-      border-bottom-color: rgba(201,160,78,0.25);
-    }
-    .compare-table td {
-      padding: 18px 24px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--text);
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .compare-table td:first-child {
-      text-align: left;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .compare-table td.highlight-col {
-      background: rgba(201,160,78,0.03);
-      color: var(--gold);
-      font-weight: 500;
-    }
-    .compare-table .check { color: var(--green); font-size: 16px; }
-    .compare-table .cross { color: rgba(255,255,255,0.15); font-size: 16px; }
-    .compare-gva-header {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 0.1em;
-    }
+/* ── フロー ── */
+.flow-row{display:flex;align-items:flex-start;gap:0}
+.flow-step{flex:1;text-align:center;position:relative;padding:0 8px}
+.flow-step::after{content:'→';position:absolute;right:-8px;top:16px;font-size:16px;color:#b0bcd4;font-weight:700}
+.flow-step:last-child::after{display:none}
+.flow-no{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.flow-ttl{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.flow-txt{font-size:10px;color:var(--gray);line-height:1.7}
+.flow-time{font-size:10px;color:var(--gold);font-weight:700;margin-top:4px}
 
-    /* ====== STRENGTHS ====== */
-    #strengths { background: var(--bg2); }
-    .strength-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-    .strength-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 36px 32px;
-    }
-    .strength-icon { font-size: 32px; margin-bottom: 20px; }
-    .strength-title {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-    .strength-text { font-size: 12px; color: var(--muted); line-height: 1.9; }
-    .strength-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 44px;
-      color: var(--gold);
-      letter-spacing: 0.02em;
-      margin-bottom: 4px;
-    }
+/* ── ユーティリティ ── */
+.pos{color:var(--green)} .neg{color:var(--red)}
+.bold{font-weight:700}
+.divider{border:none;border-top:1px solid var(--border);margin:12px 0}
+.text-right{text-align:right}
+.text-center{text-align:center}
 
-    /* ====== FLOW ====== */
-    #flow { background: var(--bg); }
-    .flow-steps {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      position: relative;
-    }
-    .flow-steps::before {
-      content: '';
-      position: absolute;
-      top: 32px;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: var(--border);
-      z-index: 0;
-    }
-    .flow-step {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 0 16px;
-    }
-    .flow-dot {
-      width: 64px; height: 64px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      color: var(--gold);
-    }
-    .flow-title {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .flow-text { font-size: 11px; color: var(--muted); line-height: 1.7; }
-    .flow-time {
-      font-size: 10px;
-      color: var(--gold);
-      margin-top: 8px;
-      letter-spacing: 0.1em;
-    }
-
-    /* ====== CTA ====== */
-    #cta {
-      background: var(--bg);
-      text-align: center;
-      padding: 120px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    #cta::before {
-      content: '';
-      position: absolute;
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(201,160,78,0.07) 0%, transparent 65%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-    .cta-label {
-      font-size: 10px;
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      margin-bottom: 24px;
-    }
-    .cta-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(56px, 8vw, 96px);
-      line-height: 0.95;
-      color: var(--white);
-      margin-bottom: 24px;
-    }
-    .cta-title em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--gold), var(--coral));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .cta-sub {
-      font-size: 15px;
-      color: var(--muted);
-      margin-bottom: 48px;
-      font-style: italic;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-    }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 48px;
-      border: 1px solid rgba(201,160,78,0.5);
-      color: var(--gold);
-      font-size: 12px;
-      letter-spacing: 0.25em;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-      z-index: 0;
-    }
-    .cta-btn:hover::before { transform: scaleX(1); }
-    .cta-btn:hover { color: #000; }
-    .cta-btn span { position: relative; z-index: 1; }
-    .cta-contacts {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      margin-top: 48px;
-    }
-    .cta-contact-item {
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .cta-contact-item strong {
-      display: block;
-      color: var(--text);
-      font-size: 15px;
-      font-weight: 400;
-      margin-top: 4px;
-    }
-
-    /* ====== FOOTER ====== */
-    footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 32px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-    }
-    .footer-note {
-      font-size: 11px;
-      color: var(--muted);
-      text-align: right;
-      line-height: 1.8;
-    }
-
-    /* ====== SCROLL ANIMATIONS ====== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .fade-up-delay-1 { transition-delay: 0.1s; }
-    .fade-up-delay-2 { transition-delay: 0.2s; }
-    .fade-up-delay-3 { transition-delay: 0.3s; }
-
-    /* ====== SPECIAL ELEMENTS ====== */
-    .gold-text { color: var(--gold); }
-    .green-text { color: var(--green); }
-    .coral-text { color: var(--coral); }
-    .highlight-box {
-      background: rgba(201,160,78,0.07);
-      border: 1px solid rgba(201,160,78,0.2);
-      border-left: 3px solid var(--gold);
-      padding: 20px 24px;
-      margin-top: 24px;
-    }
-    .highlight-box-text {
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.8;
-    }
-    .max-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--gold), var(--coral));
-      color: #000;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 14px;
-      letter-spacing: 0.15em;
-      padding: 3px 10px;
-      border-radius: 2px;
-      vertical-align: middle;
-      margin-left: 8px;
-    }
-
-    /* ====== RESPONSIVE ====== */
-    @media (max-width: 768px) {
-      .container { padding: 0 20px; }
-      section { padding: 64px 0; }
-      .why-grid, .menu-grid, .results-grid { grid-template-columns: 1fr; }
-      .sim-tabs { grid-template-columns: 1fr; }
-      .strength-grid { grid-template-columns: 1fr; }
-      .flow-steps { grid-template-columns: 1fr; gap: 20px; }
-      .flow-steps::before { display: none; }
-      .cover-stats { gap: 20px; }
-    }
-  </style>
+/* ── レスポンシブ ── */
+@media(max-width:768px){
+  #hdr{padding:16px}
+  .hdr-top{flex-direction:column;gap:8px}
+  .hdr-right{text-align:left}
+  .hdr-title{font-size:16px}
+  #budgetbar{padding:10px 16px;gap:6px}
+  .bgt-btn{padding:6px 14px;font-size:12px}
+  .bgt-summary{display:none}
+  #tabbar{padding:0 16px}
+  .tab-btn{padding:12px 10px;font-size:11px}
+  #main{padding:16px}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-grid-6{grid-template-columns:1fr 1fr}
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr}
+  .flow-row{flex-direction:column;gap:12px}
+  .flow-step::after{display:none}
+}
+</style>
 </head>
 <body>
 
-<!-- ===== COVER ===== -->
-<section id="cover">
-  <div class="cover-grid-bg"></div>
-  <div class="cover-glow"></div>
-  <div class="cover-glow2"></div>
+<!-- ヘッダー -->
+<div id="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="hdr-label">株式会社 GOOD VIBES AGENCY　|　クライアント向け提案資料</div>
+      <div class="hdr-title">Instagram複合施策 PRシミュレーション</div>
+      <div class="hdr-sub">① インフルエンサーリール × ② ナノUGCフィード口コミ　複合プラン<br>
+      FW単価 ¥2.0〜／ナノUGC ¥5,600/名　※Instagramのみ・最大150名稼働</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-date" id="hdr-date"></div>
+      <div class="badge-conf">CONFIDENTIAL</div>
+    </div>
+  </div>
+</div>
 
-  <div class="cover-top">
-    <div class="cover-logo">GOOD VIBES AGENCY</div>
-    <div class="cover-meta">
-      Instagram 複合施策提案書<br>
-      2026年 6月
+<!-- 予算セレクター -->
+<div id="budgetbar">
+  <span class="bgt-lbl">💰 月額予算：</span>
+  <button class="bgt-btn" data-bgt="500">¥50万円</button>
+  <button class="bgt-btn" data-bgt="1000">¥100万円</button>
+  <button class="bgt-btn" data-bgt="1500">¥150万円</button>
+  <span class="bgt-summary" id="bgt-summary"></span>
+</div>
+
+<!-- タブ -->
+<div id="tabbar">
+  <button class="tab-btn" data-tab="sim">シミュレーション</button>
+  <button class="tab-btn" data-tab="menu">メニュー詳細</button>
+  <button class="tab-btn" data-tab="result">実績・事例</button>
+  <button class="tab-btn" data-tab="compare">他社比較</button>
+  <button class="tab-btn" data-tab="flow">依頼の流れ</button>
+</div>
+
+<!-- メインコンテンツ -->
+<div id="main"></div>
+
+<!-- フッター -->
+<div style="padding:14px 32px;background:#fff;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:10px;color:#9aa5be;margin-top:8px">
+  <span>株式会社 GOOD VIBES AGENCY　|　Instagram複合施策 PRシミュレーション</span>
+  <span>本資料の推定数値は過去実績に基づく参考値です。効果を保証するものではありません。商品ギフティングコストは別途。</span>
+</div>
+
+<script>
+// ── データ定義 ──
+const MENU = {
+  reel: { unitCost: 70000, avgFw: 35000, fwRate: 2.0, impPerPerson: 100000 },
+  ugc:  { unitCost:  5600, avgFw:  4000, impPerPerson:  20000 },
+};
+
+const BUDGETS = {
+  500:  { reel: 2,  ugc:  64, reelCost: 140000, ugcCost: 358400  },
+  1000: { reel: 5,  ugc: 116, reelCost: 350000, ugcCost: 649600  },
+  1500: { reel: 10, ugc: 140, reelCost: 700000, ugcCost: 784000  },
+};
+
+let state = { bgt: 1000, tab: 'sim' };
+
+// ── 計算 ──
+function calc(bgt) {
+  const d = BUDGETS[bgt];
+  const totalPeople = d.reel + d.ugc;
+  const totalCost   = d.reelCost + d.ugcCost;
+  const totalImp    = d.reel * MENU.reel.impPerPerson + d.ugc * MENU.ugc.impPerPerson;
+  const cpm         = Math.round(totalCost / totalImp * 1000);
+  const reelPct     = Math.round(d.reelCost / totalCost * 100);
+  const ugcPct      = 100 - reelPct;
+  const ugcAssets   = totalPeople;
+  const costPerPerson = Math.round(totalCost / totalPeople);
+  return { ...d, totalPeople, totalCost, totalImp, cpm, reelPct, ugcPct, ugcAssets, costPerPerson };
+}
+
+const fYen  = v => `¥${(v / 10000).toFixed(1)}万`;
+const fYenK = v => `¥${v.toLocaleString()}`;
+const fImp  = v => v >= 10000 ? `${(v/10000).toFixed(0)}万` : v.toLocaleString();
+const fM    = v => v >= 10000 ? `${(v/10000).toFixed(1)}万` : v.toLocaleString();
+
+// ── タブ: シミュレーション ──
+function tSim() {
+  const b = state.bgt;
+  const c = calc(b);
+  const isMax = b === 1500;
+  const isRec = b === 1000;
+
+  return `
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">予算配分内訳</div></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-ttl">メニュー別 配分</div>
+
+        <div class="menu-row">
+          <div class="menu-left">
+            <div class="menu-dot" style="background:var(--gold2)"></div>
+            <div>
+              <div class="menu-name">① インフルエンサーリール <span class="tag tag-reel">REEL</span></div>
+              <div class="menu-detail">${c.reel}名 × ¥70,000（FW avg 35,000人・FW単価¥2）</div>
+            </div>
+          </div>
+          <div class="menu-right">
+            <div class="menu-cost">${fYenK(c.reelCost)}</div>
+            <div class="menu-pct">${c.reelPct}%</div>
+          </div>
+        </div>
+
+        <div class="menu-row">
+          <div class="menu-left">
+            <div class="menu-dot" style="background:var(--green)"></div>
+            <div>
+              <div class="menu-name">② UGC フィードカルーセル <span class="tag tag-feed">FEED</span></div>
+              <div class="menu-detail">${c.ugc}名 × ¥5,600（ナノインフルエンサー）</div>
+            </div>
+          </div>
+          <div class="menu-right">
+            <div class="menu-cost">${fYenK(c.ugcCost)}</div>
+            <div class="menu-pct">${c.ugcPct}%</div>
+          </div>
+        </div>
+
+        <div class="alloc-bar-wrap">
+          <div class="alloc-bar-a" style="width:${c.reelPct}%"></div>
+          <div class="alloc-bar-b"></div>
+        </div>
+        <div class="alloc-legend">
+          <span>① リール ${c.reelPct}%</span>
+          <span>② UGC ${c.ugcPct}%</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:2px solid var(--border)">
+          <span style="font-size:12px;color:var(--gray)">合計</span>
+          <span style="font-size:22px;font-weight:900;color:var(--navy)">${fYenK(c.totalCost)}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-ttl">ポイント</div>
+        <div class="info-box" style="margin-bottom:12px">
+          <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">
+            ${isMax ? '🔥 MAX稼働プラン — ネットワーク全力投入' : isRec ? '⭐ 推奨プラン — ROI最大化バランス型' : '✅ テスト導入プラン — リスク最小で効果検証'}
+          </p>
+          <p style="font-size:12px;color:#374151;line-height:1.9">
+            ${isMax
+              ? 'GVAナノネットワーク150名フル稼働。インフルエンサー10名のリールで認知を爆発させ、140名のUGCカルーセルでInstagram検索口コミを量産。UGC素材150点は広告素材としても転用可能。'
+              : isRec
+              ? 'インフルエンサー5名の認知リールと116名のナノUGCを組み合わせた最もROIが高い構成。広告との並走でCVRブーストに最適。継続運用で口コミが蓄積され複利的に効果が増大。'
+              : '2名のインフルエンサーリールと64名のナノUGCで、まず1ヶ月の効果を検証。コストを抑えながらリール×UGC複合設計の拡散・口コミ効果を確認できる導入パターン。'
+            }
+          </p>
+        </div>
+        <div class="warn-box">
+          📌 インフルエンサーFW数・カテゴリにより単価は変動します。FW単価¥2×平均FW35,000人での試算。<br>
+          商品ギフティングコストは別途ご負担ください。
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="cover-content">
-    <div class="cover-label">Instagram Marketing Proposal</div>
-    <h1 class="cover-title">
-      INFLUENCE<br>
-      <em>&amp; TRUST</em>
-    </h1>
-    <p class="cover-subtitle">
-      インフルエンサーリール × UGCフィード口コミ<br>
-      複合施策 — 3パターンシミュレーション
-    </p>
-    <div class="cover-stats">
-      <div class="cover-stat">
-        <div class="cover-stat-num">3,000+</div>
-        <div class="cover-stat-label">ナノインフルエンサー<br>ネットワーク規模</div>
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">主要KPI</div></div>
+    <div class="kpi-grid">
+      <div class="kpi" style="--ac:var(--navy)">
+        <div class="kpi-lbl">TOTAL 稼働人数</div>
+        <div class="kpi-val">${c.totalPeople}<small style="font-size:16px;font-weight:600">名</small>${isMax ? ' <span class="tag tag-max">MAX</span>' : ''}</div>
+        <div class="kpi-sub">① ${c.reel}名 ＋ ② ${c.ugc}名</div>
       </div>
-      <div class="cover-stat">
-        <div class="cover-stat-num">150名</div>
-        <div class="cover-stat-label">最大同時稼働人数</div>
+      <div class="kpi" style="--ac:var(--gold)">
+        <div class="kpi-lbl">推定インプレッション</div>
+        <div class="kpi-val">${fImp(c.totalImp)}<small style="font-size:16px;font-weight:600">imp</small></div>
+        <div class="kpi-sub">① ${fImp(c.reel * MENU.reel.impPerPerson)} ＋ ② ${fImp(c.ugc * MENU.ugc.impPerPerson)}</div>
       </div>
-      <div class="cover-stat">
-        <div class="cover-stat-num">×8</div>
-        <div class="cover-stat-label">フォロワー比<br>インプレッション倍率</div>
+      <div class="kpi" style="--ac:var(--green)">
+        <div class="kpi-lbl">CPM（参考）</div>
+        <div class="kpi-val">¥${c.cpm}</div>
+        <div class="kpi-sub">Meta広告 ¥500〜2,000 比</div>
       </div>
-      <div class="cover-stat">
-        <div class="cover-stat-num">¥2/FW</div>
-        <div class="cover-stat-label">インフルエンサー<br>FW単価（最安）</div>
+      <div class="kpi" style="--ac:var(--blue)">
+        <div class="kpi-lbl">UGC素材獲得数</div>
+        <div class="kpi-val">${c.ugcAssets}<small style="font-size:16px;font-weight:600">点</small></div>
+        <div class="kpi-sub">広告・EC転用可能</div>
+      </div>
+    </div>
+    <div class="kpi-grid-6" style="margin-top:12px">
+      <div class="kpi" style="--ac:var(--navy)">
+        <div class="kpi-lbl">投稿本数合計</div>
+        <div class="kpi-val">${c.totalPeople}<small style="font-size:16px;font-weight:600">本</small></div>
+        <div class="kpi-sub">リール${c.reel}本 ＋ フィード${c.ugc}本</div>
+      </div>
+      <div class="kpi" style="--ac:var(--gray)">
+        <div class="kpi-lbl">1名あたりコスト</div>
+        <div class="kpi-val">¥${c.costPerPerson.toLocaleString()}</div>
+        <div class="kpi-sub">管理費・ディレクション込み</div>
+      </div>
+      <div class="kpi" style="--ac:var(--orange)">
+        <div class="kpi-lbl">リール 推定リーチ</div>
+        <div class="kpi-val">${fImp(c.reel * MENU.reel.impPerPerson)}</div>
+        <div class="kpi-sub">${c.reel}名 × avg 100,000 imp</div>
       </div>
     </div>
   </div>
-  <div class="cover-line"></div>
-</section>
 
-<!-- ===== WHY ===== -->
-<section id="why">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">背景 / Context</div>
-      <h2 class="sec-title">なぜ今、複合施策なのか</h2>
-      <p class="sec-desc">単体施策では限界がある。「認知」と「信頼」を同時に取りにいく設計が、2026年のInstagram攻略の核心。</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-item fade-up fade-up-delay-1">
-        <div class="why-num">01</div>
-        <div class="why-icon">📉</div>
-        <div class="why-title">広告に対する信頼性の低下</div>
-        <div class="why-text">消費者の92%が企業広告より「第三者の口コミ」を信頼。フォロワーが多いインフルエンサーほど「PR投稿」と見抜かれ、購買行動に繋がりにくくなっている。</div>
-      </div>
-      <div class="why-item fade-up fade-up-delay-2">
-        <div class="why-num">02</div>
-        <div class="why-icon">🔍</div>
-        <div class="why-title">Instagramの検索エンジン化</div>
-        <div class="why-text">ユーザーが商品を「Google」でなく「Instagram」で検索する時代。フィードカルーセルのUGCが蓄積されることで、検索流入が自然発生的に増加する。</div>
-      </div>
-      <div class="why-item fade-up fade-up-delay-1">
-        <div class="why-num">03</div>
-        <div class="why-icon">🎬</div>
-        <div class="why-title">リールの発見タブ拡散力</div>
-        <div class="why-text">Instagramリールはフォロワー外への拡散が最も強い形式。インフルエンサーのリール投稿はFW数の2〜3倍以上のリーチが一般的。認知獲得の起爆剤として機能する。</div>
-      </div>
-      <div class="why-item fade-up fade-up-delay-2">
-        <div class="why-num">04</div>
-        <div class="why-icon">💡</div>
-        <div class="why-title">「認知 × 口コミ」の相乗効果</div>
-        <div class="why-text">インフルエンサーリールで認知を爆発させ、ナノUGCで「本音の口コミ」を量産する複合設計が最も高いCVRを実現。単体施策の1.5〜2倍の購買貢献が見込まれる。</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== MENU ===== -->
-<section id="menu">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">Service Menu</div>
-      <h2 class="sec-title">2つのメニュー</h2>
-      <p class="sec-desc">組み合わせることで、認知拡大と購買転換を同時に最大化する。Instagramのみでの展開。</p>
-    </div>
-    <div class="menu-grid">
-
-      <!-- MENU 1 -->
-      <div class="menu-card primary fade-up fade-up-delay-1">
-        <div class="menu-num">①</div>
-        <div class="menu-badge gold">REACH / 認知拡大</div>
-        <div class="menu-title">インフルエンサー<br>ショート動画タイアップ</div>
-        <div class="menu-subtitle">リール + ストーリーズ セット投稿 / Instagram限定</div>
-        <div class="menu-price-label">FW単価</div>
-        <div class="menu-price gold">¥2.0〜<small style="font-size:24px;color:var(--muted)">/FW</small></div>
-        <div class="menu-price-sub">最低FW: 10,000人〜 ／ 過去実績 平均FW: 35,000人</div>
-        <ul class="menu-features">
-          <li>リール投稿（60秒以内）+ ストーリーズ1枚セット</li>
-          <li>発見タブ経由でFW外へリーチ拡大</li>
-          <li>インフルエンサー選定・キャスティング込み</li>
-          <li>ステマ規制対応のPR表記ディレクション</li>
-          <li>投稿前の原稿確認・修正対応</li>
-          <li>投稿後の効果測定レポート</li>
-        </ul>
-        <div class="highlight-box" style="margin-top:24px;">
-          <div class="highlight-box-text">💡 <strong style="color:var(--gold)">市場比較：</strong>業界相場のFW単価は¥2〜5。GVAは最安水準の¥2/FWを維持しながら、ディレクションまでワンストップで対応。</div>
-        </div>
-      </div>
-
-      <!-- MENU 2 -->
-      <div class="menu-card secondary fade-up fade-up-delay-2">
-        <div class="menu-num">②</div>
-        <div class="menu-badge green">TRUST / 購買転換</div>
-        <div class="menu-title">ナノインフルエンサー<br>UGC口コミ試作</div>
-        <div class="menu-subtitle">フィード カルーセル投稿 / Instagram限定</div>
-        <div class="menu-price-label">1名あたり単価</div>
-        <div class="menu-price green">¥5,600<small style="font-size:18px;color:var(--muted)">/名</small></div>
-        <div class="menu-price-sub">フォロワー1,000〜10,000人のナノインフルエンサー ／ 全管理込み</div>
-        <ul class="menu-features">
-          <li>フィードカルーセル投稿（詳細レビュー形式）</li>
-          <li>3,000名以上のGVA独自ナノネットワークから厳選</li>
-          <li>エンゲージメント率3%以上・品質審査済みのみ採用</li>
-          <li>ステマ規制対応・PR表記ガイドライン徹底管理</li>
-          <li>検索キーワード設計でInstagram検索流入を狙う</li>
-          <li>UGC素材の二次利用（広告転用）サポート付き</li>
-        </ul>
-        <div class="highlight-box" style="margin-top:24px;border-left-color:var(--green);background:rgba(78,201,138,0.05);">
-          <div class="highlight-box-text">💡 <strong style="color:var(--green)">GVA実績：</strong>FW6,500人のナノが52,000impを獲得（×8倍）。月間107件のUGCで合計340,936impを記録。</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== SIMULATION ===== -->
-<section id="sim">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">PR Simulation</div>
-      <h2 class="sec-title">予算別シミュレーション</h2>
-      <p class="sec-desc">①インフルエンサーリール × ②UGCフィードの複合配分。最大150名のネットワークを最大化する3パターン。</p>
-    </div>
-
-    <!-- TAB NAV -->
-    <div class="sim-tab-nav fade-up">
-      <button class="sim-tab-btn active" data-tab="a">
-        50万円
-        <span class="btn-sub">PATTERN A</span>
-      </button>
-      <button class="sim-tab-btn" data-tab="b">
-        100万円 <span class="rec-pill">推奨</span>
-        <span class="btn-sub">PATTERN B</span>
-      </button>
-      <button class="sim-tab-btn" data-tab="c">
-        150万円 <span class="max-pill">MAX</span>
-        <span class="btn-sub">PATTERN C</span>
-      </button>
-    </div>
-
-    <!-- TAB PANELS -->
-    <div class="sim-panels fade-up">
-
-      <!-- PANEL A -->
-      <div class="sim-panel active" id="panel-a">
-        <div class="sim-panel-grid">
-          <div class="sim-panel-left">
-            <div class="sim-big-label">PATTERN A — 月額予算</div>
-            <div class="sim-big-budget">50<span>万円</span></div>
-
-            <div class="sim-alloc-block">
-              <div class="sim-alloc-title">予算配分</div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-gold"></div>
-                  <div>
-                    <div class="sim-alloc-name">① インフルエンサーリール</div>
-                    <div class="sim-alloc-detail">2名 × ¥70,000（FW avg 35,000人）</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥140,000</div>
-                  <div class="sim-alloc-pct">28%</div>
-                </div>
-              </div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-green"></div>
-                  <div>
-                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
-                    <div class="sim-alloc-detail">64名 × ¥5,600</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥358,400</div>
-                  <div class="sim-alloc-pct">72%</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="sim-stacked-bar">
-              <div class="sim-bar-a" style="width:28%"></div>
-              <div class="sim-bar-b"></div>
-            </div>
-            <div class="sim-bar-legend">
-              <span>① リール 28%</span><span>② UGC 72%</span>
-            </div>
-
-            <div class="sim-insight">
-              💡 <strong style="color:var(--gold)">少額テストに最適。</strong>ナノUGCで口コミを量産しながら、インフルエンサー2名の認知リールで拡散。まず1ヶ月の効果を検証したいブランドにおすすめ。
-            </div>
-          </div>
-
-          <div class="sim-panel-right">
-            <div class="sim-kpi-grid">
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">TOTAL 人数</div>
-                <div class="sim-kpi-val white">66<small style="font-size:18px">名</small></div>
-                <div class="sim-kpi-sub">① 2名 ＋ ② 64名</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">投稿本数</div>
-                <div class="sim-kpi-val white">66<small style="font-size:18px">本</small></div>
-                <div class="sim-kpi-sub">リール2本 ＋ フィード64本</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">推定インプレッション</div>
-                <div class="sim-kpi-val gold">148<small style="font-size:18px">万</small></div>
-                <div class="sim-kpi-sub">① 200K ＋ ② 1,280K</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">CPM 目安</div>
-                <div class="sim-kpi-val green">¥338</div>
-                <div class="sim-kpi-sub">Meta広告比 最大 1/5</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">UGC素材数</div>
-                <div class="sim-kpi-val white">66<small style="font-size:18px">素材</small></div>
-                <div class="sim-kpi-sub">広告転用可能</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">1名あたりコスト</div>
-                <div class="sim-kpi-val white">¥7,552</div>
-                <div class="sim-kpi-sub">管理費込み参考値</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANEL B -->
-      <div class="sim-panel" id="panel-b">
-        <div class="sim-panel-grid">
-          <div class="sim-panel-left">
-            <div class="sim-big-label">PATTERN B — 月額予算（推奨）</div>
-            <div class="sim-big-budget" style="color:var(--gold)">100<span>万円</span></div>
-
-            <div class="sim-alloc-block">
-              <div class="sim-alloc-title">予算配分</div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-gold"></div>
-                  <div>
-                    <div class="sim-alloc-name">① インフルエンサーリール</div>
-                    <div class="sim-alloc-detail">5名 × ¥70,000（FW avg 35,000人）</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥350,000</div>
-                  <div class="sim-alloc-pct">35%</div>
-                </div>
-              </div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-green"></div>
-                  <div>
-                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
-                    <div class="sim-alloc-detail">116名 × ¥5,600</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥649,600</div>
-                  <div class="sim-alloc-pct">65%</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="sim-stacked-bar">
-              <div class="sim-bar-a" style="width:35%"></div>
-              <div class="sim-bar-b"></div>
-            </div>
-            <div class="sim-bar-legend">
-              <span>① リール 35%</span><span>② UGC 65%</span>
-            </div>
-
-            <div class="sim-insight">
-              💡 <strong style="color:var(--gold)">バランス型・最もROIが高い。</strong>インフルエンサー5名のリールで認知を爆発させながら、116名のナノUGCで検索口コミを蓄積。広告との並走で購買転換率を最大化。
-            </div>
-          </div>
-
-          <div class="sim-panel-right">
-            <div class="sim-kpi-grid">
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">TOTAL 人数</div>
-                <div class="sim-kpi-val gold">121<small style="font-size:18px">名</small></div>
-                <div class="sim-kpi-sub">① 5名 ＋ ② 116名</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">投稿本数</div>
-                <div class="sim-kpi-val gold">121<small style="font-size:18px">本</small></div>
-                <div class="sim-kpi-sub">リール5本 ＋ フィード116本</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">推定インプレッション</div>
-                <div class="sim-kpi-val gold">282<small style="font-size:18px">万</small></div>
-                <div class="sim-kpi-sub">① 500K ＋ ② 2,320K</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">CPM 目安</div>
-                <div class="sim-kpi-val green">¥355</div>
-                <div class="sim-kpi-sub">Meta広告比 最大 1/4</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">UGC素材数</div>
-                <div class="sim-kpi-val gold">121<small style="font-size:18px">素材</small></div>
-                <div class="sim-kpi-sub">広告転用可能</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">1名あたりコスト</div>
-                <div class="sim-kpi-val white">¥8,264</div>
-                <div class="sim-kpi-sub">管理費込み参考値</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PANEL C -->
-      <div class="sim-panel" id="panel-c">
-        <div class="sim-panel-grid">
-          <div class="sim-panel-left">
-            <div class="sim-big-label">PATTERN C — 月額予算（フル稼働）</div>
-            <div class="sim-big-budget" style="color:var(--coral)">150<span>万円</span></div>
-
-            <div class="sim-alloc-block">
-              <div class="sim-alloc-title">予算配分</div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-gold"></div>
-                  <div>
-                    <div class="sim-alloc-name">① インフルエンサーリール</div>
-                    <div class="sim-alloc-detail">10名 × ¥70,000（FW avg 35,000人）</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥700,000</div>
-                  <div class="sim-alloc-pct">47%</div>
-                </div>
-              </div>
-              <div class="sim-alloc-item">
-                <div class="sim-alloc-left">
-                  <div class="sim-alloc-dot dot-green"></div>
-                  <div>
-                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
-                    <div class="sim-alloc-detail">140名 × ¥5,600</div>
-                  </div>
-                </div>
-                <div class="sim-alloc-right">
-                  <div class="sim-alloc-cost">¥784,000</div>
-                  <div class="sim-alloc-pct">53%</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="sim-stacked-bar">
-              <div class="sim-bar-a" style="width:47%"></div>
-              <div class="sim-bar-b"></div>
-            </div>
-            <div class="sim-bar-legend">
-              <span>① リール 47%</span><span>② UGC 53%</span>
-            </div>
-
-            <div class="sim-insight coral-insight">
-              🔥 <strong style="color:var(--coral)">GVAネットワーク最大稼働。</strong>ナノ140名＋インフルエンサー10名で計150名同時稼働。1ヶ月で380万インプレッションと150点のUGC素材を獲得。広告素材として転用すれば更なる拡大も可能。
-            </div>
-          </div>
-
-          <div class="sim-panel-right">
-            <div class="sim-kpi-grid">
-              <div class="sim-kpi" style="border-color:rgba(255,96,64,0.2);background:rgba(255,96,64,0.04)">
-                <div class="sim-kpi-label">TOTAL 人数</div>
-                <div class="sim-kpi-val coral">150<small style="font-size:18px">名</small></div>
-                <div class="sim-kpi-sub">① 10名 ＋ ② 140名 — MAX</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">投稿本数</div>
-                <div class="sim-kpi-val coral">150<small style="font-size:18px">本</small></div>
-                <div class="sim-kpi-sub">リール10本 ＋ フィード140本</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">推定インプレッション</div>
-                <div class="sim-kpi-val gold">380<small style="font-size:18px">万</small></div>
-                <div class="sim-kpi-sub">① 1,000K ＋ ② 2,800K</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">CPM 目安</div>
-                <div class="sim-kpi-val green">¥395</div>
-                <div class="sim-kpi-sub">Meta広告比 最大 1/3</div>
-              </div>
-              <div class="sim-kpi" style="border-color:rgba(78,201,138,0.2);background:rgba(78,201,138,0.04)">
-                <div class="sim-kpi-label">UGC素材数</div>
-                <div class="sim-kpi-val coral">150<small style="font-size:18px">素材</small></div>
-                <div class="sim-kpi-sub">広告転用可能・最大数</div>
-              </div>
-              <div class="sim-kpi">
-                <div class="sim-kpi-label">1名あたりコスト</div>
-                <div class="sim-kpi-val white">¥9,893</div>
-                <div class="sim-kpi-sub">管理費込み参考値</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /sim-panels -->
-
-    <!-- DETAIL TABLE -->
-    <div class="fade-up" style="margin-top:48px;">
-      <div class="sec-label" style="margin-bottom:24px;">詳細内訳</div>
-      <table class="sim-detail-table">
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">3パターン 早見表</div></div>
+    <div class="tbl-wrap">
+      <table class="dtbl">
         <thead>
           <tr>
-            <th></th>
-            <th>①インフルエンサー人数</th>
+            <th class="L" style="min-width:100px">プラン</th>
+            <th>①リール人数</th>
             <th>②UGC人数</th>
             <th>合計人数</th>
             <th>①費用</th>
             <th>②費用</th>
+            <th>合計費用</th>
             <th>推定imp</th>
-            <th>CPM目安</th>
+            <th>CPM</th>
+            <th>UGC素材</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong style="color:var(--text)">50万円</strong></td>
-            <td><span class="tag-reel">リール</span> 2名</td>
-            <td><span class="tag-feed">フィード</span> 64名</td>
-            <td>66名</td>
-            <td style="color:var(--gold)">¥140,000</td>
-            <td style="color:var(--green)">¥358,400</td>
-            <td>148万</td>
-            <td>¥338</td>
-          </tr>
-          <tr>
-            <td><strong style="color:var(--gold)">100万円 ★</strong></td>
-            <td><span class="tag-reel">リール</span> 5名</td>
-            <td><span class="tag-feed">フィード</span> 116名</td>
-            <td>121名</td>
-            <td style="color:var(--gold)">¥350,000</td>
-            <td style="color:var(--green)">¥649,600</td>
-            <td>282万</td>
-            <td>¥355</td>
-          </tr>
-          <tr>
-            <td><strong style="color:var(--coral)">150万円 MAX</strong></td>
-            <td><span class="tag-reel">リール</span> 10名</td>
-            <td><span class="tag-feed">フィード</span> 140名</td>
-            <td>150名</td>
-            <td style="color:var(--gold)">¥700,000</td>
-            <td style="color:var(--green)">¥784,000</td>
-            <td>380万</td>
-            <td>¥395</td>
-          </tr>
+          ${[500, 1000, 1500].map(bg => {
+            const cc = calc(bg);
+            const isThis = bg === b;
+            return `<tr style="${isThis ? 'background:#fffbeb!important' : ''}">
+              <td class="L" style="font-weight:700;color:var(--navy)">
+                ¥${bg/10}万円
+                ${bg === 1000 ? '<span class="tag tag-rec" style="margin-left:4px">推奨</span>' : ''}
+                ${bg === 1500 ? '<span class="tag tag-max" style="margin-left:4px">MAX</span>' : ''}
+                ${isThis ? '　◀' : ''}
+              </td>
+              <td>${cc.reel}名</td>
+              <td>${cc.ugc}名</td>
+              <td style="font-weight:700">${cc.totalPeople}名</td>
+              <td>${fYenK(cc.reelCost)}</td>
+              <td>${fYenK(cc.ugcCost)}</td>
+              <td style="font-weight:700">${fYenK(cc.totalCost)}</td>
+              <td style="font-weight:700;color:var(--gold)">${fImp(cc.totalImp)}</td>
+              <td>¥${cc.cpm}</td>
+              <td>${cc.ugcAssets}点</td>
+            </tr>`;
+          }).join('')}
         </tbody>
-        <tfoot>
-          <tr class="total-row">
-            <td colspan="7">※ インフルエンサーFW単価¥2/FW・平均FW数35,000人で試算。UGC単価¥5,600/名。推定インプレッションは過去実績に基づく参考値（実績保証ではない）。商品ギフティング費用は別途。</td>
-            <td></td>
-          </tr>
-        </tfoot>
       </table>
     </div>
+  </div>`;
+}
 
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== RESULTS ===== -->
-<section id="results">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">Track Record</div>
-      <h2 class="sec-title">GVA実績</h2>
-      <p class="sec-desc">数字が語る。GVAのナノインフルエンサーネットワークが生んだ実際の成果。</p>
-    </div>
-    <div class="results-grid">
-      <div class="result-card fade-up fade-up-delay-1">
-        <div class="result-type">CASE STUDY — 大手アパレルブランド A社 ／ 継続稼働中</div>
-        <div class="result-title">UGC×インスタグラム<br>口コミ量産施策</div>
-        <div class="result-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働</div>
-        <div class="result-nums">
-          <div class="result-num">
-            <div class="result-num-val">340,936</div>
-            <div class="result-num-label">月間合計<br>インプレッション</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">107件</div>
-            <div class="result-num-label">月間<br>UGC獲得数</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">52,000</div>
-            <div class="result-num-label">最高imp<br>（FW6,500人）</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">×8倍</div>
-            <div class="result-num-label">フォロワー比<br>インプレッション倍率</div>
-          </div>
-        </div>
-        <div class="highlight-box" style="margin-top:28px;">
-          <div class="highlight-box-text">広告配信との並走で「広告っぽく見えない本物の口コミ」としてCVRブーストに貢献。月次で媒体ミックスを最適化できる柔軟性を高く評価。</div>
-        </div>
+// ── タブ: メニュー詳細 ──
+function tMenu() {
+  return `
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">① インフルエンサーショート動画タイアップ</div></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-ttl">概要</div>
+        <table class="dtbl">
+          <tbody>
+            <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>リール（60秒以内）＋ ストーリーズ 1枚セット</strong></td></tr>
+            <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
+            <tr><td class="L" style="color:var(--gray)">FW単価</td><td class="L"><strong class="pos">¥2.0〜/FW</strong>（業界最安水準）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">最低FW数</td><td class="L">10,000人〜</td></tr>
+            <tr><td class="L" style="color:var(--gray)">過去実績 avg FW</td><td class="L"><strong>35,000人</strong>（avg費用 ¥70,000/名）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">インフルエンサー選定</td><td class="L">GVAキャスティング込み</td></tr>
+            <tr><td class="L" style="color:var(--gray)">PR表記対応</td><td class="L">ステマ規制対応・全投稿管理</td></tr>
+            <tr><td class="L" style="color:var(--gray)">原稿確認</td><td class="L">公開前に全文確認・修正対応</td></tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="result-card fade-up fade-up-delay-2">
-        <div class="result-type">CASE STUDY — 大手ヘアケアブランド B社 ／ リブランディング成功</div>
-        <div class="result-title">若年層離れを逆転<br>ブランドシェア再獲得</div>
-        <div class="result-sub">業種：ヘアケア ／ 施策：Instagram × TikTok 長期横断UGC（参考事例）</div>
-        <div class="result-nums">
-          <div class="result-num">
-            <div class="result-num-val">×60</div>
-            <div class="result-num-label">X発話量<br>前年比</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">×4</div>
-            <div class="result-num-label">Instagram発話量<br>前年比</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">1.2倍</div>
-            <div class="result-num-label">売上伸長<br>施策翌月比</div>
-          </div>
-          <div class="result-num">
-            <div class="result-num-val">1位</div>
-            <div class="result-num-label">10〜20代<br>ブランドシェア</div>
-          </div>
-        </div>
-        <div class="highlight-box" style="margin-top:28px;">
-          <div class="highlight-box-text">49年続く老舗ブランドの若年層認知を劇的に刷新。ナノUGC施策が口コミ量産から購買転換まで一気通貫で機能した実証事例。</div>
+      <div class="card">
+        <div class="card-ttl">費用早見（FW数別）</div>
+        <table class="dtbl">
+          <thead>
+            <tr><th class="L">FW数</th><th>単価（FW×¥2）</th><th>推定imp</th></tr>
+          </thead>
+          <tbody>
+            ${[[10000,'¥20,000','30万'],[20000,'¥40,000','50万'],[35000,'¥70,000','100万'],[50000,'¥100,000','150万'],[100000,'¥200,000','250万以上']].map(([fw,cost,imp])=>`
+            <tr>
+              <td class="L">${fw.toLocaleString()}人</td>
+              <td><strong>${cost}</strong></td>
+              <td style="color:var(--gold)">${imp}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <div class="warn-box" style="margin-top:12px">
+          ※ リールは発見タブ経由でFW外にも拡散。<br>推定impはFW数の2〜3倍を目安としています。
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- ===== COMPARISON ===== -->
-<section id="compare">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">Competitive Advantage</div>
-      <h2 class="sec-title">他社との比較</h2>
-      <p class="sec-desc">同等価格帯のインフルエンサー会社・UGCプラットフォームとGVAの違い。</p>
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">② ナノインフルエンサー UGC口コミ（フィードカルーセル）</div></div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-ttl">概要</div>
+        <table class="dtbl">
+          <tbody>
+            <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>フィードカルーセル投稿</strong>（詳細レビュー・検索対策）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
+            <tr><td class="L" style="color:var(--gray)">単価</td><td class="L"><strong class="pos">¥5,600/名</strong>（全管理込み）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">ネットワーク規模</td><td class="L"><strong>3,000名以上</strong>（GVA独自・審査済み）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">対象FW数</td><td class="L">1,000〜10,000人（ナノ）</td></tr>
+            <tr><td class="L" style="color:var(--gray)">選定基準</td><td class="L">ENG率3%以上・親和性・品質・コンプライアンス</td></tr>
+            <tr><td class="L" style="color:var(--gray)">PR表記</td><td class="L">ステマ規制対応・徹底管理</td></tr>
+            <tr><td class="L" style="color:var(--gray)">UGC二次利用</td><td class="L">広告転用許諾取得サポート込み</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-ttl">人数別 費用目安</div>
+        <table class="dtbl">
+          <thead>
+            <tr><th class="L">人数</th><th>費用</th><th>推定imp</th><th>UGC素材</th></tr>
+          </thead>
+          <tbody>
+            ${[[30,'¥168,000','60万','30点'],[50,'¥280,000','100万','50点'],[64,'¥358,400','128万','64点'],[100,'¥560,000','200万','100点'],[116,'¥649,600','232万','116点'],[140,'¥784,000','280万','140点']].map(([n,cost,imp,asset])=>`
+            <tr>
+              <td class="L">${n}名</td>
+              <td><strong>${cost}</strong></td>
+              <td style="color:var(--gold)">${imp}</td>
+              <td style="color:var(--green)">${asset}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <div class="green-box" style="margin-top:12px">
+          ✅ GVA実績：FW6,500人のナノが52,000imp達成（×8倍）。<br>
+          月107件UGCで合計340,936impを記録。
+        </div>
+      </div>
     </div>
-    <div class="fade-up">
-      <table class="compare-table">
+  </div>`;
+}
+
+// ── タブ: 実績 ──
+function tResult() {
+  return `
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">GVA支援 実績事例</div></div>
+    <div class="g2">
+      <div class="case-card" style="--ac:var(--navy)">
+        <div class="case-type">CASE STUDY 01 — 大手アパレルブランド A社 ／ 継続稼働中</div>
+        <div class="case-ttl">UGC×Instagram口コミ量産施策</div>
+        <div class="case-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働</div>
+        <div class="case-nums">
+          <div><div class="case-num-val">340,936</div><div class="case-num-lbl">月間合計インプレッション</div></div>
+          <div><div class="case-num-val">107件</div><div class="case-num-lbl">月間UGC獲得数</div></div>
+          <div><div class="case-num-val">52,000</div><div class="case-num-lbl">最高imp（FW6,500人）</div></div>
+          <div><div class="case-num-val">×8倍</div><div class="case-num-lbl">フォロワー比インプレッション</div></div>
+        </div>
+        <div class="info-box" style="margin-top:16px">
+          <p style="font-size:12px;color:#374151;line-height:1.9">広告配信との並走で「広告っぽく見えない本物の口コミ」としてCVRブーストに貢献。月次で媒体ミックスを最適化できる柔軟性を高く評価いただいています。</p>
+        </div>
+      </div>
+      <div class="case-card" style="--ac:var(--green)">
+        <div class="case-type">CASE STUDY 02 — 大手ヘアケアブランド B社 ／ リブランディング成功</div>
+        <div class="case-ttl">若年層離れを逆転・ブランドシェア再獲得</div>
+        <div class="case-sub">業種：ヘアケア ／ 施策：Instagram × TikTok 長期横断UGC（参考事例）</div>
+        <div class="case-nums">
+          <div><div class="case-num-val" style="color:var(--green)">×60</div><div class="case-num-lbl">X発話量（前年比）</div></div>
+          <div><div class="case-num-val" style="color:var(--green)">×4</div><div class="case-num-lbl">Instagram発話量（前年比）</div></div>
+          <div><div class="case-num-val" style="color:var(--green)">1.2倍</div><div class="case-num-lbl">売上伸長（施策翌月比）</div></div>
+          <div><div class="case-num-val" style="color:var(--green)">1位</div><div class="case-num-lbl">10〜20代ブランドシェア</div></div>
+        </div>
+        <div class="info-box" style="margin-top:16px;border-left-color:var(--green);background:#f0fdf4">
+          <p style="font-size:12px;color:#374151;line-height:1.9">49年続く老舗ブランドの若年層認知を劇的に刷新。ナノUGCによる口コミ量産から購買転換まで一気通貫で機能した実証事例。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">GVAの強み</div></div>
+    <div class="g3">
+      ${[
+        ['3,000+','ナノネットワーク規模','ENG率3%以上・品質審査・コンプライアンスの4軸で厳選。「売れる口コミ」を生む人材だけを採用。','var(--navy)'],
+        ['¥2/FW','業界最安水準の単価','業界相場¥2〜5/FWに対し、GVAは最安¥2.0/FW。全ディレクション・PR表記管理込みでこの価格。','var(--gold)'],
+        ['0件','ステマ規制トラブル実績','2023年規制施行以来ゼロ件。全投稿でPR表記を徹底管理しクライアントの法的リスクを排除。','var(--green)'],
+        ['150名','最大同時稼働人数','リール×UGC複合で業界最大クラスの同時稼働数を実現。単体施策では不可能な口コミ量産が可能。','var(--blue)'],
+        ['月次','効果測定レポート','imp・リーチ・ENG・保存数を月次で可視化。次回施策への改善提案もセットで提供。','var(--orange)'],
+        ['込み','UGC二次利用サポート','獲得した画像・動画素材のMeta/Google広告転用許諾取得もGVAが代行。素材が広告素材に変わる。','var(--navy)'],
+      ].map(([num,ttl,txt,ac])=>`
+      <div class="card" style="border-top:3px solid ${ac}">
+        <div style="font-size:28px;font-weight:900;color:${ac};margin-bottom:8px">${num}</div>
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">${ttl}</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.85">${txt}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── タブ: 他社比較 ──
+function tCompare() {
+  const rows = [
+    ['インフルエンサーFW単価','¥2〜5/FW','非対応','¥2.0〜/FW（最安水準）'],
+    ['UGC口コミ単価','非対応・別途手配','¥5,000〜15,000/名','¥5,600/名（全管理込み）'],
+    ['ナノネットワーク規模','数百名程度','マッチングのみ','3,000名以上（審査済み）'],
+    ['最大同時稼働人数','30名程度','人数制限あり','150名（複合設計）'],
+    ['ステマ規制管理','△ 自社対応必要','△ 確認なし','check 全投稿で徹底管理'],
+    ['投稿前の原稿確認','cross 不可の場合多','cross 自動化のみ','check 全投稿対応'],
+    ['UGC素材の広告転用','cross 別途費用','△ 別途費用','check 込み・許諾取得対応'],
+    ['月次レポート提供','△ 有料オプション','△ 自動のみ','check 詳細分析込み'],
+    ['リール×UGC複合設計','cross 非対応','cross 非対応','check ワンストップ設計'],
+  ];
+  return `
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">競合・他社との比較</div></div>
+    <div class="tbl-wrap">
+      <table class="cmp">
         <thead>
           <tr>
-            <th style="text-align:left">比較ポイント</th>
-            <th>一般インフルエンサー会社</th>
-            <th>UGCプラットフォーム</th>
-            <th class="highlight-col">
-              <div class="compare-gva-header">GOOD VIBES AGENCY</div>
-            </th>
+            <th class="L" style="min-width:180px">比較ポイント</th>
+            <th style="min-width:160px">一般インフルエンサー会社</th>
+            <th style="min-width:160px">UGCプラットフォーム</th>
+            <th class="hl" style="min-width:180px">GOOD VIBES AGENCY</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>インフルエンサーFW単価</td>
-            <td>¥2〜5/FW</td>
-            <td>非対応</td>
-            <td class="highlight-col">¥2.0〜/FW（最安水準）</td>
-          </tr>
-          <tr>
-            <td>UGC口コミ単価</td>
-            <td>非対応・別途手配</td>
-            <td>¥5,000〜15,000/名</td>
-            <td class="highlight-col">¥5,600/名（全管理込み）</td>
-          </tr>
-          <tr>
-            <td>ナノインフルエンサー<br>ネットワーク規模</td>
-            <td>数百名程度</td>
-            <td>マッチングのみ</td>
-            <td class="highlight-col">3,000名以上（審査済み）</td>
-          </tr>
-          <tr>
-            <td>最大同時稼働人数</td>
-            <td>〜30名程度</td>
-            <td>人数制限あり</td>
-            <td class="highlight-col">150名（リール×UGC複合）</td>
-          </tr>
-          <tr>
-            <td>ステマ規制対応<br>PR表記管理</td>
-            <td class="cross">△ 自社対応必要</td>
-            <td class="cross">△ 確認なし</td>
-            <td class="highlight-col"><span class="check">✓</span> 全投稿で徹底管理</td>
-          </tr>
-          <tr>
-            <td>投稿前の原稿確認</td>
-            <td class="cross">✗ 不可の場合多</td>
-            <td class="cross">✗ 自動化</td>
-            <td class="highlight-col"><span class="check">✓</span> 全投稿対応</td>
-          </tr>
-          <tr>
-            <td>UGC素材の二次利用<br>（広告転用）サポート</td>
-            <td class="cross">✗ 別途費用</td>
-            <td class="cross">△ 別途費用</td>
-            <td class="highlight-col"><span class="check">✓</span> 込み・許諾取得対応</td>
-          </tr>
-          <tr>
-            <td>月次レポート提供</td>
-            <td class="cross">△ 有料オプション</td>
-            <td class="cross">△ 自動レポートのみ</td>
-            <td class="highlight-col"><span class="check">✓</span> 詳細分析込み</td>
-          </tr>
-          <tr>
-            <td>リール×UGC複合設計</td>
-            <td class="cross">✗ 非対応</td>
-            <td class="cross">✗ 非対応</td>
-            <td class="highlight-col"><span class="check">✓</span> ワンストップ設計</td>
-          </tr>
+          ${rows.map(([item, a, b, c]) => {
+            const fmt = v => {
+              if (v.startsWith('check')) return `<span class="check">✓</span> ${v.slice(5)}`;
+              if (v.startsWith('cross')) return `<span class="cross">✗</span>${v.slice(5)}`;
+              return v;
+            };
+            return `<tr>
+              <td class="L">${item}</td>
+              <td>${fmt(a)}</td>
+              <td>${fmt(b)}</td>
+              <td class="hl">${fmt(c)}</td>
+            </tr>`;
+          }).join('')}
         </tbody>
       </table>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== STRENGTHS ===== -->
-<section id="strengths">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">Why GVA</div>
-      <h2 class="sec-title">GVAを選ぶ理由</h2>
+    <div class="warn-box" style="margin-top:16px">
+      ※ 他社情報は公開情報に基づく一般的な相場感です。サービス内容は各社により異なります。
     </div>
-    <div class="strength-grid">
-      <div class="strength-item fade-up fade-up-delay-1">
-        <div class="strength-icon">🌐</div>
-        <div class="strength-num">3,000+</div>
-        <div class="strength-title">圧倒的なナノネットワーク</div>
-        <div class="strength-text">エンゲージメント率3%以上・ターゲット親和性・コンテンツ品質・コンプライアンスの4軸で審査済み。「売れる口コミ」を生む人材だけを厳選。</div>
-      </div>
-      <div class="strength-item fade-up fade-up-delay-2">
-        <div class="strength-icon">⚡</div>
-        <div class="strength-num">100+</div>
-        <div class="strength-title">豊富なPR実績</div>
-        <div class="strength-text">大手アパレル・ヘアケア・コスメ・食品など多ジャンルでの施策実績。データに基づいた効果設計と媒体ミックス最適化を月次で実施。</div>
-      </div>
-      <div class="strength-item fade-up fade-up-delay-3">
-        <div class="strength-icon">🛡</div>
-        <div class="strength-num">0件</div>
-        <div class="strength-title">ステマ規制トラブル実績</div>
-        <div class="strength-text">2023年規制施行以来、全施策でPR表記を徹底。ナノインフルエンサーへのガイドライン教育・確認・管理まで一括対応でクライアントの負担ゼロ。</div>
-      </div>
-      <div class="strength-item fade-up fade-up-delay-1">
-        <div class="strength-icon">🔁</div>
-        <div class="strength-title">UGC素材の二次活用</div>
-        <div class="strength-text">獲得したUGC素材（画像・動画）をMeta広告・Google広告・自社ECサイトへ転用可能。許諾取得もGVAが代行。「口コミ」を「広告素材」に変換してROIを最大化。</div>
-      </div>
-      <div class="strength-item fade-up fade-up-delay-2">
-        <div class="strength-icon">📊</div>
-        <div class="strength-title">データドリブンな運用</div>
-        <div class="strength-text">投稿後のインプレッション・リーチ・エンゲージメント・保存数を月次でレポート提供。次回施策への改善提案もセットで実施。KPIの透明化で費用対効果を可視化。</div>
-      </div>
-      <div class="strength-item fade-up fade-up-delay-3">
-        <div class="strength-icon">🎯</div>
-        <div class="strength-title">リール×UGC複合設計</div>
-        <div class="strength-text">インフルエンサーリールで「認知の爆発」、ナノUGCフィードで「検索口コミの蓄積」を同時設計。1施策で購買ファネルの上から下まで一気通貫でカバー。</div>
+  </div>`;
+}
+
+// ── タブ: フロー ──
+function tFlow() {
+  const steps = [
+    ['01','無料ヒアリング','商品・ターゲット・予算感をオンラインで','30分'],
+    ['02','選定・提案','最適なキャスティングと施策プランを提案','3営業日以内'],
+    ['03','投稿設計・手配','PR表記対応・原稿確認・スケジュール管理','全て込み'],
+    ['04','拡散・モニタリング','投稿後のENG・impをリアルタイム追跡','常時監視'],
+    ['05','効果測定・改善','月次レポートで可視化・次回施策提案','月次'],
+  ];
+  return `
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">依頼から稼働まで — 5ステップ</div></div>
+    <div class="card" style="margin-bottom:24px">
+      <div class="flow-row">
+        ${steps.map(([no,ttl,txt,time])=>`
+        <div class="flow-step">
+          <div class="flow-no">${no}</div>
+          <div class="flow-ttl">${ttl}</div>
+          <div class="flow-txt">${txt}</div>
+          <div class="flow-time">${time}</div>
+        </div>`).join('')}
       </div>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== FLOW ===== -->
-<section id="flow">
-  <div class="container">
-    <div class="sec-header fade-up">
-      <div class="sec-label">Workflow</div>
-      <h2 class="sec-title">依頼から稼働まで</h2>
-      <p class="sec-desc">GVAがワンストップで対応。クライアントの負担はほぼゼロ。</p>
-    </div>
-    <div class="flow-steps fade-up">
-      <div class="flow-step">
-        <div class="flow-dot">01</div>
-        <div class="flow-title">無料ヒアリング</div>
-        <div class="flow-text">商品・ターゲット・予算感をオンラインで</div>
-        <div class="flow-time">30分</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-dot">02</div>
-        <div class="flow-title">選定・提案</div>
-        <div class="flow-text">最適なキャスティングと施策プランを提案</div>
-        <div class="flow-time">3営業日以内</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-dot">03</div>
-        <div class="flow-title">投稿設計・手配</div>
-        <div class="flow-text">PR表記対応・原稿確認・スケジュール管理</div>
-        <div class="flow-time">全て込み</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-dot">04</div>
-        <div class="flow-title">拡散・モニタリング</div>
-        <div class="flow-text">投稿後のエンゲージメントをリアルタイム追跡</div>
-        <div class="flow-time">常時監視</div>
-      </div>
-      <div class="flow-step">
-        <div class="flow-dot">05</div>
-        <div class="flow-title">効果測定・改善</div>
-        <div class="flow-text">月次レポートで可視化・次回施策提案</div>
-        <div class="flow-time">月次</div>
-      </div>
+    <div class="info-box">
+      <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">GVAがワンストップで対応。クライアントの負担はほぼゼロ。</p>
+      <p style="font-size:12px;color:#374151;line-height:1.9">
+        ・ナノインフルエンサー選定・キャスティング（3,000名以上から厳選）<br>
+        ・投稿設計・原稿ディレクション（ステマ規制対応・PR表記遵守）<br>
+        ・スケジュール・納品物管理（投稿日時・内容確認・修正対応）<br>
+        ・効果測定・レポーティング（インプレッション・ENG可視化）<br>
+        ・UGC二次利用サポート（許諾取得・広告素材転用支援）
+      </p>
     </div>
   </div>
-</section>
 
-<!-- ===== CTA ===== -->
-<section id="cta">
-  <div class="container">
-    <div class="cta-label fade-up">NEXT STEP</div>
-    <h2 class="cta-title fade-up">
-      MAKE THE<br>
-      <em>FIRST MOVE</em>
-    </h2>
-    <p class="cta-sub fade-up">まずは30分の無料相談から。費用感だけでもOKです。</p>
-    <a href="mailto:info@goodvibesagency.tokyo?subject=【Instagram複合施策】ご相談" class="cta-btn fade-up">
-      <span>FREE CONSULTATION →</span>
-    </a>
-    <div class="cta-contacts fade-up">
-      <div class="cta-contact-item">
-        EMAIL
-        <strong>info@goodvibesagency.tokyo</strong>
+  <div class="section">
+    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">お問い合わせ</div></div>
+    <div class="g2">
+      <div class="card" style="border-top:3px solid var(--navy)">
+        <div class="card-ttl">GOOD VIBES AGENCY</div>
+        <table class="dtbl">
+          <tbody>
+            <tr><td class="L" style="color:var(--gray)">メール</td><td class="L"><strong>info@goodvibesagency.tokyo</strong></td></tr>
+            <tr><td class="L" style="color:var(--gray)">Web</td><td class="L">goodvibesagency.tokyo</td></tr>
+            <tr><td class="L" style="color:var(--gray)">返信速度</td><td class="L">翌営業日以内</td></tr>
+            <tr><td class="L" style="color:var(--gray)">初回相談</td><td class="L"><strong class="pos">無料（30分）</strong></td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="cta-contact-item">
-        WEB
-        <strong>goodvibesagency.tokyo</strong>
-      </div>
-      <div class="cta-contact-item">
-        RESPONSE
-        <strong>翌営業日以内</strong>
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <div class="card-ttl">よくある質問</div>
+        <div style="font-size:12px;line-height:1.95;color:#374151">
+          <p style="font-weight:700;color:var(--navy)">Q. 最低何ヶ月から依頼できますか？</p>
+          <p style="color:var(--gray);margin-bottom:10px">1ヶ月から。効果実感には3ヶ月以上の継続を推奨しています。</p>
+          <p style="font-weight:700;color:var(--navy)">Q. 投稿内容の確認・修正はできますか？</p>
+          <p style="color:var(--gray);margin-bottom:10px">はい、全投稿を公開前にご確認いただけます。</p>
+          <p style="font-weight:700;color:var(--navy)">Q. GVAのタレントと組み合わせられますか？</p>
+          <p style="color:var(--gray)">はい、GVA所属タレント（9名）との複合施策も提案できます。</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </div>`;
+}
 
-<!-- ===== FOOTER ===== -->
-<footer>
-  <div class="footer-logo">GOOD VIBES AGENCY</div>
-  <div class="footer-note">
-    本資料の数値は過去実績に基づく参考値であり、効果を保証するものではありません。<br>
-    商品ギフティングコストは別途ご負担ください。インフルエンサー単価はFW数・カテゴリにより変動します。<br>
-    © 2026 GOOD VIBES AGENCY All Rights Reserved.
-  </div>
-</footer>
+// ── 描画 ──
+function render() {
+  const main = document.getElementById('main');
+  const fns = { sim: tSim, menu: tMenu, result: tResult, compare: tCompare, flow: tFlow };
+  main.innerHTML = (fns[state.tab] || tSim)();
+}
 
-<script>
-  // Intersection Observer for fade-up animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+function updateBgtSummary() {
+  const c = calc(state.bgt);
+  const el = document.getElementById('bgt-summary');
+  if (el) {
+    el.innerHTML = `選択中：<strong>¥${state.bgt/10}万円</strong>　合計 <strong>${c.totalPeople}名</strong>　推定 <strong>${fImp(c.totalImp)}imp</strong>`;
+  }
+}
 
-  // Tab switching
-  const tabBtns = document.querySelectorAll('.sim-tab-btn');
-  const panels  = document.querySelectorAll('.sim-panel');
+function init() {
+  // 日付
+  const d = new Date();
+  const fmt = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+  document.getElementById('hdr-date').textContent = fmt;
 
-  tabBtns.forEach(btn => {
+  // 予算ボタン
+  document.querySelectorAll('.bgt-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-
-      tabBtns.forEach(b => b.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-
-      btn.classList.add('active');
-      document.getElementById('panel-' + target).classList.add('active');
+      state.bgt = +btn.dataset.bgt;
+      document.querySelectorAll('.bgt-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      updateBgtSummary();
+      if (state.tab === 'sim') render();
     });
+    if (+btn.dataset.bgt === state.bgt) btn.classList.add('on');
   });
-</script>
 
+  // タブ
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      render();
+    });
+    if (btn.dataset.tab === state.tab) btn.classList.add('on');
+  });
+
+  updateBgtSummary();
+  render();
+}
+
+init();
+</script>
 </body>
 </html>
