@@ -374,12 +374,210 @@
 
     /* ====== SIMULATION SECTION ====== */
     #sim { background: var(--bg); }
-    .sim-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 40px;
+
+    /* Tab buttons */
+    .sim-tab-nav {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      border: 1px solid var(--border);
+      overflow: hidden;
     }
+    .sim-tab-btn {
+      flex: 1;
+      padding: 22px 20px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .sim-tab-btn:last-child { border-right: none; }
+    .sim-tab-btn .btn-sub {
+      display: block;
+      font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .sim-tab-btn::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+    .sim-tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.02); }
+    .sim-tab-btn.active {
+      color: var(--gold);
+      background: rgba(201,160,78,0.04);
+    }
+    .sim-tab-btn.active::before { transform: scaleX(1); }
+    .sim-tab-btn .rec-pill {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      padding: 2px 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: 6px;
+      border-radius: 2px;
+    }
+    .sim-tab-btn .max-pill {
+      display: inline-block;
+      background: var(--coral);
+      color: #fff;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      padding: 2px 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: 6px;
+      border-radius: 2px;
+    }
+
+    /* Tab panels */
+    .sim-panels { border: 1px solid var(--border); border-top: none; }
+    .sim-panel {
+      display: none;
+      padding: 48px;
+      animation: panelFadeIn 0.3s ease;
+    }
+    .sim-panel.active { display: block; }
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sim-panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .sim-panel-left {}
+    .sim-panel-right {}
+    .sim-big-budget {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 88px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+    .sim-big-budget span { font-size: 36px; color: var(--muted); }
+    .sim-big-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .sim-alloc-block { margin-bottom: 32px; }
+    .sim-alloc-title {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .sim-alloc-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sim-alloc-item:first-child { border-top: 1px solid var(--border); }
+    .sim-alloc-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sim-alloc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .dot-gold { background: var(--gold); }
+    .dot-green { background: var(--green); }
+    .sim-alloc-name { font-size: 13px; color: var(--text); }
+    .sim-alloc-detail { font-size: 11px; color: var(--muted); }
+    .sim-alloc-right { text-align: right; }
+    .sim-alloc-cost { font-size: 15px; color: var(--white); font-weight: 500; }
+    .sim-alloc-pct { font-size: 11px; color: var(--muted); }
+    .sim-stacked-bar {
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 8px;
+      display: flex;
+    }
+    .sim-bar-a { background: var(--gold); transition: width 0.5s ease; }
+    .sim-bar-b { background: var(--green); flex: 1; }
+    .sim-bar-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .sim-kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .sim-kpi {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 20px;
+    }
+    .sim-kpi-label {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .sim-kpi-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .sim-kpi-val.gold { color: var(--gold); }
+    .sim-kpi-val.green { color: var(--green); }
+    .sim-kpi-val.coral { color: var(--coral); }
+    .sim-kpi-val.white { color: var(--white); }
+    .sim-kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .sim-insight {
+      background: rgba(201,160,78,0.06);
+      border: 1px solid rgba(201,160,78,0.2);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .sim-insight.green-insight {
+      background: rgba(78,201,138,0.05);
+      border-color: rgba(78,201,138,0.2);
+      border-left-color: var(--green);
+    }
+    .sim-insight.coral-insight {
+      background: rgba(255,96,64,0.05);
+      border-color: rgba(255,96,64,0.2);
+      border-left-color: var(--coral);
+    }
+
+    /* legacy card styles (kept for compat) */
     .sim-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -394,8 +592,7 @@
     }
     .sim-card .rec-badge {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 20px; right: 20px;
       background: var(--gold);
       color: #000;
       font-size: 9px;
@@ -1055,173 +1252,287 @@
       <p class="sec-desc">①インフルエンサーリール × ②UGCフィードの複合配分。最大150名のネットワークを最大化する3パターン。</p>
     </div>
 
-    <!-- SIM CARDS -->
-    <div class="sim-tabs">
+    <!-- TAB NAV -->
+    <div class="sim-tab-nav fade-up">
+      <button class="sim-tab-btn active" data-tab="a">
+        50万円
+        <span class="btn-sub">PATTERN A</span>
+      </button>
+      <button class="sim-tab-btn" data-tab="b">
+        100万円 <span class="rec-pill">推奨</span>
+        <span class="btn-sub">PATTERN B</span>
+      </button>
+      <button class="sim-tab-btn" data-tab="c">
+        150万円 <span class="max-pill">MAX</span>
+        <span class="btn-sub">PATTERN C</span>
+      </button>
+    </div>
 
-      <!-- PATTERN A: 50万 -->
-      <div class="sim-card fade-up fade-up-delay-1">
-        <div class="sim-budget-label">PATTERN A — 月額予算</div>
-        <div class="sim-budget">50<span>万円</span></div>
+    <!-- TAB PANELS -->
+    <div class="sim-panels fade-up">
 
-        <div class="sim-divider"></div>
+      <!-- PANEL A -->
+      <div class="sim-panel active" id="panel-a">
+        <div class="sim-panel-grid">
+          <div class="sim-panel-left">
+            <div class="sim-big-label">PATTERN A — 月額予算</div>
+            <div class="sim-big-budget">50<span>万円</span></div>
 
-        <div class="sim-alloc">
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-gold"></div>
-              ①インフルエンサーリール
+            <div class="sim-alloc-block">
+              <div class="sim-alloc-title">予算配分</div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-gold"></div>
+                  <div>
+                    <div class="sim-alloc-name">① インフルエンサーリール</div>
+                    <div class="sim-alloc-detail">2名 × ¥70,000（FW avg 35,000人）</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥140,000</div>
+                  <div class="sim-alloc-pct">28%</div>
+                </div>
+              </div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-green"></div>
+                  <div>
+                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
+                    <div class="sim-alloc-detail">64名 × ¥5,600</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥358,400</div>
+                  <div class="sim-alloc-pct">72%</div>
+                </div>
+              </div>
             </div>
-            <div class="sim-alloc-val">¥140,000</div>
-          </div>
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-green"></div>
-              ②UGCフィード
+
+            <div class="sim-stacked-bar">
+              <div class="sim-bar-a" style="width:28%"></div>
+              <div class="sim-bar-b"></div>
             </div>
-            <div class="sim-alloc-val">¥358,400</div>
-          </div>
-          <div class="sim-bar-bg">
-            <div class="sim-bar-fill" style="width:100%"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
-            <span>① 28%</span><span>② 72%</span>
-          </div>
-        </div>
-
-        <div class="sim-metrics">
-          <div class="sim-metric">
-            <div class="sim-metric-label">TOTAL人数</div>
-            <div class="sim-metric-val white">66<span style="font-size:14px">名</span></div>
-            <div class="sim-metric-sub">① 2名 + ② 64名</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">投稿本数合計</div>
-            <div class="sim-metric-val white">66<span style="font-size:14px">本</span></div>
-            <div class="sim-metric-sub">リール2本 + フィード64本</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">推定インプレッション</div>
-            <div class="sim-metric-val gold">148<span style="font-size:14px">万</span></div>
-            <div class="sim-metric-sub">①200K + ②1,280K</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">CPM（参考）</div>
-            <div class="sim-metric-val green">¥338</div>
-            <div class="sim-metric-sub">広告比 最大1/5</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PATTERN B: 100万 -->
-      <div class="sim-card featured fade-up fade-up-delay-2">
-        <div class="rec-badge">RECOMMENDED</div>
-        <div class="sim-budget-label">PATTERN B — 月額予算</div>
-        <div class="sim-budget" style="color:var(--gold)">100<span>万円</span></div>
-
-        <div class="sim-divider"></div>
-
-        <div class="sim-alloc">
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-gold"></div>
-              ①インフルエンサーリール
+            <div class="sim-bar-legend">
+              <span>① リール 28%</span><span>② UGC 72%</span>
             </div>
-            <div class="sim-alloc-val">¥350,000</div>
-          </div>
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-green"></div>
-              ②UGCフィード
-            </div>
-            <div class="sim-alloc-val">¥649,600</div>
-          </div>
-          <div class="sim-bar-bg">
-            <div class="sim-bar-fill" style="width:100%"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
-            <span>① 35%</span><span>② 65%</span>
-          </div>
-        </div>
 
-        <div class="sim-metrics">
-          <div class="sim-metric">
-            <div class="sim-metric-label">TOTAL人数</div>
-            <div class="sim-metric-val white">121<span style="font-size:14px">名</span></div>
-            <div class="sim-metric-sub">① 5名 + ② 116名</div>
+            <div class="sim-insight">
+              💡 <strong style="color:var(--gold)">少額テストに最適。</strong>ナノUGCで口コミを量産しながら、インフルエンサー2名の認知リールで拡散。まず1ヶ月の効果を検証したいブランドにおすすめ。
+            </div>
           </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">投稿本数合計</div>
-            <div class="sim-metric-val white">121<span style="font-size:14px">本</span></div>
-            <div class="sim-metric-sub">リール5本 + フィード116本</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">推定インプレッション</div>
-            <div class="sim-metric-val gold">282<span style="font-size:14px">万</span></div>
-            <div class="sim-metric-sub">①500K + ②2,320K</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">CPM（参考）</div>
-            <div class="sim-metric-val green">¥355</div>
-            <div class="sim-metric-sub">広告比 最大1/4</div>
+
+          <div class="sim-panel-right">
+            <div class="sim-kpi-grid">
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">TOTAL 人数</div>
+                <div class="sim-kpi-val white">66<small style="font-size:18px">名</small></div>
+                <div class="sim-kpi-sub">① 2名 ＋ ② 64名</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">投稿本数</div>
+                <div class="sim-kpi-val white">66<small style="font-size:18px">本</small></div>
+                <div class="sim-kpi-sub">リール2本 ＋ フィード64本</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">推定インプレッション</div>
+                <div class="sim-kpi-val gold">148<small style="font-size:18px">万</small></div>
+                <div class="sim-kpi-sub">① 200K ＋ ② 1,280K</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">CPM 目安</div>
+                <div class="sim-kpi-val green">¥338</div>
+                <div class="sim-kpi-sub">Meta広告比 最大 1/5</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">UGC素材数</div>
+                <div class="sim-kpi-val white">66<small style="font-size:18px">素材</small></div>
+                <div class="sim-kpi-sub">広告転用可能</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">1名あたりコスト</div>
+                <div class="sim-kpi-val white">¥7,552</div>
+                <div class="sim-kpi-sub">管理費込み参考値</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- PATTERN C: 150万 -->
-      <div class="sim-card fade-up fade-up-delay-3">
-        <div class="sim-budget-label">PATTERN C — 月額予算</div>
-        <div class="sim-budget">150<span>万円</span></div>
+      <!-- PANEL B -->
+      <div class="sim-panel" id="panel-b">
+        <div class="sim-panel-grid">
+          <div class="sim-panel-left">
+            <div class="sim-big-label">PATTERN B — 月額予算（推奨）</div>
+            <div class="sim-big-budget" style="color:var(--gold)">100<span>万円</span></div>
 
-        <div class="sim-divider"></div>
-
-        <div class="sim-alloc">
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-gold"></div>
-              ①インフルエンサーリール
+            <div class="sim-alloc-block">
+              <div class="sim-alloc-title">予算配分</div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-gold"></div>
+                  <div>
+                    <div class="sim-alloc-name">① インフルエンサーリール</div>
+                    <div class="sim-alloc-detail">5名 × ¥70,000（FW avg 35,000人）</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥350,000</div>
+                  <div class="sim-alloc-pct">35%</div>
+                </div>
+              </div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-green"></div>
+                  <div>
+                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
+                    <div class="sim-alloc-detail">116名 × ¥5,600</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥649,600</div>
+                  <div class="sim-alloc-pct">65%</div>
+                </div>
+              </div>
             </div>
-            <div class="sim-alloc-val">¥700,000</div>
-          </div>
-          <div class="sim-alloc-row">
-            <div class="sim-alloc-label">
-              <div class="sim-alloc-dot dot-green"></div>
-              ②UGCフィード
-            </div>
-            <div class="sim-alloc-val">¥784,000</div>
-          </div>
-          <div class="sim-bar-bg">
-            <div class="sim-bar-fill" style="width:100%"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
-            <span>① 47%</span><span>② 53%</span>
-          </div>
-        </div>
 
-        <div class="sim-metrics">
-          <div class="sim-metric">
-            <div class="sim-metric-label">TOTAL人数</div>
-            <div class="sim-metric-val coral">150<span style="font-size:14px">名</span></div>
-            <div class="sim-metric-sub">① 10名 + ② 140名 <span class="max-badge">MAX</span></div>
+            <div class="sim-stacked-bar">
+              <div class="sim-bar-a" style="width:35%"></div>
+              <div class="sim-bar-b"></div>
+            </div>
+            <div class="sim-bar-legend">
+              <span>① リール 35%</span><span>② UGC 65%</span>
+            </div>
+
+            <div class="sim-insight">
+              💡 <strong style="color:var(--gold)">バランス型・最もROIが高い。</strong>インフルエンサー5名のリールで認知を爆発させながら、116名のナノUGCで検索口コミを蓄積。広告との並走で購買転換率を最大化。
+            </div>
           </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">投稿本数合計</div>
-            <div class="sim-metric-val white">150<span style="font-size:14px">本</span></div>
-            <div class="sim-metric-sub">リール10本 + フィード140本</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">推定インプレッション</div>
-            <div class="sim-metric-val gold">380<span style="font-size:14px">万</span></div>
-            <div class="sim-metric-sub">①1,000K + ②2,800K</div>
-          </div>
-          <div class="sim-metric">
-            <div class="sim-metric-label">CPM（参考）</div>
-            <div class="sim-metric-val green">¥395</div>
-            <div class="sim-metric-sub">UGC素材150素材獲得</div>
+
+          <div class="sim-panel-right">
+            <div class="sim-kpi-grid">
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">TOTAL 人数</div>
+                <div class="sim-kpi-val gold">121<small style="font-size:18px">名</small></div>
+                <div class="sim-kpi-sub">① 5名 ＋ ② 116名</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">投稿本数</div>
+                <div class="sim-kpi-val gold">121<small style="font-size:18px">本</small></div>
+                <div class="sim-kpi-sub">リール5本 ＋ フィード116本</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">推定インプレッション</div>
+                <div class="sim-kpi-val gold">282<small style="font-size:18px">万</small></div>
+                <div class="sim-kpi-sub">① 500K ＋ ② 2,320K</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">CPM 目安</div>
+                <div class="sim-kpi-val green">¥355</div>
+                <div class="sim-kpi-sub">Meta広告比 最大 1/4</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">UGC素材数</div>
+                <div class="sim-kpi-val gold">121<small style="font-size:18px">素材</small></div>
+                <div class="sim-kpi-sub">広告転用可能</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">1名あたりコスト</div>
+                <div class="sim-kpi-val white">¥8,264</div>
+                <div class="sim-kpi-sub">管理費込み参考値</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-    </div><!-- /sim-tabs -->
+      <!-- PANEL C -->
+      <div class="sim-panel" id="panel-c">
+        <div class="sim-panel-grid">
+          <div class="sim-panel-left">
+            <div class="sim-big-label">PATTERN C — 月額予算（フル稼働）</div>
+            <div class="sim-big-budget" style="color:var(--coral)">150<span>万円</span></div>
+
+            <div class="sim-alloc-block">
+              <div class="sim-alloc-title">予算配分</div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-gold"></div>
+                  <div>
+                    <div class="sim-alloc-name">① インフルエンサーリール</div>
+                    <div class="sim-alloc-detail">10名 × ¥70,000（FW avg 35,000人）</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥700,000</div>
+                  <div class="sim-alloc-pct">47%</div>
+                </div>
+              </div>
+              <div class="sim-alloc-item">
+                <div class="sim-alloc-left">
+                  <div class="sim-alloc-dot dot-green"></div>
+                  <div>
+                    <div class="sim-alloc-name">② UGC フィードカルーセル</div>
+                    <div class="sim-alloc-detail">140名 × ¥5,600</div>
+                  </div>
+                </div>
+                <div class="sim-alloc-right">
+                  <div class="sim-alloc-cost">¥784,000</div>
+                  <div class="sim-alloc-pct">53%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sim-stacked-bar">
+              <div class="sim-bar-a" style="width:47%"></div>
+              <div class="sim-bar-b"></div>
+            </div>
+            <div class="sim-bar-legend">
+              <span>① リール 47%</span><span>② UGC 53%</span>
+            </div>
+
+            <div class="sim-insight coral-insight">
+              🔥 <strong style="color:var(--coral)">GVAネットワーク最大稼働。</strong>ナノ140名＋インフルエンサー10名で計150名同時稼働。1ヶ月で380万インプレッションと150点のUGC素材を獲得。広告素材として転用すれば更なる拡大も可能。
+            </div>
+          </div>
+
+          <div class="sim-panel-right">
+            <div class="sim-kpi-grid">
+              <div class="sim-kpi" style="border-color:rgba(255,96,64,0.2);background:rgba(255,96,64,0.04)">
+                <div class="sim-kpi-label">TOTAL 人数</div>
+                <div class="sim-kpi-val coral">150<small style="font-size:18px">名</small></div>
+                <div class="sim-kpi-sub">① 10名 ＋ ② 140名 — MAX</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">投稿本数</div>
+                <div class="sim-kpi-val coral">150<small style="font-size:18px">本</small></div>
+                <div class="sim-kpi-sub">リール10本 ＋ フィード140本</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">推定インプレッション</div>
+                <div class="sim-kpi-val gold">380<small style="font-size:18px">万</small></div>
+                <div class="sim-kpi-sub">① 1,000K ＋ ② 2,800K</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">CPM 目安</div>
+                <div class="sim-kpi-val green">¥395</div>
+                <div class="sim-kpi-sub">Meta広告比 最大 1/3</div>
+              </div>
+              <div class="sim-kpi" style="border-color:rgba(78,201,138,0.2);background:rgba(78,201,138,0.04)">
+                <div class="sim-kpi-label">UGC素材数</div>
+                <div class="sim-kpi-val coral">150<small style="font-size:18px">素材</small></div>
+                <div class="sim-kpi-sub">広告転用可能・最大数</div>
+              </div>
+              <div class="sim-kpi">
+                <div class="sim-kpi-label">1名あたりコスト</div>
+                <div class="sim-kpi-val white">¥9,893</div>
+                <div class="sim-kpi-sub">管理費込み参考値</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sim-panels -->
 
     <!-- DETAIL TABLE -->
     <div class="fade-up" style="margin-top:48px;">
@@ -1574,26 +1885,23 @@
       }
     });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // Animated counters
-  function animateCounter(el, target, suffix = '') {
-    const start = 0;
-    const duration = 1500;
-    const startTime = performance.now();
-    const isDecimal = target % 1 !== 0;
+  // Tab switching
+  const tabBtns = document.querySelectorAll('.sim-tab-btn');
+  const panels  = document.querySelectorAll('.sim-panel');
 
-    const update = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const current = start + (target - start) * ease;
-      el.textContent = isDecimal ? current.toFixed(1) + suffix : Math.floor(current).toLocaleString() + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  }
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById('panel-' + target).classList.add('active');
+    });
+  });
 </script>
 
 </body>
