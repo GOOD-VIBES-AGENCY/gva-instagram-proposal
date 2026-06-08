@@ -5,16 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Instagram複合施策 PRシミュレーション | GOOD VIBES AGENCY</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#0f2557;--navy2:#1b3a7a;--gold:#b8860b;--gold2:#d4a017;
   --green:#15803d;--red:#b91c1c;--blue:#1d4ed8;--orange:#c2410c;
-  --gray:#64748b;--lightgray:#f1f4f9;--border:#dde3ef;--text:#1a1f2e;
+  --purple:#6d28d9;--gray:#64748b;--border:#dde3ef;--text:#1a1f2e;
+  --bg:#f0f2f6;
 }
-body{font-family:'Noto Sans JP',sans-serif;background:#f0f2f6;color:var(--text);font-size:14px;min-height:100vh}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
 button{cursor:pointer;font-family:'Noto Sans JP',sans-serif}
 table{border-collapse:collapse;width:100%}
+canvas{display:block}
 
 /* ── ヘッダー ── */
 #hdr{background:var(--navy);color:#fff;padding:20px 32px;border-bottom:4px solid var(--gold)}
@@ -27,9 +30,9 @@ table{border-collapse:collapse;width:100%}
 .badge-conf{background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;letter-spacing:.08em;display:inline-block}
 
 /* ── 予算バー ── */
-#budgetbar{background:#f0f4ff;border-bottom:2px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#budgetbar{background:#e8edf8;border-bottom:2px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .bgt-lbl{font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap}
-.bgt-btn{padding:8px 24px;font-size:13px;font-weight:700;border:2px solid #b0bcd4;background:#fff;color:var(--navy);border-radius:4px;transition:all .15s}
+.bgt-btn{padding:8px 24px;font-size:13px;font-weight:700;border:2px solid #b0bcd4;background:#fff;color:var(--navy);border-radius:4px;transition:all .2s}
 .bgt-btn.on{border-color:var(--navy);background:var(--navy);color:#fff}
 .bgt-summary{margin-left:auto;font-size:12px;color:var(--gray)}
 .bgt-summary strong{color:var(--navy);font-size:14px}
@@ -42,25 +45,31 @@ table{border-collapse:collapse;width:100%}
 
 /* ── メイン ── */
 #main{padding:28px 32px;max-width:1080px;margin:0 auto}
-.section{margin-bottom:28px}
+.section{margin-bottom:32px}
 .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .sec-no{font-size:22px;font-weight:900;color:var(--gold);line-height:1;min-width:36px}
 .sec-title{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.06em;border-bottom:2px solid var(--navy);padding-bottom:6px;flex:1}
 
 /* ── カード ── */
-.card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:22px 24px}
+.card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:22px 24px}
 .card-ttl{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
 /* ── KPI ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi-grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.kpi{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:16px 18px;border-top:3px solid var(--ac,var(--navy))}
+.kpi-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:16px 18px;border-top:3px solid var(--ac,var(--navy));transition:transform .2s}
+.kpi:hover{transform:translateY(-2px)}
 .kpi-lbl{font-size:10px;color:var(--gray);font-weight:600;letter-spacing:.04em;margin-bottom:6px}
-.kpi-val{font-size:26px;font-weight:900;color:var(--ac,var(--navy));line-height:1}
+.kpi-val{font-size:26px;font-weight:900;color:var(--ac,var(--navy));line-height:1;transition:all .4s}
 .kpi-sub{font-size:10px;color:#9aa5be;margin-top:5px;line-height:1.5}
 
+/* ── チャートラッパー ── */
+.chart-wrap{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:20px 24px}
+.chart-ttl{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.chart-inner{position:relative}
+
 /* ── テーブル ── */
-.tbl-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08)}
+.tbl-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09)}
 .dtbl th{background:var(--navy);color:#fff;padding:10px 14px;font-size:11px;font-weight:700;text-align:right;white-space:nowrap;border-right:1px solid var(--navy2)}
 .dtbl th.L{text-align:left}
 .dtbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--border);border-right:1px solid #eef0f6;text-align:right;background:#fff}
@@ -68,11 +77,12 @@ table{border-collapse:collapse;width:100%}
 .dtbl tr:nth-child(even) td{background:#f8f9fd}
 .dtbl tr:hover td{background:#eef2ff}
 .dtbl .total-row td{background:#e4e9f5;font-weight:700;font-size:13px;color:var(--navy)}
+.dtbl .hl-row td{background:#fffbeb;font-weight:700}
 
 /* ── 配分バー ── */
 .alloc-bar-wrap{margin:12px 0 6px;height:10px;border-radius:5px;overflow:hidden;background:#e4e9f5;display:flex}
-.alloc-bar-a{background:var(--gold2);transition:width .4s ease}
-.alloc-bar-b{background:#15803d;flex:1}
+.alloc-bar-a{background:var(--gold2);transition:width .5s ease}
+.alloc-bar-b{background:var(--green);flex:1}
 .alloc-legend{display:flex;justify-content:space-between;font-size:10px;color:var(--gray);margin-bottom:12px}
 
 /* ── メニュー行 ── */
@@ -89,38 +99,34 @@ table{border-collapse:collapse;width:100%}
 /* ── グリッド ── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g12{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
 
-/* ── インフォボックス ── */
-.info-box{background:#f0f4ff;border-left:5px solid var(--navy);border-radius:0 8px 8px 0;padding:18px 22px}
-.warn-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:14px 18px;font-size:11px;color:#78350f;line-height:1.8}
+/* ── ボックス ── */
+.info-box{background:#f0f4ff;border-left:5px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 20px}
+.warn-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;font-size:11px;color:#78350f;line-height:1.8}
 .green-box{background:#f0fdf4;border-left:5px solid var(--green);border-radius:0 8px 8px 0;padding:14px 18px;font-size:12px;color:#14532d;line-height:1.8}
+.gold-box{background:#fffbeb;border-left:5px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;font-size:12px;line-height:1.8}
 
 /* ── タグ ── */
-.tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;vertical-align:middle}
+.tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;vertical-align:middle;margin-left:4px}
 .tag-reel{background:#fef3c7;color:#92400e}
 .tag-feed{background:#dcfce7;color:#14532d}
 .tag-rec{background:var(--navy);color:#fff}
 .tag-max{background:#7c3aed;color:#fff}
+.tag-new{background:#ef4444;color:#fff}
 
-/* ── 比較テーブル ── */
-.cmp th{background:var(--navy);color:#fff;padding:10px 14px;font-size:11px;font-weight:700;text-align:center;border-right:1px solid var(--navy2)}
-.cmp th.L{text-align:left}
-.cmp th.hl{background:var(--gold);color:#fff}
-.cmp td{padding:10px 14px;font-size:12px;border-bottom:1px solid var(--border);text-align:center;background:#fff}
-.cmp td.L{text-align:left;color:var(--gray)}
-.cmp td.hl{background:#fffbeb;font-weight:700;color:var(--gold)}
-.cmp .check{color:var(--green);font-size:16px;font-weight:900}
-.cmp .cross{color:#d1d5db;font-size:14px}
-.cmp tr:hover td{background:#f8f9fd}
+/* ── ファネル ── */
+.funnel{display:flex;flex-direction:column;gap:0;align-items:center;padding:20px 0}
+.funnel-step{width:100%;padding:12px 20px;text-align:center;position:relative;transition:all .2s}
+.funnel-step:hover{filter:brightness(1.05)}
+.funnel-label{font-size:12px;font-weight:700;color:#fff}
+.funnel-sub{font-size:10px;color:rgba(255,255,255,.8);margin-top:2px}
+.funnel-arrow{text-align:center;font-size:18px;color:#b0bcd4;line-height:1.2;margin:2px 0}
 
-/* ── 実績カード ── */
-.case-card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.08);padding:22px 24px;border-top:3px solid var(--ac,var(--navy))}
-.case-type{font-size:10px;letter-spacing:.15em;color:var(--gray);margin-bottom:8px;font-weight:600}
-.case-ttl{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:4px}
-.case-sub{font-size:11px;color:var(--gray);margin-bottom:16px}
-.case-nums{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.case-num-val{font-size:28px;font-weight:900;color:var(--gold);line-height:1}
-.case-num-lbl{font-size:10px;color:var(--gray);margin-top:3px;line-height:1.5}
+/* ── KPI表 ── */
+.kpi-tbl th{background:#f1f4f9;color:var(--navy);padding:9px 14px;font-size:11px;font-weight:700;text-align:left;border-bottom:2px solid var(--border)}
+.kpi-tbl td{padding:9px 14px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:top}
+.kpi-tbl tr:hover td{background:#fafbff}
 
 /* ── フロー ── */
 .flow-row{display:flex;align-items:flex-start;gap:0}
@@ -132,29 +138,46 @@ table{border-collapse:collapse;width:100%}
 .flow-txt{font-size:10px;color:var(--gray);line-height:1.7}
 .flow-time{font-size:10px;color:var(--gold);font-weight:700;margin-top:4px}
 
-/* ── ユーティリティ ── */
-.pos{color:var(--green)} .neg{color:var(--red)}
-.bold{font-weight:700}
-.divider{border:none;border-top:1px solid var(--border);margin:12px 0}
-.text-right{text-align:right}
-.text-center{text-align:center}
+/* ── 実績 ── */
+.case-card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:22px 24px;border-top:3px solid var(--ac,var(--navy))}
+.case-type{font-size:10px;letter-spacing:.15em;color:var(--gray);margin-bottom:8px;font-weight:600}
+.case-ttl{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:4px}
+.case-sub{font-size:11px;color:var(--gray);margin-bottom:16px}
+.case-nums{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.case-num-val{font-size:28px;font-weight:900;color:var(--gold);line-height:1}
+.case-num-lbl{font-size:10px;color:var(--gray);margin-top:3px;line-height:1.5}
+
+/* ── 比較 ── */
+.cmp th{background:var(--navy);color:#fff;padding:10px 14px;font-size:11px;font-weight:700;text-align:center;border-right:1px solid var(--navy2)}
+.cmp th.L{text-align:left}
+.cmp th.hl{background:var(--gold)}
+.cmp td{padding:10px 14px;font-size:12px;border-bottom:1px solid var(--border);text-align:center;background:#fff}
+.cmp td.L{text-align:left;color:var(--gray)}
+.cmp td.hl{background:#fffbeb;font-weight:700;color:var(--gold)}
+.cmp .check{color:var(--green);font-weight:900}
+.cmp .cross{color:#d1d5db}
+.cmp tr:hover td{background:#f8f9fd}
+
+/* ── アニメーション ── */
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeIn .4s ease forwards}
+.kpi-val.updating{animation:countUp .35s ease}
 
 /* ── レスポンシブ ── */
 @media(max-width:768px){
-  #hdr{padding:16px}
+  #hdr,#budgetbar,#main{padding-left:16px;padding-right:16px}
   .hdr-top{flex-direction:column;gap:8px}
   .hdr-right{text-align:left}
   .hdr-title{font-size:16px}
-  #budgetbar{padding:10px 16px;gap:6px}
   .bgt-btn{padding:6px 14px;font-size:12px}
   .bgt-summary{display:none}
   #tabbar{padding:0 16px}
   .tab-btn{padding:12px 10px;font-size:11px}
   #main{padding:16px}
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .kpi-grid-6{grid-template-columns:1fr 1fr}
-  .g2{grid-template-columns:1fr}
-  .g3{grid-template-columns:1fr}
+  .kpi-grid,.kpi-grid-3{grid-template-columns:1fr 1fr}
+  .g2,.g3,.g12{grid-template-columns:1fr}
   .flow-row{flex-direction:column;gap:12px}
   .flow-step::after{display:none}
 }
@@ -162,14 +185,13 @@ table{border-collapse:collapse;width:100%}
 </head>
 <body>
 
-<!-- ヘッダー -->
 <div id="hdr">
   <div class="hdr-top">
     <div>
       <div class="hdr-label">株式会社 GOOD VIBES AGENCY　|　クライアント向け提案資料</div>
       <div class="hdr-title">Instagram複合施策 PRシミュレーション</div>
       <div class="hdr-sub">① インフルエンサーリール × ② ナノUGCフィード口コミ　複合プラン<br>
-      FW単価 ¥2.0〜／ナノUGC ¥5,600/名　※Instagramのみ・最大150名稼働</div>
+      FW単価 ¥2.0〜 ／ ナノUGC ¥5,600/名　｜　Instagramのみ・最大150名同時稼働</div>
     </div>
     <div class="hdr-right">
       <div class="hdr-date" id="hdr-date"></div>
@@ -178,7 +200,6 @@ table{border-collapse:collapse;width:100%}
   </div>
 </div>
 
-<!-- 予算セレクター -->
 <div id="budgetbar">
   <span class="bgt-lbl">💰 月額予算：</span>
   <button class="bgt-btn" data-bgt="500">¥50万円</button>
@@ -187,528 +208,776 @@ table{border-collapse:collapse;width:100%}
   <span class="bgt-summary" id="bgt-summary"></span>
 </div>
 
-<!-- タブ -->
 <div id="tabbar">
   <button class="tab-btn" data-tab="sim">シミュレーション</button>
+  <button class="tab-btn" data-tab="kpi">KPI設計 <span class="tag tag-new">NEW</span></button>
   <button class="tab-btn" data-tab="menu">メニュー詳細</button>
   <button class="tab-btn" data-tab="result">実績・事例</button>
   <button class="tab-btn" data-tab="compare">他社比較</button>
   <button class="tab-btn" data-tab="flow">依頼の流れ</button>
 </div>
 
-<!-- メインコンテンツ -->
 <div id="main"></div>
 
-<!-- フッター -->
 <div style="padding:14px 32px;background:#fff;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:10px;color:#9aa5be;margin-top:8px">
   <span>株式会社 GOOD VIBES AGENCY　|　Instagram複合施策 PRシミュレーション</span>
-  <span>本資料の推定数値は過去実績に基づく参考値です。効果を保証するものではありません。商品ギフティングコストは別途。</span>
+  <span>推定数値は過去実績に基づく参考値です。効果保証ではありません。商品ギフティングコストは別途。</span>
 </div>
 
 <script>
-// ── データ定義 ──
+// ───────────────────────────
+// データ定義
+// ───────────────────────────
 const MENU = {
-  reel: { unitCost: 70000, avgFw: 35000, fwRate: 2.0, impPerPerson: 100000 },
-  ugc:  { unitCost:  5600, avgFw:  4000, impPerPerson:  20000 },
+  reel: { unitCost:70000, impPerPerson:100000 },
+  ugc:  { unitCost: 5600, impPerPerson: 20000 },
 };
-
 const BUDGETS = {
-  500:  { reel: 2,  ugc:  64, reelCost: 140000, ugcCost: 358400  },
-  1000: { reel: 5,  ugc: 116, reelCost: 350000, ugcCost: 649600  },
-  1500: { reel: 10, ugc: 140, reelCost: 700000, ugcCost: 784000  },
+  500:  { reel:2,  ugc:64,  reelCost:140000, ugcCost:358400  },
+  1000: { reel:5,  ugc:116, reelCost:350000, ugcCost:649600  },
+  1500: { reel:10, ugc:140, reelCost:700000, ugcCost:784000  },
 };
+// Meta広告等のCPM参考値（¥）
+const BENCH_CPM = { 'Meta広告':900, 'YouTube広告':700, 'Twitter広告':600, 'GVAリール':340, 'GVA UGC':280 };
 
-let state = { bgt: 1000, tab: 'sim' };
+let state = { bgt:1000, tab:'sim' };
+let charts = {};
 
-// ── 計算 ──
-function calc(bgt) {
-  const d = BUDGETS[bgt];
-  const totalPeople = d.reel + d.ugc;
-  const totalCost   = d.reelCost + d.ugcCost;
-  const totalImp    = d.reel * MENU.reel.impPerPerson + d.ugc * MENU.ugc.impPerPerson;
-  const cpm         = Math.round(totalCost / totalImp * 1000);
-  const reelPct     = Math.round(d.reelCost / totalCost * 100);
-  const ugcPct      = 100 - reelPct;
-  const ugcAssets   = totalPeople;
-  const costPerPerson = Math.round(totalCost / totalPeople);
-  return { ...d, totalPeople, totalCost, totalImp, cpm, reelPct, ugcPct, ugcAssets, costPerPerson };
+// ───────────────────────────
+// ユーティリティ
+// ───────────────────────────
+const fYenK = v => `¥${Number(v).toLocaleString()}`;
+const fImp  = v => v>=10000000?`${(v/10000000).toFixed(1)}千万`:v>=10000?`${(v/10000).toFixed(0)}万`:v.toLocaleString();
+const fImpD = v => v>=10000000?`${(v/10000000).toFixed(1)}千万imp`:v>=10000?`${(v/10000).toFixed(0)}万imp`:v.toLocaleString()+'imp';
+
+function calc(bgt){
+  const d=BUDGETS[bgt];
+  const total=d.reel+d.ugc, cost=d.reelCost+d.ugcCost;
+  const imp=d.reel*MENU.reel.impPerPerson+d.ugc*MENU.ugc.impPerPerson;
+  const cpm=Math.round(cost/imp*1000);
+  return{...d,total,cost,imp,cpm,
+    reelPct:Math.round(d.reelCost/cost*100),
+    ugcPct:100-Math.round(d.reelCost/cost*100),
+    costPerPerson:Math.round(cost/total)};
 }
 
-const fYen  = v => `¥${(v / 10000).toFixed(1)}万`;
-const fYenK = v => `¥${v.toLocaleString()}`;
-const fImp  = v => v >= 10000 ? `${(v/10000).toFixed(0)}万` : v.toLocaleString();
-const fM    = v => v >= 10000 ? `${(v/10000).toFixed(1)}万` : v.toLocaleString();
+// ───────────────────────────
+// 数値カウントアップ
+// ───────────────────────────
+function countUp(el,target,duration=700,prefix='',suffix=''){
+  const start=performance.now();
+  const isFloat=(target%1!==0);
+  function frame(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    const v=target*ease;
+    el.textContent=prefix+(isFloat?v.toFixed(1):Math.floor(v).toLocaleString())+suffix;
+    if(p<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
 
-// ── タブ: シミュレーション ──
-function tSim() {
-  const b = state.bgt;
-  const c = calc(b);
-  const isMax = b === 1500;
-  const isRec = b === 1000;
+// ───────────────────────────
+// チャート破棄ヘルパー
+// ───────────────────────────
+function destroyAll(){
+  Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}});
+  charts={};
+}
 
-  return `
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">予算配分内訳</div></div>
-    <div class="g2">
-      <div class="card">
+// ───────────────────────────
+// タブ: シミュレーション
+// ───────────────────────────
+function tSim(){
+  const b=state.bgt, c=calc(b);
+  const isMax=b===1500, isRec=b===1000;
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">予算配分と推定効果</div></div>
+  <div class="g12">
+    <div>
+      <!-- 配分カード -->
+      <div class="card" style="margin-bottom:16px">
         <div class="card-ttl">メニュー別 配分</div>
-
         <div class="menu-row">
           <div class="menu-left">
-            <div class="menu-dot" style="background:var(--gold2)"></div>
-            <div>
-              <div class="menu-name">① インフルエンサーリール <span class="tag tag-reel">REEL</span></div>
-              <div class="menu-detail">${c.reel}名 × ¥70,000（FW avg 35,000人・FW単価¥2）</div>
-            </div>
+            <div class="menu-dot" style="background:#d4a017"></div>
+            <div><div class="menu-name">① インフルエンサーリール <span class="tag tag-reel">REEL</span></div>
+            <div class="menu-detail">${c.reel}名 × ¥70,000（FW avg 35,000人）</div></div>
           </div>
-          <div class="menu-right">
-            <div class="menu-cost">${fYenK(c.reelCost)}</div>
-            <div class="menu-pct">${c.reelPct}%</div>
-          </div>
+          <div class="menu-right"><div class="menu-cost">${fYenK(c.reelCost)}</div><div class="menu-pct">${c.reelPct}%</div></div>
         </div>
-
         <div class="menu-row">
           <div class="menu-left">
-            <div class="menu-dot" style="background:var(--green)"></div>
-            <div>
-              <div class="menu-name">② UGC フィードカルーセル <span class="tag tag-feed">FEED</span></div>
-              <div class="menu-detail">${c.ugc}名 × ¥5,600（ナノインフルエンサー）</div>
-            </div>
+            <div class="menu-dot" style="background:#15803d"></div>
+            <div><div class="menu-name">② UGC フィードカルーセル <span class="tag tag-feed">FEED</span></div>
+            <div class="menu-detail">${c.ugc}名 × ¥5,600</div></div>
           </div>
-          <div class="menu-right">
-            <div class="menu-cost">${fYenK(c.ugcCost)}</div>
-            <div class="menu-pct">${c.ugcPct}%</div>
-          </div>
+          <div class="menu-right"><div class="menu-cost">${fYenK(c.ugcCost)}</div><div class="menu-pct">${c.ugcPct}%</div></div>
         </div>
-
         <div class="alloc-bar-wrap">
           <div class="alloc-bar-a" style="width:${c.reelPct}%"></div>
           <div class="alloc-bar-b"></div>
         </div>
-        <div class="alloc-legend">
-          <span>① リール ${c.reelPct}%</span>
-          <span>② UGC ${c.ugcPct}%</span>
-        </div>
-
+        <div class="alloc-legend"><span>① リール ${c.reelPct}%</span><span>② UGC ${c.ugcPct}%</span></div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:2px solid var(--border)">
-          <span style="font-size:12px;color:var(--gray)">合計</span>
-          <span style="font-size:22px;font-weight:900;color:var(--navy)">${fYenK(c.totalCost)}</span>
+          <span style="font-size:12px;color:var(--gray)">月額合計</span>
+          <span style="font-size:22px;font-weight:900;color:var(--navy)">${fYenK(c.cost)}</span>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-ttl">ポイント</div>
-        <div class="info-box" style="margin-bottom:12px">
-          <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">
-            ${isMax ? '🔥 MAX稼働プラン — ネットワーク全力投入' : isRec ? '⭐ 推奨プラン — ROI最大化バランス型' : '✅ テスト導入プラン — リスク最小で効果検証'}
-          </p>
-          <p style="font-size:12px;color:#374151;line-height:1.9">
-            ${isMax
-              ? 'GVAナノネットワーク150名フル稼働。インフルエンサー10名のリールで認知を爆発させ、140名のUGCカルーセルでInstagram検索口コミを量産。UGC素材150点は広告素材としても転用可能。'
-              : isRec
-              ? 'インフルエンサー5名の認知リールと116名のナノUGCを組み合わせた最もROIが高い構成。広告との並走でCVRブーストに最適。継続運用で口コミが蓄積され複利的に効果が増大。'
-              : '2名のインフルエンサーリールと64名のナノUGCで、まず1ヶ月の効果を検証。コストを抑えながらリール×UGC複合設計の拡散・口コミ効果を確認できる導入パターン。'
-            }
-          </p>
+      <!-- ドーナツチャート -->
+      <div class="chart-wrap">
+        <div class="chart-ttl">配分比率</div>
+        <div class="chart-inner" style="max-width:220px;margin:0 auto">
+          <canvas id="chart-donut" height="220"></canvas>
         </div>
-        <div class="warn-box">
-          📌 インフルエンサーFW数・カテゴリにより単価は変動します。FW単価¥2×平均FW35,000人での試算。<br>
-          商品ギフティングコストは別途ご負担ください。
+      </div>
+    </div>
+    <div>
+      <!-- KPI -->
+      <div class="kpi-grid" style="margin-bottom:16px">
+        <div class="kpi" style="--ac:var(--navy)">
+          <div class="kpi-lbl">TOTAL 稼働人数</div>
+          <div class="kpi-val" id="kv-people">${c.total}名</div>
+          <div class="kpi-sub">① ${c.reel}名 ＋ ② ${c.ugc}名${isMax?' <strong style="color:#7c3aed">MAX</strong>':''}</div>
         </div>
+        <div class="kpi" style="--ac:var(--gold)">
+          <div class="kpi-lbl">推定インプレッション</div>
+          <div class="kpi-val" id="kv-imp">${fImpD(c.imp)}</div>
+          <div class="kpi-sub">① ${fImp(c.reel*MENU.reel.impPerPerson)} ＋ ② ${fImp(c.ugc*MENU.ugc.impPerPerson)}</div>
+        </div>
+        <div class="kpi" style="--ac:var(--green)">
+          <div class="kpi-lbl">CPM（参考）</div>
+          <div class="kpi-val" id="kv-cpm">¥${c.cpm}</div>
+          <div class="kpi-sub">Meta広告 ¥500〜2,000 比</div>
+        </div>
+        <div class="kpi" style="--ac:var(--blue)">
+          <div class="kpi-lbl">UGC素材獲得</div>
+          <div class="kpi-val" id="kv-assets">${c.total}点</div>
+          <div class="kpi-sub">広告・EC転用可能</div>
+        </div>
+      </div>
+      <!-- インプ積み上げバーチャート -->
+      <div class="chart-wrap">
+        <div class="chart-ttl">インプレッション 内訳<span style="font-size:10px;color:var(--gray);font-weight:400">（推定）</span></div>
+        <div class="chart-inner" style="height:160px"><canvas id="chart-imp"></canvas></div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">主要KPI</div></div>
-    <div class="kpi-grid">
-      <div class="kpi" style="--ac:var(--navy)">
-        <div class="kpi-lbl">TOTAL 稼働人数</div>
-        <div class="kpi-val">${c.totalPeople}<small style="font-size:16px;font-weight:600">名</small>${isMax ? ' <span class="tag tag-max">MAX</span>' : ''}</div>
-        <div class="kpi-sub">① ${c.reel}名 ＋ ② ${c.ugc}名</div>
-      </div>
-      <div class="kpi" style="--ac:var(--gold)">
-        <div class="kpi-lbl">推定インプレッション</div>
-        <div class="kpi-val">${fImp(c.totalImp)}<small style="font-size:16px;font-weight:600">imp</small></div>
-        <div class="kpi-sub">① ${fImp(c.reel * MENU.reel.impPerPerson)} ＋ ② ${fImp(c.ugc * MENU.ugc.impPerPerson)}</div>
-      </div>
-      <div class="kpi" style="--ac:var(--green)">
-        <div class="kpi-lbl">CPM（参考）</div>
-        <div class="kpi-val">¥${c.cpm}</div>
-        <div class="kpi-sub">Meta広告 ¥500〜2,000 比</div>
-      </div>
-      <div class="kpi" style="--ac:var(--blue)">
-        <div class="kpi-lbl">UGC素材獲得数</div>
-        <div class="kpi-val">${c.ugcAssets}<small style="font-size:16px;font-weight:600">点</small></div>
-        <div class="kpi-sub">広告・EC転用可能</div>
-      </div>
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">CPM比較 — 主要媒体との費用対効果</div></div>
+  <div class="g2">
+    <div class="chart-wrap">
+      <div class="chart-ttl">CPM（1,000imp あたり費用）比較</div>
+      <div class="chart-inner" style="height:220px"><canvas id="chart-cpm"></canvas></div>
     </div>
-    <div class="kpi-grid-6" style="margin-top:12px">
-      <div class="kpi" style="--ac:var(--navy)">
-        <div class="kpi-lbl">投稿本数合計</div>
-        <div class="kpi-val">${c.totalPeople}<small style="font-size:16px;font-weight:600">本</small></div>
-        <div class="kpi-sub">リール${c.reel}本 ＋ フィード${c.ugc}本</div>
-      </div>
-      <div class="kpi" style="--ac:var(--gray)">
-        <div class="kpi-lbl">1名あたりコスト</div>
-        <div class="kpi-val">¥${c.costPerPerson.toLocaleString()}</div>
-        <div class="kpi-sub">管理費・ディレクション込み</div>
-      </div>
-      <div class="kpi" style="--ac:var(--orange)">
-        <div class="kpi-lbl">リール 推定リーチ</div>
-        <div class="kpi-val">${fImp(c.reel * MENU.reel.impPerPerson)}</div>
-        <div class="kpi-sub">${c.reel}名 × avg 100,000 imp</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">3パターン 早見表</div></div>
-    <div class="tbl-wrap">
+    <div class="card">
+      <div class="card-ttl">広告との費用比較まとめ</div>
       <table class="dtbl">
-        <thead>
-          <tr>
-            <th class="L" style="min-width:100px">プラン</th>
-            <th>①リール人数</th>
-            <th>②UGC人数</th>
-            <th>合計人数</th>
-            <th>①費用</th>
-            <th>②費用</th>
-            <th>合計費用</th>
-            <th>推定imp</th>
-            <th>CPM</th>
-            <th>UGC素材</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th class="L">媒体・手法</th><th>CPM目安</th><th>差分</th>
+        </tr></thead>
         <tbody>
-          ${[500, 1000, 1500].map(bg => {
-            const cc = calc(bg);
-            const isThis = bg === b;
-            return `<tr style="${isThis ? 'background:#fffbeb!important' : ''}">
-              <td class="L" style="font-weight:700;color:var(--navy)">
-                ¥${bg/10}万円
-                ${bg === 1000 ? '<span class="tag tag-rec" style="margin-left:4px">推奨</span>' : ''}
-                ${bg === 1500 ? '<span class="tag tag-max" style="margin-left:4px">MAX</span>' : ''}
-                ${isThis ? '　◀' : ''}
-              </td>
-              <td>${cc.reel}名</td>
-              <td>${cc.ugc}名</td>
-              <td style="font-weight:700">${cc.totalPeople}名</td>
-              <td>${fYenK(cc.reelCost)}</td>
-              <td>${fYenK(cc.ugcCost)}</td>
-              <td style="font-weight:700">${fYenK(cc.totalCost)}</td>
-              <td style="font-weight:700;color:var(--gold)">${fImp(cc.totalImp)}</td>
-              <td>¥${cc.cpm}</td>
-              <td>${cc.ugcAssets}点</td>
-            </tr>`;
-          }).join('')}
+          <tr><td class="L">Meta（FB/IG）広告</td><td>¥500〜2,000</td><td class="neg">基準</td></tr>
+          <tr><td class="L">YouTube広告</td><td>¥400〜1,200</td><td class="neg">〃</td></tr>
+          <tr><td class="L">Twitter/X広告</td><td>¥300〜800</td><td class="neg">〃</td></tr>
+          <tr class="hl-row"><td class="L"><strong>GVA ①リール</strong></td><td><strong>¥${calc(state.bgt).cpm}前後</strong></td><td class="pos"><strong>Meta比 最大▼73%</strong></td></tr>
+          <tr class="hl-row"><td class="L"><strong>GVA ②UGC口コミ</strong></td><td><strong>¥280前後</strong></td><td class="pos"><strong>Meta比 最大▼86%</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="green-box" style="margin-top:12px">
+        ✅ UGC素材は獲得後、Meta広告のクリエイティブとして転用可能。<br>
+        通常クリエイティブ制作費（¥10〜50万/素材）が不要になります。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">3パターン 早見表</div></div>
+  <div class="tbl-wrap">
+    <table class="dtbl">
+      <thead><tr>
+        <th class="L">プラン</th>
+        <th>①リール</th><th>②UGC</th><th>合計</th>
+        <th>①費用</th><th>②費用</th><th>合計費用</th>
+        <th>推定imp</th><th>CPM</th><th>UGC素材</th>
+      </tr></thead>
+      <tbody>
+        ${[500,1000,1500].map(bg=>{
+          const cc=calc(bg);
+          return`<tr${bg===b?' class="hl-row"':''}>
+            <td class="L" style="font-weight:700;color:var(--navy)">
+              ¥${bg/10}万円
+              ${bg===1000?'<span class="tag tag-rec">推奨</span>':''}
+              ${bg===1500?'<span class="tag tag-max">MAX</span>':''}
+              ${bg===b?' ◀':''}
+            </td>
+            <td>${cc.reel}名</td><td>${cc.ugc}名</td>
+            <td style="font-weight:700">${cc.total}名</td>
+            <td>${fYenK(cc.reelCost)}</td><td>${fYenK(cc.ugcCost)}</td>
+            <td style="font-weight:700">${fYenK(cc.cost)}</td>
+            <td style="font-weight:700;color:var(--gold)">${fImpD(cc.imp)}</td>
+            <td>¥${cc.cpm}</td><td>${cc.total}点</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>
+</div>`;
+}
+
+// ───────────────────────────
+// タブ: KPI設計
+// ───────────────────────────
+function tKpi(){
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">KGI / KPI 設計</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">KGI（最終目標）→ KPI（中間指標）設計</div>
+      <table class="kpi-tbl">
+        <thead><tr>
+          <th style="width:22%">目的</th><th style="width:30%">KGI</th><th>KPI指標</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;color:var(--navy)">認知拡大</td>
+            <td>ブランド検索数 ＋20%</td>
+            <td>インプレッション数 ／ リーチ数 ／ リール動画再生数 ／ フォロワー増加数</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--green)">購買促進</td>
+            <td>EC流入 ＋30% / CVR向上</td>
+            <td>リンククリック数 ／ キャンペーンコード使用率 ／ アフィリエイト経由売上 ／ ROAS</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--gold)">口コミ量産</td>
+            <td>UGC発話量 ＋50件/月</td>
+            <td>UGC投稿数 ／ 保存数 ／ コメント数 ／ エンゲージメント率 ／ Instagram検索表示数</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--purple)">ブランドリフト</td>
+            <td>ポジティブ言及率 ＋15%</td>
+            <td>ポジ/ネガコメント比 ／ ブランド好意度調査 ／ UGC二次拡散数 ／ 保存率</td>
+          </tr>
         </tbody>
       </table>
     </div>
-  </div>`;
-}
-
-// ── タブ: メニュー詳細 ──
-function tMenu() {
-  return `
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">① インフルエンサーショート動画タイアップ</div></div>
-    <div class="g2">
-      <div class="card">
-        <div class="card-ttl">概要</div>
-        <table class="dtbl">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-ttl">推奨KPIベンチマーク（Instagram）</div>
+        <table class="kpi-tbl">
+          <thead><tr><th>指標</th><th>業界平均</th><th>GVAナノ実績</th></tr></thead>
           <tbody>
-            <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>リール（60秒以内）＋ ストーリーズ 1枚セット</strong></td></tr>
-            <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
-            <tr><td class="L" style="color:var(--gray)">FW単価</td><td class="L"><strong class="pos">¥2.0〜/FW</strong>（業界最安水準）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">最低FW数</td><td class="L">10,000人〜</td></tr>
-            <tr><td class="L" style="color:var(--gray)">過去実績 avg FW</td><td class="L"><strong>35,000人</strong>（avg費用 ¥70,000/名）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">インフルエンサー選定</td><td class="L">GVAキャスティング込み</td></tr>
-            <tr><td class="L" style="color:var(--gray)">PR表記対応</td><td class="L">ステマ規制対応・全投稿管理</td></tr>
-            <tr><td class="L" style="color:var(--gray)">原稿確認</td><td class="L">公開前に全文確認・修正対応</td></tr>
+            <tr><td>エンゲージメント率</td><td>1.2〜3%</td><td style="color:var(--green);font-weight:700">3%以上</td></tr>
+            <tr><td>フォロワー比imp倍率</td><td>1〜2倍</td><td style="color:var(--green);font-weight:700">最大×8倍</td></tr>
+            <tr><td>保存率（カルーセル）</td><td>0.5〜2%</td><td style="color:var(--green);font-weight:700">3〜5%（検索対策）</td></tr>
+            <tr><td>UGC二次拡散率</td><td>5〜10%</td><td style="color:var(--green);font-weight:700">15〜20%</td></tr>
+            <tr><td>CPM</td><td>広告¥500〜2,000</td><td style="color:var(--green);font-weight:700">¥280〜400</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="card">
-        <div class="card-ttl">費用早見（FW数別）</div>
-        <table class="dtbl">
-          <thead>
-            <tr><th class="L">FW数</th><th>単価（FW×¥2）</th><th>推定imp</th></tr>
-          </thead>
-          <tbody>
-            ${[[10000,'¥20,000','30万'],[20000,'¥40,000','50万'],[35000,'¥70,000','100万'],[50000,'¥100,000','150万'],[100000,'¥200,000','250万以上']].map(([fw,cost,imp])=>`
-            <tr>
-              <td class="L">${fw.toLocaleString()}人</td>
-              <td><strong>${cost}</strong></td>
-              <td style="color:var(--gold)">${imp}</td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-        <div class="warn-box" style="margin-top:12px">
-          ※ リールは発見タブ経由でFW外にも拡散。<br>推定impはFW数の2〜3倍を目安としています。
-        </div>
+      <div class="warn-box">
+        📌 大手代理店提出時の推奨KPI報告指標：<br>
+        インプレッション・リーチ・ENG率・保存数・UGC数・CPM・ROAS（広告連動時）
       </div>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">② ナノインフルエンサー UGC口コミ（フィードカルーセル）</div></div>
-    <div class="g2">
-      <div class="card">
-        <div class="card-ttl">概要</div>
-        <table class="dtbl">
-          <tbody>
-            <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>フィードカルーセル投稿</strong>（詳細レビュー・検索対策）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
-            <tr><td class="L" style="color:var(--gray)">単価</td><td class="L"><strong class="pos">¥5,600/名</strong>（全管理込み）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">ネットワーク規模</td><td class="L"><strong>3,000名以上</strong>（GVA独自・審査済み）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">対象FW数</td><td class="L">1,000〜10,000人（ナノ）</td></tr>
-            <tr><td class="L" style="color:var(--gray)">選定基準</td><td class="L">ENG率3%以上・親和性・品質・コンプライアンス</td></tr>
-            <tr><td class="L" style="color:var(--gray)">PR表記</td><td class="L">ステマ規制対応・徹底管理</td></tr>
-            <tr><td class="L" style="color:var(--gray)">UGC二次利用</td><td class="L">広告転用許諾取得サポート込み</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <div class="card-ttl">人数別 費用目安</div>
-        <table class="dtbl">
-          <thead>
-            <tr><th class="L">人数</th><th>費用</th><th>推定imp</th><th>UGC素材</th></tr>
-          </thead>
-          <tbody>
-            ${[[30,'¥168,000','60万','30点'],[50,'¥280,000','100万','50点'],[64,'¥358,400','128万','64点'],[100,'¥560,000','200万','100点'],[116,'¥649,600','232万','116点'],[140,'¥784,000','280万','140点']].map(([n,cost,imp,asset])=>`
-            <tr>
-              <td class="L">${n}名</td>
-              <td><strong>${cost}</strong></td>
-              <td style="color:var(--gold)">${imp}</td>
-              <td style="color:var(--green)">${asset}</td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-        <div class="green-box" style="margin-top:12px">
-          ✅ GVA実績：FW6,500人のナノが52,000imp達成（×8倍）。<br>
-          月107件UGCで合計340,936impを記録。
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">購買ファネルと施策の役割設計</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">Instagram購買ファネル × GVA施策マッピング</div>
+      <div class="funnel">
+        <div class="funnel-step" style="background:var(--navy);width:100%;border-radius:6px 6px 0 0">
+          <div class="funnel-label">AWARENESS（認知）</div>
+          <div class="funnel-sub">① インフルエンサーリール　発見タブ拡散 ／ FW外リーチ最大化</div>
+        </div>
+        <div class="funnel-arrow">▼</div>
+        <div class="funnel-step" style="background:#1b3a7a;width:88%">
+          <div class="funnel-label">INTEREST（興味・検索）</div>
+          <div class="funnel-sub">② UGCカルーセル　Instagram検索流入 ／ 保存数蓄積</div>
+        </div>
+        <div class="funnel-arrow">▼</div>
+        <div class="funnel-step" style="background:var(--blue);width:76%">
+          <div class="funnel-label">CONSIDERATION（検討）</div>
+          <div class="funnel-sub">UGCの詳細レビュー ／ コメント欄での口コミ確認</div>
+        </div>
+        <div class="funnel-arrow">▼</div>
+        <div class="funnel-step" style="background:var(--green);width:64%">
+          <div class="funnel-label">PURCHASE（購買）</div>
+          <div class="funnel-sub">アフィリエイトリンク ／ キャンペーンコード ／ EC流入</div>
+        </div>
+        <div class="funnel-arrow">▼</div>
+        <div class="funnel-step" style="background:var(--gold);width:52%;border-radius:0 0 6px 6px">
+          <div class="funnel-label">ADVOCACY（再拡散）</div>
+          <div class="funnel-sub">UGC二次利用 ／ Meta広告クリエイティブ転用 ／ ホワイトリスト</div>
         </div>
       </div>
     </div>
-  </div>`;
-}
-
-// ── タブ: 実績 ──
-function tResult() {
-  return `
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">GVA支援 実績事例</div></div>
-    <div class="g2">
-      <div class="case-card" style="--ac:var(--navy)">
-        <div class="case-type">CASE STUDY 01 — 大手アパレルブランド A社 ／ 継続稼働中</div>
-        <div class="case-ttl">UGC×Instagram口コミ量産施策</div>
-        <div class="case-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働</div>
-        <div class="case-nums">
-          <div><div class="case-num-val">340,936</div><div class="case-num-lbl">月間合計インプレッション</div></div>
-          <div><div class="case-num-val">107件</div><div class="case-num-lbl">月間UGC獲得数</div></div>
-          <div><div class="case-num-val">52,000</div><div class="case-num-lbl">最高imp（FW6,500人）</div></div>
-          <div><div class="case-num-val">×8倍</div><div class="case-num-lbl">フォロワー比インプレッション</div></div>
-        </div>
-        <div class="info-box" style="margin-top:16px">
-          <p style="font-size:12px;color:#374151;line-height:1.9">広告配信との並走で「広告っぽく見えない本物の口コミ」としてCVRブーストに貢献。月次で媒体ミックスを最適化できる柔軟性を高く評価いただいています。</p>
-        </div>
+    <div>
+      <div class="chart-wrap" style="margin-bottom:16px">
+        <div class="chart-ttl">施策効果の時系列イメージ</div>
+        <div class="chart-inner" style="height:200px"><canvas id="chart-timeline"></canvas></div>
       </div>
-      <div class="case-card" style="--ac:var(--green)">
-        <div class="case-type">CASE STUDY 02 — 大手ヘアケアブランド B社 ／ リブランディング成功</div>
-        <div class="case-ttl">若年層離れを逆転・ブランドシェア再獲得</div>
-        <div class="case-sub">業種：ヘアケア ／ 施策：Instagram × TikTok 長期横断UGC（参考事例）</div>
-        <div class="case-nums">
-          <div><div class="case-num-val" style="color:var(--green)">×60</div><div class="case-num-lbl">X発話量（前年比）</div></div>
-          <div><div class="case-num-val" style="color:var(--green)">×4</div><div class="case-num-lbl">Instagram発話量（前年比）</div></div>
-          <div><div class="case-num-val" style="color:var(--green)">1.2倍</div><div class="case-num-lbl">売上伸長（施策翌月比）</div></div>
-          <div><div class="case-num-val" style="color:var(--green)">1位</div><div class="case-num-lbl">10〜20代ブランドシェア</div></div>
-        </div>
-        <div class="info-box" style="margin-top:16px;border-left-color:var(--green);background:#f0fdf4">
-          <p style="font-size:12px;color:#374151;line-height:1.9">49年続く老舗ブランドの若年層認知を劇的に刷新。ナノUGCによる口コミ量産から購買転換まで一気通貫で機能した実証事例。</p>
-        </div>
+      <div class="gold-box">
+        <strong>📡 Meta広告との連動提案</strong><br>
+        獲得したUGC素材（ナノUGCカルーセル）をMeta広告の<strong>ホワイトリスティング</strong>に活用することで、「広告っぽくない広告」として配信可能。<br>
+        通常クリエイティブ比CTR <strong>最大+30%</strong> が見込めます。
       </div>
     </div>
   </div>
+</div>
 
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">GVAの強み</div></div>
-    <div class="g3">
-      ${[
-        ['3,000+','ナノネットワーク規模','ENG率3%以上・品質審査・コンプライアンスの4軸で厳選。「売れる口コミ」を生む人材だけを採用。','var(--navy)'],
-        ['¥2/FW','業界最安水準の単価','業界相場¥2〜5/FWに対し、GVAは最安¥2.0/FW。全ディレクション・PR表記管理込みでこの価格。','var(--gold)'],
-        ['0件','ステマ規制トラブル実績','2023年規制施行以来ゼロ件。全投稿でPR表記を徹底管理しクライアントの法的リスクを排除。','var(--green)'],
-        ['150名','最大同時稼働人数','リール×UGC複合で業界最大クラスの同時稼働数を実現。単体施策では不可能な口コミ量産が可能。','var(--blue)'],
-        ['月次','効果測定レポート','imp・リーチ・ENG・保存数を月次で可視化。次回施策への改善提案もセットで提供。','var(--orange)'],
-        ['込み','UGC二次利用サポート','獲得した画像・動画素材のMeta/Google広告転用許諾取得もGVAが代行。素材が広告素材に変わる。','var(--navy)'],
-      ].map(([num,ttl,txt,ac])=>`
-      <div class="card" style="border-top:3px solid ${ac}">
-        <div style="font-size:28px;font-weight:900;color:${ac};margin-bottom:8px">${num}</div>
-        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">${ttl}</div>
-        <div style="font-size:11px;color:var(--gray);line-height:1.85">${txt}</div>
-      </div>`).join('')}
-    </div>
-  </div>`;
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">03</div><div class="sec-title">月次PDCA設計</div></div>
+  <div class="card">
+    <table class="kpi-tbl">
+      <thead><tr>
+        <th style="width:12%">フェーズ</th><th style="width:20%">アクション</th><th style="width:30%">確認指標</th><th>GVA対応</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--navy);font-weight:700">Plan</td>
+          <td>キャスティング・投稿設計</td>
+          <td>ターゲット親和性スコア ／ 過去ENG率</td>
+          <td>AIスコアリング＋人力審査で厳選</td>
+        </tr>
+        <tr>
+          <td style="color:var(--blue);font-weight:700">Do</td>
+          <td>投稿実行・拡散</td>
+          <td>投稿数 ／ PR表記確認</td>
+          <td>原稿確認＋スケジュール管理</td>
+        </tr>
+        <tr>
+          <td style="color:var(--green);font-weight:700">Check</td>
+          <td>月次効果測定</td>
+          <td>imp ／ リーチ ／ ENG率 ／ 保存数 ／ UGC数</td>
+          <td>月次詳細レポート提供</td>
+        </tr>
+        <tr>
+          <td style="color:var(--gold);font-weight:700">Act</td>
+          <td>施策改善・最適化</td>
+          <td>高ENG投稿の分析 ／ 次月キャスティング調整</td>
+          <td>改善提案込み（継続費用追加なし）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>`;
 }
 
-// ── タブ: 他社比較 ──
-function tCompare() {
-  const rows = [
+// ───────────────────────────
+// タブ: メニュー詳細
+// ───────────────────────────
+function tMenu(){
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">① インフルエンサーショート動画タイアップ</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">仕様</div>
+      <table class="dtbl"><tbody>
+        <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>リール（60秒以内）＋ ストーリーズ 1枚</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
+        <tr><td class="L" style="color:var(--gray)">FW単価</td><td class="L"><strong class="pos">¥2.0〜/FW（業界最安水準）</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">最低FW数</td><td class="L">10,000人〜</td></tr>
+        <tr><td class="L" style="color:var(--gray)">過去実績 avg FW</td><td class="L"><strong>35,000人</strong>（avg費用¥70,000/名）</td></tr>
+        <tr><td class="L" style="color:var(--gray)">インフルエンサー選定</td><td class="L">GVAキャスティング込み</td></tr>
+        <tr><td class="L" style="color:var(--gray)">PR表記対応</td><td class="L">ステマ規制対応・全投稿管理</td></tr>
+        <tr><td class="L" style="color:var(--gray)">原稿確認</td><td class="L">公開前 全文確認・修正対応</td></tr>
+        <tr><td class="L" style="color:var(--gray)">二次利用</td><td class="L">許諾取得対応（別途見積）</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-ttl">FW数別 費用早見</div>
+      <table class="dtbl">
+        <thead><tr><th class="L">FW数（目安）</th><th>単価</th><th>推定imp</th><th>用途</th></tr></thead>
+        <tbody>
+          ${[[10000,'¥20,000','30万','認知テスト'],[20000,'¥40,000','50万','ニッチ層狙い'],[35000,'¥70,000','100万','標準〜推奨'],[50000,'¥100,000','150万','リーチ最大化'],[100000,'¥200,000','250万+','バズ狙い']].map(([fw,c,i,u])=>`
+          <tr><td class="L">${Number(fw).toLocaleString()}人</td><td><strong>${c}</strong></td><td style="color:var(--gold)">${i}</td><td style="color:var(--gray);font-size:11px">${u}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="warn-box" style="margin-top:12px">※ リールは発見タブ経由でFW外に拡散。推定impはFW数の2〜3倍を目安。</div>
+    </div>
+  </div>
+</div>
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">② ナノインフルエンサー UGC口コミ（フィードカルーセル）</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">仕様</div>
+      <table class="dtbl"><tbody>
+        <tr><td class="L" style="color:var(--gray)">投稿形式</td><td class="L"><strong>フィードカルーセル（詳細レビュー）</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">対象媒体</td><td class="L">Instagram のみ</td></tr>
+        <tr><td class="L" style="color:var(--gray)">単価</td><td class="L"><strong class="pos">¥5,600/名（全管理込み）</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">ネットワーク規模</td><td class="L"><strong>3,000名以上</strong>（GVA独自・審査済み）</td></tr>
+        <tr><td class="L" style="color:var(--gray)">対象FW数</td><td class="L">1,000〜10,000人（ナノ）</td></tr>
+        <tr><td class="L" style="color:var(--gray)">選定基準</td><td class="L">ENG率3%以上・親和性・品質・コンプライアンス</td></tr>
+        <tr><td class="L" style="color:var(--gray)">検索キーワード設計</td><td class="L">Instagram検索流入設計込み</td></tr>
+        <tr><td class="L" style="color:var(--gray)">UGC二次利用</td><td class="L">広告転用許諾取得サポート込み</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-ttl">人数別 費用目安</div>
+      <table class="dtbl">
+        <thead><tr><th class="L">人数</th><th>費用</th><th>推定imp</th><th>UGC素材</th></tr></thead>
+        <tbody>
+          ${[[30,'¥168,000','60万','30点'],[50,'¥280,000','100万','50点'],[64,'¥358,400','128万','64点'],[100,'¥560,000','200万','100点'],[116,'¥649,600','232万','116点'],[140,'¥784,000','280万','140点']].map(([n,c,i,a])=>`
+          <tr><td class="L">${n}名</td><td><strong>${c}</strong></td><td style="color:var(--gold)">${i}</td><td style="color:var(--green)">${a}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="green-box" style="margin-top:12px">✅ GVA実績：FW6,500人 → 52,000imp（×8倍）<br>月107件UGCで合計340,936imp達成</div>
+    </div>
+  </div>
+</div>`;
+}
+
+// ───────────────────────────
+// タブ: 実績
+// ───────────────────────────
+function tResult(){
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">GVA支援 実績事例</div></div>
+  <div class="g2">
+    <div class="case-card" style="--ac:var(--navy)">
+      <div class="case-type">CASE STUDY 01 — 大手アパレルブランド A社 ／ 継続稼働中</div>
+      <div class="case-ttl">UGC×Instagram 口コミ量産施策</div>
+      <div class="case-sub">業種：アパレル ／ 施策：ナノUGC Instagram集中稼働</div>
+      <div class="case-nums">
+        <div><div class="case-num-val" id="cv-imp1">—</div><div class="case-num-lbl">月間合計インプレッション</div></div>
+        <div><div class="case-num-val" id="cv-ugc">—</div><div class="case-num-lbl">月間UGC獲得数</div></div>
+        <div><div class="case-num-val" id="cv-maxipm">—</div><div class="case-num-lbl">最高imp（FW6,500人）</div></div>
+        <div><div class="case-num-val" style="color:var(--navy)" id="cv-mult">—</div><div class="case-num-lbl">フォロワー比imp倍率</div></div>
+      </div>
+      <div class="info-box" style="margin-top:16px">
+        <p style="font-size:12px;color:#374151;line-height:1.9">Meta広告との並走で「広告っぽく見えない口コミ」としてCVRブーストに貢献。月次で媒体ミックスを最適化できる柔軟性を高く評価。継続稼働中。</p>
+      </div>
+    </div>
+    <div class="case-card" style="--ac:var(--green)">
+      <div class="case-type">CASE STUDY 02 — 大手ヘアケアブランド B社 ／ リブランディング成功</div>
+      <div class="case-ttl">若年層離れを逆転・ブランドシェア1位奪還</div>
+      <div class="case-sub">業種：ヘアケア ／ 施策：Instagram × TikTok 長期横断UGC（参考事例）</div>
+      <div class="case-nums">
+        <div><div class="case-num-val" style="color:var(--green)" id="cv-x">—</div><div class="case-num-lbl">X発話量（前年比）</div></div>
+        <div><div class="case-num-val" style="color:var(--green)" id="cv-ig">—</div><div class="case-num-lbl">Instagram発話量（前年比）</div></div>
+        <div><div class="case-num-val" style="color:var(--green)" id="cv-sales">—</div><div class="case-num-lbl">売上伸長（施策翌月比）</div></div>
+        <div><div class="case-num-val" style="color:var(--green)" id="cv-rank">—</div><div class="case-num-lbl">10〜20代シェアランキング</div></div>
+      </div>
+      <div class="info-box" style="margin-top:16px;border-left-color:var(--green);background:#f0fdf4">
+        <p style="font-size:12px;color:#374151;line-height:1.9">49年ブランドの若年層認知を劇的刷新。ナノUGCの口コミ量産が購買転換まで一気通貫で機能。X/Instagram/TikTok横断設計が発話量を爆発させた。</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">GVAの強み 6項目</div></div>
+  <div class="g3">
+    ${[['3,000+','ナノネットワーク規模','ENG率3%以上・品質・コンプライアンス4軸で厳選。「売れる口コミ」を生む人材だけ。','var(--navy)'],
+       ['¥2/FW','業界最安FW単価','業界相場¥2〜5/FWに対しGVAは最安¥2.0/FW。ディレクション込みでこの価格。','var(--gold)'],
+       ['0件','ステマ規制トラブル','2023年規制施行以来ゼロ。全投稿PR表記を徹底管理しクライアントの法的リスクを排除。','var(--green)'],
+       ['150名','最大同時稼働','リール×UGC複合で業界最大クラス。単体施策では不可能な口コミ量産が1ヶ月で実現。','var(--blue)'],
+       ['月次','PDCA レポート','imp・リーチ・ENG・保存数を月次可視化。次回施策の改善提案もセット。','var(--orange)'],
+       ['込み','UGC二次利用','獲得素材のMeta/Google広告転用許諾取得をGVAが代行。クリエイティブ費を圧縮。','var(--purple)'],
+    ].map(([num,ttl,txt,ac])=>`
+    <div class="card" style="border-top:3px solid ${ac}">
+      <div style="font-size:28px;font-weight:900;color:${ac};margin-bottom:8px">${num}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">${ttl}</div>
+      <div style="font-size:11px;color:var(--gray);line-height:1.85">${txt}</div>
+    </div>`).join('')}
+  </div>
+</div>`;
+}
+
+// ───────────────────────────
+// タブ: 他社比較
+// ───────────────────────────
+function tCompare(){
+  const rows=[
     ['インフルエンサーFW単価','¥2〜5/FW','非対応','¥2.0〜/FW（最安水準）'],
-    ['UGC口コミ単価','非対応・別途手配','¥5,000〜15,000/名','¥5,600/名（全管理込み）'],
+    ['UGC口コミ単価','非対応・別途','¥5,000〜15,000/名','¥5,600/名（全管理込み）'],
     ['ナノネットワーク規模','数百名程度','マッチングのみ','3,000名以上（審査済み）'],
     ['最大同時稼働人数','30名程度','人数制限あり','150名（複合設計）'],
-    ['ステマ規制管理','△ 自社対応必要','△ 確認なし','check 全投稿で徹底管理'],
+    ['ステマ規制対応管理','△ 自社対応必要','△ 確認なし','check 全投稿 徹底管理'],
     ['投稿前の原稿確認','cross 不可の場合多','cross 自動化のみ','check 全投稿対応'],
-    ['UGC素材の広告転用','cross 別途費用','△ 別途費用','check 込み・許諾取得対応'],
+    ['UGC広告転用サポート','cross 別途費用','△ 別途費用','check 許諾取得込み'],
     ['月次レポート提供','△ 有料オプション','△ 自動のみ','check 詳細分析込み'],
-    ['リール×UGC複合設計','cross 非対応','cross 非対応','check ワンストップ設計'],
+    ['KPI設計・PDCA支援','cross 非対応','cross 非対応','check 月次改善提案込み'],
+    ['リール×UGC複合設計','cross 非対応','cross 非対応','check ワンストップ'],
   ];
-  return `
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">競合・他社との比較</div></div>
-    <div class="tbl-wrap">
-      <table class="cmp">
-        <thead>
-          <tr>
-            <th class="L" style="min-width:180px">比較ポイント</th>
-            <th style="min-width:160px">一般インフルエンサー会社</th>
-            <th style="min-width:160px">UGCプラットフォーム</th>
-            <th class="hl" style="min-width:180px">GOOD VIBES AGENCY</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows.map(([item, a, b, c]) => {
-            const fmt = v => {
-              if (v.startsWith('check')) return `<span class="check">✓</span> ${v.slice(5)}`;
-              if (v.startsWith('cross')) return `<span class="cross">✗</span>${v.slice(5)}`;
-              return v;
-            };
-            return `<tr>
-              <td class="L">${item}</td>
-              <td>${fmt(a)}</td>
-              <td>${fmt(b)}</td>
-              <td class="hl">${fmt(c)}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-    <div class="warn-box" style="margin-top:16px">
-      ※ 他社情報は公開情報に基づく一般的な相場感です。サービス内容は各社により異なります。
-    </div>
-  </div>`;
+  const fmt=v=>{
+    if(v.startsWith('check'))return`<span class="check">✓</span> ${v.slice(5)}`;
+    if(v.startsWith('cross'))return`<span class="cross">✗</span>${v.slice(5)}`;
+    return v;
+  };
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">競合・他社との比較（10項目）</div></div>
+  <div class="tbl-wrap">
+    <table class="cmp">
+      <thead><tr>
+        <th class="L" style="min-width:180px">比較ポイント</th>
+        <th style="min-width:160px">一般インフルエンサー会社</th>
+        <th style="min-width:160px">UGCプラットフォーム</th>
+        <th class="hl" style="min-width:180px">GOOD VIBES AGENCY</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(([item,a,b,c])=>`<tr>
+          <td class="L">${item}</td>
+          <td>${fmt(a)}</td><td>${fmt(b)}</td>
+          <td class="hl">${fmt(c)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="warn-box" style="margin-top:16px">※ 他社情報は公開情報に基づく一般的な相場感です。各社サービス内容は異なります。</div>
+</div>`;
 }
 
-// ── タブ: フロー ──
-function tFlow() {
-  const steps = [
+// ───────────────────────────
+// タブ: 依頼の流れ
+// ───────────────────────────
+function tFlow(){
+  const steps=[
     ['01','無料ヒアリング','商品・ターゲット・予算感をオンラインで','30分'],
     ['02','選定・提案','最適なキャスティングと施策プランを提案','3営業日以内'],
     ['03','投稿設計・手配','PR表記対応・原稿確認・スケジュール管理','全て込み'],
     ['04','拡散・モニタリング','投稿後のENG・impをリアルタイム追跡','常時監視'],
-    ['05','効果測定・改善','月次レポートで可視化・次回施策提案','月次'],
+    ['05','効果測定・PDCA','月次レポート＋次回改善提案','毎月'],
   ];
-  return `
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">依頼から稼働まで — 5ステップ</div></div>
-    <div class="card" style="margin-bottom:24px">
-      <div class="flow-row">
-        ${steps.map(([no,ttl,txt,time])=>`
-        <div class="flow-step">
-          <div class="flow-no">${no}</div>
-          <div class="flow-ttl">${ttl}</div>
-          <div class="flow-txt">${txt}</div>
-          <div class="flow-time">${time}</div>
-        </div>`).join('')}
-      </div>
-    </div>
-    <div class="info-box">
-      <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">GVAがワンストップで対応。クライアントの負担はほぼゼロ。</p>
-      <p style="font-size:12px;color:#374151;line-height:1.9">
-        ・ナノインフルエンサー選定・キャスティング（3,000名以上から厳選）<br>
-        ・投稿設計・原稿ディレクション（ステマ規制対応・PR表記遵守）<br>
-        ・スケジュール・納品物管理（投稿日時・内容確認・修正対応）<br>
-        ・効果測定・レポーティング（インプレッション・ENG可視化）<br>
-        ・UGC二次利用サポート（許諾取得・広告素材転用支援）
-      </p>
+  return`
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">依頼から稼働まで 5ステップ</div></div>
+  <div class="card" style="margin-bottom:24px">
+    <div class="flow-row">
+      ${steps.map(([no,ttl,txt,time])=>`
+      <div class="flow-step">
+        <div class="flow-no">${no}</div>
+        <div class="flow-ttl">${ttl}</div>
+        <div class="flow-txt">${txt}</div>
+        <div class="flow-time">${time}</div>
+      </div>`).join('')}
     </div>
   </div>
-
-  <div class="section">
-    <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">お問い合わせ</div></div>
-    <div class="g2">
-      <div class="card" style="border-top:3px solid var(--navy)">
-        <div class="card-ttl">GOOD VIBES AGENCY</div>
-        <table class="dtbl">
-          <tbody>
-            <tr><td class="L" style="color:var(--gray)">メール</td><td class="L"><strong>info@goodvibesagency.tokyo</strong></td></tr>
-            <tr><td class="L" style="color:var(--gray)">Web</td><td class="L">goodvibesagency.tokyo</td></tr>
-            <tr><td class="L" style="color:var(--gray)">返信速度</td><td class="L">翌営業日以内</td></tr>
-            <tr><td class="L" style="color:var(--gray)">初回相談</td><td class="L"><strong class="pos">無料（30分）</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card" style="border-top:3px solid var(--gold)">
-        <div class="card-ttl">よくある質問</div>
-        <div style="font-size:12px;line-height:1.95;color:#374151">
-          <p style="font-weight:700;color:var(--navy)">Q. 最低何ヶ月から依頼できますか？</p>
-          <p style="color:var(--gray);margin-bottom:10px">1ヶ月から。効果実感には3ヶ月以上の継続を推奨しています。</p>
-          <p style="font-weight:700;color:var(--navy)">Q. 投稿内容の確認・修正はできますか？</p>
-          <p style="color:var(--gray);margin-bottom:10px">はい、全投稿を公開前にご確認いただけます。</p>
-          <p style="font-weight:700;color:var(--navy)">Q. GVAのタレントと組み合わせられますか？</p>
-          <p style="color:var(--gray)">はい、GVA所属タレント（9名）との複合施策も提案できます。</p>
-        </div>
+  <div class="info-box">
+    <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">GVAがワンストップで対応。クライアントの負担はほぼゼロ。</p>
+    <p style="font-size:12px;color:#374151;line-height:1.9">
+      ・ナノインフルエンサー選定・キャスティング（3,000名以上から厳選）<br>
+      ・投稿設計・原稿ディレクション（ステマ規制対応・PR表記遵守）<br>
+      ・スケジュール・納品物管理（投稿日時・内容確認・修正対応）<br>
+      ・効果測定・レポーティング（月次詳細レポート ＋ 改善提案）<br>
+      ・UGC二次利用サポート（許諾取得・Meta広告クリエイティブ転用支援）
+    </p>
+  </div>
+</div>
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">02</div><div class="sec-title">お問い合わせ</div></div>
+  <div class="g2">
+    <div class="card" style="border-top:3px solid var(--navy)">
+      <div class="card-ttl">GOOD VIBES AGENCY</div>
+      <table class="dtbl"><tbody>
+        <tr><td class="L" style="color:var(--gray)">メール</td><td class="L"><strong>info@goodvibesagency.tokyo</strong></td></tr>
+        <tr><td class="L" style="color:var(--gray)">Web</td><td class="L">goodvibesagency.tokyo</td></tr>
+        <tr><td class="L" style="color:var(--gray)">返信</td><td class="L">翌営業日以内</td></tr>
+        <tr><td class="L" style="color:var(--gray)">初回相談</td><td class="L"><strong class="pos">無料（30分オンライン）</strong></td></tr>
+      </tbody></table>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div class="card-ttl">よくある質問</div>
+      <div style="font-size:12px;line-height:1.95;color:#374151">
+        <p style="font-weight:700;color:var(--navy)">Q. 最低何ヶ月から依頼できますか？</p>
+        <p style="color:var(--gray);margin-bottom:10px">1ヶ月から。効果実感には3ヶ月以上継続を推奨。</p>
+        <p style="font-weight:700;color:var(--navy)">Q. 投稿内容の確認・修正はできますか？</p>
+        <p style="color:var(--gray);margin-bottom:10px">全投稿を公開前にご確認いただけます。</p>
+        <p style="font-weight:700;color:var(--navy)">Q. GVAタレントと組み合わせられますか？</p>
+        <p style="color:var(--gray)">はい、GVA所属タレント9名との複合施策も提案できます。</p>
       </div>
     </div>
-  </div>`;
+  </div>
+</div>`;
 }
 
-// ── 描画 ──
-function render() {
-  const main = document.getElementById('main');
-  const fns = { sim: tSim, menu: tMenu, result: tResult, compare: tCompare, flow: tFlow };
-  main.innerHTML = (fns[state.tab] || tSim)();
-}
+// ───────────────────────────
+// チャート描画
+// ───────────────────────────
+function drawCharts(){
+  const c=calc(state.bgt);
+  const tab=state.tab;
 
-function updateBgtSummary() {
-  const c = calc(state.bgt);
-  const el = document.getElementById('bgt-summary');
-  if (el) {
-    el.innerHTML = `選択中：<strong>¥${state.bgt/10}万円</strong>　合計 <strong>${c.totalPeople}名</strong>　推定 <strong>${fImp(c.totalImp)}imp</strong>`;
+  // シミュレーションタブのチャート
+  if(tab==='sim'){
+    // ドーナツ
+    if(document.getElementById('chart-donut')){
+      charts.donut=new Chart(document.getElementById('chart-donut'),{
+        type:'doughnut',
+        data:{
+          labels:['① インフルエンサーリール','② UGC フィード'],
+          datasets:[{
+            data:[c.reelCost,c.ugcCost],
+            backgroundColor:['#d4a017','#15803d'],
+            borderColor:['#fff','#fff'],
+            borderWidth:3,
+            hoverOffset:8
+          }]
+        },
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          plugins:{
+            legend:{position:'bottom',labels:{font:{size:11},padding:12}},
+            tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${(ctx.raw/10000).toFixed(1)}万円`}}
+          },
+          animation:{animateRotate:true,duration:700}
+        }
+      });
+    }
+    // インプ積み上げバー
+    if(document.getElementById('chart-imp')){
+      charts.imp=new Chart(document.getElementById('chart-imp'),{
+        type:'bar',
+        data:{
+          labels:['インプレッション内訳'],
+          datasets:[
+            {label:'① リール',data:[c.reel*MENU.reel.impPerPerson],backgroundColor:'rgba(212,160,23,0.85)',borderRadius:4},
+            {label:'② UGC フィード',data:[c.ugc*MENU.ugc.impPerPerson],backgroundColor:'rgba(21,128,61,0.85)',borderRadius:4}
+          ]
+        },
+        options:{
+          indexAxis:'y',responsive:true,maintainAspectRatio:false,
+          scales:{
+            x:{stacked:true,ticks:{callback:v=>fImp(v)},grid:{color:'rgba(0,0,0,0.05)'}},
+            y:{stacked:true,display:false}
+          },
+          plugins:{
+            legend:{position:'bottom',labels:{font:{size:11}}},
+            tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fImp(ctx.raw)}imp`}}
+          },
+          animation:{duration:700}
+        }
+      });
+    }
+    // CPM比較バー
+    if(document.getElementById('chart-cpm')){
+      const labels=Object.keys(BENCH_CPM);
+      const data=Object.values(BENCH_CPM);
+      const colors=labels.map(l=>l.startsWith('GVA')?'rgba(21,128,61,0.85)':'rgba(100,116,139,0.6)');
+      charts.cpm=new Chart(document.getElementById('chart-cpm'),{
+        type:'bar',
+        data:{labels,datasets:[{
+          label:'CPM（¥）',data,backgroundColor:colors,borderRadius:4
+        }]},
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          scales:{
+            y:{ticks:{callback:v=>`¥${v}`},grid:{color:'rgba(0,0,0,0.05)'}},
+            x:{grid:{display:false}}
+          },
+          plugins:{
+            legend:{display:false},
+            tooltip:{callbacks:{label:ctx=>`¥${ctx.raw}`}}
+          },
+          animation:{duration:700}
+        }
+      });
+    }
+  }
+
+  // KPIタブ: 時系列チャート
+  if(tab==='kpi'&&document.getElementById('chart-timeline')){
+    const months=['M1','M2','M3','M4','M5','M6'];
+    const reelData=[c.reel*MENU.reel.impPerPerson*0.8,c.reel*MENU.reel.impPerPerson,c.reel*MENU.reel.impPerPerson*1.1,c.reel*MENU.reel.impPerPerson*1.15,c.reel*MENU.reel.impPerPerson*1.2,c.reel*MENU.reel.impPerPerson*1.3];
+    const ugcData=[c.ugc*MENU.ugc.impPerPerson*0.6,c.ugc*MENU.ugc.impPerPerson*0.85,c.ugc*MENU.ugc.impPerPerson,c.ugc*MENU.ugc.impPerPerson*1.1,c.ugc*MENU.ugc.impPerPerson*1.2,c.ugc*MENU.ugc.impPerPerson*1.35];
+    charts.timeline=new Chart(document.getElementById('chart-timeline'),{
+      type:'line',
+      data:{
+        labels:months,
+        datasets:[
+          {label:'① リール',data:reelData,borderColor:'#d4a017',backgroundColor:'rgba(212,160,23,0.1)',tension:.4,fill:true,pointRadius:4},
+          {label:'② UGC口コミ（累積効果）',data:ugcData,borderColor:'#15803d',backgroundColor:'rgba(21,128,61,0.1)',tension:.4,fill:true,pointRadius:4}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        scales:{
+          y:{ticks:{callback:v=>fImp(v)},grid:{color:'rgba(0,0,0,0.05)'}},
+          x:{grid:{display:false}}
+        },
+        plugins:{
+          legend:{position:'bottom',labels:{font:{size:11}}},
+          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${fImp(ctx.raw)}imp`}}
+        },
+        animation:{duration:800}
+      }
+    });
+  }
+
+  // 実績タブ: カウントアップ
+  if(tab==='result'){
+    setTimeout(()=>{
+      const animate=(id,v,s='')=>{const el=document.getElementById(id);if(el)countUp(el,v,700,'',s)};
+      animate('cv-imp1',340936,'');
+      animate('cv-ugc',107,'件');
+      animate('cv-maxipm',52000,'');
+      animate('cv-x',60,'倍');
+      animate('cv-ig',4,'倍');
+      const d=document.getElementById('cv-mult');if(d){d.textContent='×8倍';}
+      const s=document.getElementById('cv-sales');if(s){s.textContent='1.2倍';}
+      const r=document.getElementById('cv-rank');if(r){r.textContent='1位';}
+    },200);
   }
 }
 
-function init() {
-  // 日付
-  const d = new Date();
-  const fmt = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
-  document.getElementById('hdr-date').textContent = fmt;
+// ───────────────────────────
+// 描画
+// ───────────────────────────
+function render(){
+  destroyAll();
+  const fns={sim:tSim,kpi:tKpi,menu:tMenu,result:tResult,compare:tCompare,flow:tFlow};
+  document.getElementById('main').innerHTML=(fns[state.tab]||tSim)();
+  requestAnimationFrame(()=>requestAnimationFrame(drawCharts));
+}
 
-  // 予算ボタン
-  document.querySelectorAll('.bgt-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.bgt = +btn.dataset.bgt;
-      document.querySelectorAll('.bgt-btn').forEach(b => b.classList.remove('on'));
+function updateSummary(){
+  const c=calc(state.bgt);
+  const el=document.getElementById('bgt-summary');
+  if(el) el.innerHTML=`選択中：<strong>¥${state.bgt/10}万円</strong>　合計 <strong>${c.total}名</strong>　推定 <strong>${fImpD(c.imp)}</strong>`;
+}
+
+// ───────────────────────────
+// 初期化
+// ───────────────────────────
+function init(){
+  const d=new Date();
+  document.getElementById('hdr-date').textContent=`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+
+  document.querySelectorAll('.bgt-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      state.bgt=+btn.dataset.bgt;
+      document.querySelectorAll('.bgt-btn').forEach(b=>b.classList.remove('on'));
       btn.classList.add('on');
-      updateBgtSummary();
-      if (state.tab === 'sim') render();
+      updateSummary();
+      if(state.tab==='sim') render();
     });
-    if (+btn.dataset.bgt === state.bgt) btn.classList.add('on');
+    if(+btn.dataset.bgt===state.bgt) btn.classList.add('on');
   });
 
-  // タブ
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.tab = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      state.tab=btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
       btn.classList.add('on');
       render();
     });
-    if (btn.dataset.tab === state.tab) btn.classList.add('on');
+    if(btn.dataset.tab===state.tab) btn.classList.add('on');
   });
 
-  updateBgtSummary();
+  updateSummary();
   render();
 }
 
