@@ -20,7 +20,7 @@ table{border-collapse:collapse;width:100%}
 canvas{display:block}
 
 /* ── ヘッダー ── */
-#hdr{background:linear-gradient(135deg,#0f2557 0%,#1b3a7a 100%);color:#fff;padding:20px 32px;border-bottom:4px solid var(--gold)}
+#hdr{background:linear-gradient(135deg,#0f2557 0%,#1b3a7a 100%);color:#fff;padding:20px 32px;border-bottom:4px solid var(--gold);box-shadow:0 4px 12px rgba(15,37,87,.2)}
 .hdr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .hdr-label{font-size:10px;letter-spacing:.2em;color:#8aaad8;margin-bottom:6px;font-weight:500}
 .hdr-title{font-size:20px;font-weight:900;line-height:1.3}
@@ -38,7 +38,7 @@ canvas{display:block}
 .bgt-summary strong{color:var(--navy);font-size:14px}
 
 /* ── タブ ── */
-#tabbar{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 32px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#tabbar{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 32px;overflow-x:auto;-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(15,37,87,.06)}
 #tabbar::-webkit-scrollbar{display:none}
 .tab-btn{padding:14px 20px;font-size:12px;font-weight:600;background:none;border:none;color:var(--gray);border-bottom:3px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .15s}
 .tab-btn.on{color:var(--navy);border-bottom-color:var(--navy);font-weight:700}
@@ -51,13 +51,14 @@ canvas{display:block}
 .sec-title{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.06em;border-bottom:2px solid var(--navy);padding-bottom:6px;flex:1}
 
 /* ── カード ── */
-.card{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:22px 24px}
-.card-ttl{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(15,37,87,.08);padding:22px 24px;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 6px 20px rgba(15,37,87,.13);transform:translateY(-2px)}
+.card-ttl{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.08em;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 
 /* ── KPI ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .kpi-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.kpi{background:#fff;border-radius:8px;box-shadow:0 1px 6px rgba(15,37,87,.09);padding:16px 18px;border-top:3px solid var(--ac,var(--navy));transition:transform .2s,box-shadow .2s}.kpi:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(15,37,87,.15)}
+.kpi{background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(15,37,87,.08);padding:16px 18px;border-top:3px solid var(--ac,var(--navy));transition:transform .2s,box-shadow .2s}.kpi:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,37,87,.16)}
 .kpi:hover{transform:translateY(-2px)}
 .kpi-lbl{font-size:10px;color:var(--gray);font-weight:600;letter-spacing:.04em;margin-bottom:6px}
 .kpi-val{font-size:26px;font-weight:900;color:var(--ac,var(--navy));line-height:1;transition:all .4s}
@@ -624,6 +625,70 @@ function tSim(){
     </table>
   </div>
   <div class="warn-box" style="margin-top:12px">※ ②UGC費は予算残額を充当するため1名あたり単価は¥5,600〜¥5,720の範囲で前後します。インフルエンサー単価はFW数・カテゴリにより変動。商品ギフティングは別途。</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">04</div><div class="sec-title">ROI 簡易試算ツール</div></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-ttl">パラメータ入力</div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px">商品単価（¥）</div>
+        <input type="number" id="roi-price" value="3000" min="1"
+          style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:4px;font-size:14px;font-weight:700;color:var(--navy);font-family:inherit"
+          oninput="calcRoi()">
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px">Instagram経由 推定CVR（%）</div>
+        <input type="number" id="roi-cvr" value="0.5" min="0.01" max="100" step="0.1"
+          style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:4px;font-size:14px;font-weight:700;color:var(--navy);font-family:inherit"
+          oninput="calcRoi()">
+        <div style="font-size:10px;color:var(--gray);margin-top:4px">※ Instagram経由の一般的なCVRは0.3〜1.5%程度</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px">粗利率（%）</div>
+        <input type="number" id="roi-margin" value="50" min="1" max="100"
+          style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:4px;font-size:14px;font-weight:700;color:var(--navy);font-family:inherit"
+          oninput="calcRoi()">
+      </div>
+      <div class="warn-box">※ あくまで参考試算です。実際のROIは商材・施策設計・市場環境により異なります。</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <div class="card-ttl">推定ROI（選択中プランの目安）</div>
+      <div class="kpi-grid-3" style="margin-bottom:20px">
+        <div class="kpi" style="--ac:var(--navy)">
+          <div class="kpi-lbl">推定リーチ人数</div>
+          <div class="kpi-val" id="roi-reach">—</div>
+          <div class="kpi-sub">imp × 推定視聴率60%</div>
+        </div>
+        <div class="kpi" style="--ac:var(--green)">
+          <div class="kpi-lbl">推定購買転換数</div>
+          <div class="kpi-val" id="roi-conv">—</div>
+          <div class="kpi-sub">リーチ × CVR</div>
+        </div>
+        <div class="kpi" style="--ac:var(--gold)">
+          <div class="kpi-lbl">推定売上貢献額</div>
+          <div class="kpi-val" id="roi-sales">—</div>
+          <div class="kpi-sub">転換数 × 商品単価</div>
+        </div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:6px;padding:16px 20px">
+        <div style="font-size:11px;color:var(--gray);margin-bottom:6px">推定 粗利 ROI</div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:44px;font-weight:900;color:var(--green);line-height:1" id="roi-pct">—</div>
+          <div style="font-size:20px;color:var(--green);font-weight:700">%</div>
+        </div>
+        <div style="font-size:11px;color:var(--gray);margin-top:6px">（推定粗利 ÷ 施策費用 × 100）</div>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--gray);line-height:1.8">
+        <strong style="color:var(--navy)">計算式：</strong><br>
+        推定リーチ = 推定imp × 60%<br>
+        推定転換数 = リーチ × CVR<br>
+        推定売上 = 転換数 × 商品単価<br>
+        ROI = (売上 × 粗利率 − 施策費) ÷ 施策費 × 100
+      </div>
+    </div>
+  </div>
+</div>
 </div>`;
 }
 
@@ -926,22 +991,22 @@ function tMenu(){
     <div class="card-ttl">なぜGVAのナノが「質が高い」と言えるのか — 4ステップ選定フロー</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4px">
       <div style="padding:20px 16px;border-right:1px solid var(--border);position:relative">
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 1</div>
+        <div style="font-size:28px;margin-bottom:6px">📊</div><div style="font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:900;color:var(--gold);margin-bottom:6px">STEP 1</div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">ENG率スコアリング</div>
         <div style="font-size:11px;color:var(--gray);line-height:1.8">フォロワー数ではなく「いいね＋保存÷リーチ」で計算したENG率が1.5%以上のアカウントのみ通過。フォロワー水増しアカウントを排除。</div>
       </div>
       <div style="padding:20px 16px;border-right:1px solid var(--border)">
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 2</div>
+        <div style="font-size:28px;margin-bottom:6px">🎯</div><div style="font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:900;color:var(--gold);margin-bottom:6px">STEP 2</div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">商材親和性マッチング</div>
         <div style="font-size:11px;color:var(--gray);line-height:1.8">フォロワーの年齢・性別・興味関心と商材ターゲットの一致度をスコア化。「とりあえず人数を揃える」ではなく、売れる相性を重視。</div>
       </div>
       <div style="padding:20px 16px;border-right:1px solid var(--border)">
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 3</div>
+        <div style="font-size:28px;margin-bottom:6px">👁</div><div style="font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:900;color:var(--gold);margin-bottom:6px">STEP 3</div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">コンテンツ品質審査</div>
         <div style="font-size:11px;color:var(--gray);line-height:1.8">写真・文章・投稿頻度・コメント欄の質をGVA担当者が人の目で確認。AIスコアでは捕捉できない「リアリティ」と「自然さ」を審査。</div>
       </div>
       <div style="padding:20px 16px">
-        <div style="font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px">STEP 4</div>
+        <div style="font-size:28px;margin-bottom:6px">🛡</div><div style="font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:900;color:var(--gold);margin-bottom:6px">STEP 4</div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px">コンプライアンス確認</div>
         <div style="font-size:11px;color:var(--gray);line-height:1.8">過去のPR表記遵守歴・炎上歴・ガイドライン認知を確認。PR表記研修を実施し、採用後もGVAが全投稿をモニタリング。</div>
       </div>
@@ -1303,7 +1368,86 @@ function render(){
   destroyAll();
   const fns={overview:tOverview,sim:tSim,kpi:tKpi,menu:tMenu,result:tResult,compare:tCompare,flow:tFlow};
   document.getElementById('main').innerHTML=(fns[state.tab]||tSim)();
-  requestAnimationFrame(()=>requestAnimationFrame(drawCharts));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    drawCharts();
+    if(state.tab==='sim') { animateKpis(); calcRoi(); }
+    if(state.tab==='result') animateResults();
+  }));
+}
+
+// KPIカード数値のカウントアップ
+function animateKpis(){
+  const c=calc(state.bgt);
+  const animate=(id,target,fmt)=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const dur=600, start=performance.now();
+    const frame=now=>{
+      const p=Math.min((now-start)/dur,1);
+      const ease=1-Math.pow(1-p,3);
+      el.textContent=fmt(Math.round(target*ease));
+      if(p<1)requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+  // 人数
+  const pe=document.getElementById('kv-people');
+  if(pe){const t=c.total;const dur=600;const s=performance.now();const f=n=>{const p=Math.min((n-s)/dur,1);const e=1-Math.pow(1-p,3);pe.textContent=Math.round(t*e)+'名';if(p<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
+  // imp
+  const ie=document.getElementById('kv-imp');
+  if(ie){const t=c.imp;const dur=700;const s=performance.now();const f=n=>{const p=Math.min((n-s)/dur,1);const e=1-Math.pow(1-p,3);ie.textContent=fImpD(Math.round(t*e));if(p<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
+  // CPM
+  const ce=document.getElementById('kv-cpm');
+  if(ce){const t=c.cpm;const dur=500;const s=performance.now();const f=n=>{const p=Math.min((n-s)/dur,1);const e=1-Math.pow(1-p,3);ce.textContent='¥'+Math.round(t*e);if(p<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
+  // assets
+  const ae=document.getElementById('kv-assets');
+  if(ae){const t=c.ugc;const dur=600;const s=performance.now();const f=n=>{const p=Math.min((n-s)/dur,1);const e=1-Math.pow(1-p,3);ae.textContent=Math.round(t*e)+'点';if(p<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
+}
+
+// ROI計算
+function calcRoi(){
+  const c=calc(state.bgt);
+  const price=parseFloat(document.getElementById('roi-price')?.value)||0;
+  const cvr=parseFloat(document.getElementById('roi-cvr')?.value)||0;
+  const margin=parseFloat(document.getElementById('roi-margin')?.value)||0;
+  if(!price||!cvr||!margin)return;
+  const reach=Math.round(c.imp*0.6);
+  const conv=Math.round(reach*(cvr/100));
+  const sales=conv*price;
+  const grossProfit=sales*(margin/100);
+  const roi=Math.round((grossProfit-c.cost)/c.cost*100);
+  const fK=v=>v>=10000?Math.round(v/10000)+'万人':v.toLocaleString()+'人';
+  const fY=v=>v>=10000000?(v/10000000).toFixed(1)+'千万円':v>=10000?(v/10000).toFixed(1)+'万円':'¥'+v.toLocaleString();
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('roi-reach',fK(reach));
+  set('roi-conv',conv.toLocaleString()+'件');
+  set('roi-sales',fY(sales));
+  // ROI カウントアップ
+  const roiEl=document.getElementById('roi-pct');
+  if(roiEl){
+    const dur=700;const s=performance.now();const f=n=>{
+      const p=Math.min((n-s)/dur,1);const e=1-Math.pow(1-p,3);
+      const v=Math.round(roi*e);
+      roiEl.textContent=v;
+      roiEl.style.color=v>=0?'var(--green)':'var(--red)';
+      if(p<1)requestAnimationFrame(f);
+    };requestAnimationFrame(f);
+  }
+}
+
+// 実績タブのカウントアップ
+function animateResults(){
+  setTimeout(()=>{
+    const animate=(id,v,s='')=>{const el=document.getElementById(id);if(!el)return;countUp(el,v,700,'',s)};
+    animate('cv-imp1',340936,'');
+    animate('cv-ugc',107,'件');
+    animate('cv-maxipm',52000,'');
+    animate('cv-x',60,'倍');
+    animate('cv-ig',4,'倍');
+    const d=document.getElementById('cv-mult');if(d)d.textContent='×8倍';
+    const s2=document.getElementById('cv-sales');if(s2)s2.textContent='1.2倍';
+    const r=document.getElementById('cv-rank');if(r)r.textContent='1位';
+  },200);
 }
 
 function updateSummary(){
