@@ -240,9 +240,9 @@ canvas{display:block}
 
 <div id="budgetbar">
   <span class="bgt-lbl">月額予算：</span>
-  <button class="bgt-btn" data-bgt="500">¥50万</button>
-  <button class="bgt-btn" data-bgt="1000">¥100万</button>
-  <button class="bgt-btn" data-bgt="1500">¥150万</button>
+  <button class="bgt-btn" data-bgt="500">¥500,000</button>
+  <button class="bgt-btn" data-bgt="1000">¥1,000,000</button>
+  <button class="bgt-btn" data-bgt="1500">¥1,500,000</button>
   <span class="bgt-summary" id="bgt-summary"></span>
 </div>
 
@@ -486,7 +486,7 @@ function tOverview(){
       </div>
       <div class="card" style="border-top:3px solid var(--gold)">
         <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">1ヶ月目の目安成果（参考）</div>
-        <div style="font-size:11px;color:var(--gray);line-height:1.9">¥100万円プランの場合、1ヶ月目に推定200〜300万imp・116件のUGC投稿・3,000〜6,000件の保存数が発生。口コミ資産がゼロから116件まで積み上がる。</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.9">¥1,000,000プランの場合、1ヶ月目に推定90〜130万imp・116件のUGC投稿・3,000〜6,000件の保存数が発生。口コミ資産がゼロから116件まで積み上がる。</div>
       </div>
       <div class="card" style="border-top:3px solid var(--green)">
         <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">3ヶ月以降で検索流入が自走</div>
@@ -718,9 +718,9 @@ function tKpi(){
   const b = state.bgt;
   // 予算別KPI目標値（過去実績ベース）
   const targets = {
-    500:  { imp:'100〜150万', ugc:64,  eng:'1.5%以上', reach:'60〜90万', save:'1,500〜3,000' },
-    1000: { imp:'200〜300万', ugc:116, eng:'1.5%以上', reach:'120〜180万', save:'3,000〜6,000' },
-    1500: { imp:'300〜400万', ugc:140, eng:'1.5%以上', reach:'180〜250万', save:'5,000〜9,000' },
+    500:  { imp:'50〜75万', ugc:64,  eng:'1.5%以上', reach:'30〜50万', save:'1,500〜3,000' },
+    1000: { imp:'90〜130万', ugc:116, eng:'1.5%以上', reach:'55〜80万', save:'3,000〜6,000' },
+    1500: { imp:'130〜180万', ugc:140, eng:'1.5%以上', reach:'80〜110万', save:'5,000〜9,000' },
   };
   const t = targets[b];
   return`
@@ -993,13 +993,13 @@ function tMenu(){
       <table class="dtbl">
         <thead><tr><th class="L">稼働人数</th><th>費用目安</th><th>推定imp</th><th>UGC素材</th></tr></thead>
         <tbody>
-          ${[[30,'¥168,000','40〜60万','30点'],[50,'¥280,000','80〜100万','50点'],[64,'¥358,400','100〜130万','64点'],[100,'¥560,000','160〜200万','100点'],[116,'¥649,600','185〜235万','116点'],[140,'¥784,000','220〜280万','140点']].map(([n,c,i,a])=>`
+          ${[[30,'¥168,000','25〜35万','30点'],[50,'¥280,000','45〜60万','50点'],[64,'¥358,400','55〜75万','64点'],[100,'¥560,000','85〜110万','100点'],[116,'¥649,600','95〜130万','116点'],[140,'¥784,000','120〜155万','140点']].map(([n,c,i,a])=>`
           <tr><td class="L">${n}名</td><td style="font-weight:700">${c}</td><td style="color:var(--gold);font-weight:700">${i}</td><td style="color:var(--green);font-weight:700">${a}</td></tr>`).join('')}
         </tbody>
       </table>
       <div class="green-box" style="margin-top:12px"><strong>GVA実績：</strong>FW6,500人のナノが52,000imp獲得（フォロワー比×8倍）<br>月間107件UGCで合計340,936imp達成（大手アパレルA社）</div>
       <div class="warn-box" style="margin-top:8px">※ UGC単価¥5,600は最低目安。予算から人数を逆算するため実際の1名単価は若干前後します。正確な見積は無料ヒアリングにてご提示します。</div>
-    <div class="warn-box" style="margin-top:8px">※ 上記imp想定は参考値です。116名起用の場合、1投稿あたり平均2万imp以上が必要となります。目標impに対して不足する分は<strong>広告配信等による補完を想定</strong>しています。詳細はヒアリング時にご説明します。</div>
+    <div class="warn-box" style="margin-top:8px">※ 上記imp想定は参考値です。目標impに対して大幅に不足する分は広告配信等による補完を想定しています。詳細はヒアリング時にご説明します。</div>
     </div>
   </div>
 </div>
