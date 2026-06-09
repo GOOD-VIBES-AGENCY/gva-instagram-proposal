@@ -333,38 +333,16 @@ function destroyAll(){
 // タブ: 施策概要（トップ）
 // ───────────────────────────
 function tOverview(){
+  const c=calc(state.bgt);
   return`
 <div class="section animate-in">
   <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">施策概要</div></div>
 
-  <div class="card" style="border-top:3px solid var(--navy);margin-bottom:20px">
-    <div class="card-ttl" style="color:var(--navy)">なぜ「ナノインフルエンサー」が購買を動かすのか</div>
-    <div style="font-size:12px;color:var(--gray);margin-bottom:16px">— インフルエンサーマーケティングの本質的変化 —</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-      <div style="background:#fff5f5;border-radius:10px;padding:16px">
-        <div style="font-size:11px;font-weight:700;color:#e53935;letter-spacing:0.06em;margin-bottom:8px">❌ 有名インフルエンサー（マクロ）</div>
-        <div style="font-weight:700;font-size:15px;margin-bottom:8px">見るだけで、買わない</div>
-        <div style="font-size:12px;color:var(--gray);line-height:1.8">フォロワー数万〜数百万のインフルエンサーの投稿は<strong>認知・憧れ</strong>には効果的。しかし「自分には関係ない世界」として距離を感じ、購買行動には繋がりにくい。</div>
-      </div>
-      <div style="background:#f0faf4;border-radius:10px;padding:16px">
-        <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.06em;margin-bottom:8px">✅ ナノインフルエンサー（身近な人）</div>
-        <div style="font-weight:700;font-size:15px;margin-bottom:8px">リアリティが購買を決める</div>
-        <div style="font-size:12px;color:var(--gray);line-height:1.8">「自分と同じ生活者」が使っている口コミは<strong>圧倒的なリアリティ</strong>を持つ。フォロワー数ではなく<strong>信頼関係</strong>が購買の背中を押す。</div>
-      </div>
-    </div>
-    <div style="background:var(--light-bg,#f8f9fd);border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:14px">
-      <div style="font-size:28px;flex-shrink:0">💡</div>
-      <div>
-        <div style="font-weight:700;font-size:14px;margin-bottom:6px">インフルエンシューマーの時代へ</div>
-        <div style="font-size:12px;color:var(--gray);line-height:1.8">SNS 2.0の時代、情報波及の構造が変化。有名人から大衆への一方向（P2C）伝播から、<strong>発信する消費者（インフルエンシューマー）</strong>による多点同時拡散へ。<br>生活者は有名インフルエンサーの投稿より、<strong>身近な人の本音の口コミ</strong>を参考に購買を決定する。GVAのナノUGC施策はこの変化を最大限に活用します。</div>
-      </div>
-    </div>
-  </div>
   <div class="info-box" style="margin-bottom:0">
     <p style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px">インフルエンサーリール × ナノインフルエンサー UGC口コミ — Instagram特化 複合施策</p>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
       <div><div style="font-size:10px;color:#8aaad8;margin-bottom:4px;letter-spacing:.05em">対象媒体</div><div style="font-size:13px;font-weight:700">Instagramのみ</div></div>
-      <div><div style="font-size:10px;color:#8aaad8;margin-bottom:4px;letter-spacing:.05em">最大稼働人数</div><div style="font-size:13px;font-weight:700">150名 / 月</div></div>
+      <div><div style="font-size:10px;color:#8aaad8;margin-bottom:4px;letter-spacing:.05em">最大稼働人数</div><div style="font-size:13px;font-weight:700" id="ov-total">${c.total}名 / 月</div></div>
       <div><div style="font-size:10px;color:#8aaad8;margin-bottom:4px;letter-spacing:.05em">ステマ規制対応</div><div style="font-size:13px;font-weight:700">全投稿 PR表記管理込</div></div>
       <div><div style="font-size:10px;color:#8aaad8;margin-bottom:4px;letter-spacing:.05em">ディレクション</div><div style="font-size:13px;font-weight:700">ワンストップ対応</div></div>
     </div>
@@ -481,6 +459,33 @@ function tOverview(){
         </p>
       </div>
       <div style="font-size:10px;color:var(--gray);margin-top:8px">出典：各種消費者調査の平均値。</div>
+    </div>
+  </div>
+</div>
+
+<div class="section animate-in">
+  <div class="sec-head"><div class="sec-no">03.5</div><div class="sec-title">なぜ「ナノインフルエンサー」が購買を動かすのか</div></div>
+  <div class="card" style="border-top:3px solid var(--navy);margin-bottom:20px">
+    <div class="card-ttl" style="color:var(--navy)">なぜ「ナノインフルエンサー」が購買を動かすのか</div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:16px">— インフルエンサーマーケティングの本質的変化 —</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div style="background:#fff5f5;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#e53935;letter-spacing:0.06em;margin-bottom:8px">❌ 有名インフルエンサー（マクロ）</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px">見るだけで、買わない</div>
+        <div style="font-size:12px;color:var(--gray);line-height:1.8">フォロワー数万〜数百万のインフルエンサーの投稿は<strong>認知・憧れ</strong>には効果的。しかし「自分には関係ない世界」として距離を感じ、購買行動には繋がりにくい。</div>
+      </div>
+      <div style="background:#f0faf4;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.06em;margin-bottom:8px">✅ ナノインフルエンサー（身近な人）</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px">リアリティが購買を決める</div>
+        <div style="font-size:12px;color:var(--gray);line-height:1.8">「自分と同じ生活者」が使っている口コミは<strong>圧倒的なリアリティ</strong>を持つ。フォロワー数ではなく<strong>信頼関係</strong>が購買の背中を押す。</div>
+      </div>
+    </div>
+    <div style="background:var(--light-bg,#f8f9fd);border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:14px">
+      <div style="font-size:28px;flex-shrink:0">💡</div>
+      <div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px">インフルエンシューマーの時代へ</div>
+        <div style="font-size:12px;color:var(--gray);line-height:1.8">SNS 2.0の時代、情報波及の構造が変化。有名人から大衆への一方向（P2C）伝播から、<strong>発信する消費者（インフルエンシューマー）</strong>による多点同時拡散へ。<br>生活者は有名インフルエンサーの投稿より、<strong>身近な人の本音の口コミ</strong>を参考に購買を決定する。GVAのナノUGC施策はこの変化を最大限に活用します。</div>
+      </div>
     </div>
   </div>
 </div>
