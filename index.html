@@ -240,9 +240,9 @@ canvas{display:block}
 
 <div id="budgetbar">
   <span class="bgt-lbl">月額予算：</span>
-  <button class="bgt-btn" data-bgt="500">¥50万円</button>
-  <button class="bgt-btn" data-bgt="1000">¥100万円</button>
-  <button class="bgt-btn" data-bgt="1500">¥150万円</button>
+  <button class="bgt-btn" data-bgt="500">¥50万</button>
+  <button class="bgt-btn" data-bgt="1000">¥100万</button>
+  <button class="bgt-btn" data-bgt="1500">¥150万</button>
   <span class="bgt-summary" id="bgt-summary"></span>
 </div>
 
@@ -270,7 +270,7 @@ canvas{display:block}
 const REEL_UNIT  = 70000; // ¥/名（FW avg 35,000人 × ¥2/FW）
 const UGC_UNIT   =  5600; // ¥/名（名目単価）
 const REEL_IMP   = 100000;
-const UGC_IMP    =  20000;
+const UGC_IMP    =  10000;
 const MAX_PEOPLE = 150;
 
 // 予算キー → リール人数のみ定義。残額は全てUGCへ充当し合計=予算ぴったり
@@ -334,39 +334,6 @@ function destroyAll(){
 // ───────────────────────────
 function tOverview(){
   return`
-<div class="section animate-in">
-  <div class="sec-head"><div class="sec-no">00</div><div class="sec-title">提案先情報</div></div>
-  <div class="card" style="border-top:3px solid var(--gold);margin-bottom:0">
-    <div class="card-ttl">ご提案先・商材・目的　（ヒアリング後に記入）</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">クライアント名</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="client-name">株式会社　　　　　　　</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">商材カテゴリ</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="product-cat">　　　　　　　　　　</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">キャンペーン目的</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="campaign-goal">認知拡大 ／ 購買促進 ／ UGC蓄積</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">ターゲット</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="target">　　　　　　　　　　</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">現在の課題</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="challenge">　　　　　　　　　　</div>
-      </div>
-      <div>
-        <div style="font-size:10px;color:var(--gray);font-weight:600;margin-bottom:6px">希望開始時期</div>
-        <div style="font-size:14px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--border);padding-bottom:6px" id="start-timing">　　年　月〜</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="section animate-in">
   <div class="sec-head"><div class="sec-no">01</div><div class="sec-title">施策概要</div></div>
   <div class="info-box" style="margin-bottom:0">
@@ -1149,7 +1116,7 @@ function tResult(){
        ['0件','ステマ規制トラブル','2023年規制施行以来ゼロ。全投稿PR表記を徹底管理しクライアントの法的リスクを排除。','var(--green)'],
        ['150名','最大同時稼働','リール×UGC複合で業界最大クラス。単体施策では不可能な口コミ量産が1ヶ月で実現。','var(--blue)'],
        ['月次','PDCA レポート','imp・リーチ・ENG・保存数を月次可視化。次回施策の改善提案もセット。','var(--orange)'],
-       ['対応','UGC二次利用','獲得素材のMeta/Google広告転用を支援。許諾取得サポートは別途ご相談。クリエイティブ費を圧縮。','var(--purple)'],
+       ['対応','UGC二次利用','獲得素材のMeta/Google広告転用を支援（許諾取得率：約80～90%）。クリエイティブ費を圧縮。','var(--purple)'],
     ].map(([num,ttl,txt,ac])=>`
     <div class="card" style="border-top:3px solid ${ac}">
       <div style="font-size:28px;font-weight:900;color:${ac};margin-bottom:8px">${num}</div>
@@ -1171,7 +1138,7 @@ function tCompare(){
     ['最大同時稼働人数','30名程度','人数制限あり','150名（複合設計）'],
     ['ステマ規制対応管理','△ 自社対応必要','△ 確認なし','check 全投稿 徹底管理'],
     ['投稿前の原稿確認','cross 不可の場合多','cross 自動化のみ','check 全投稿対応'],
-    ['UGC広告転用サポート','cross 別途費用','△ 別途費用','check 転用支援対応（許諾取得は別途相談）'],
+    ['UGC広告転用サポート','cross 別途費用','△ 別途費用','check 転用支援対応（許諾率：約80～90%）'],
     ['月次レポート提供','△ 有料オプション','△ 自動のみ','check 詳細分析込み'],
     ['KPI設計・PDCA支援','cross 非対応','cross 非対応','check 月次改善提案込み'],
     ['リール×UGC複合設計','cross 非対応','cross 非対応','check ワンストップ'],
