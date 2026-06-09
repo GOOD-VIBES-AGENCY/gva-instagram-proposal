@@ -751,9 +751,9 @@ function tKpi(){
   const b = state.bgt;
   // 予算別KPI目標値（過去実績ベース）
   const targets = {
-    500:  { imp:'100〜150万', ugc:64,  eng:'3%以上', reach:'60〜90万', save:'1,500〜3,000' },
-    1000: { imp:'200〜300万', ugc:116, eng:'3%以上', reach:'120〜180万', save:'3,000〜6,000' },
-    1500: { imp:'300〜400万', ugc:140, eng:'3%以上', reach:'180〜250万', save:'5,000〜9,000' },
+    500:  { imp:'100〜150万', ugc:64,  eng:'1.5%以上', reach:'60〜90万', save:'1,500〜3,000' },
+    1000: { imp:'200〜300万', ugc:116, eng:'1.5%以上', reach:'120〜180万', save:'3,000〜6,000' },
+    1500: { imp:'300〜400万', ugc:140, eng:'1.5%以上', reach:'180〜250万', save:'5,000〜9,000' },
   };
   const t = targets[b];
   return`
@@ -1090,7 +1090,7 @@ function tMenu(){
           <tr><td style="color:var(--gray);font-size:12px;padding-bottom:14px">含まれません。商品のギフティングコストは別途クライアント様にご負担いただきます。</td></tr>
 
           <tr><td style="font-weight:700;color:var(--navy);padding-bottom:4px">UGC素材の広告転用は？</td></tr>
-          <tr><td style="color:var(--gray);font-size:12px;padding-bottom:0">Meta広告・EC等への転用支援を行います。許諾取得サポートは別途ご相談ください。</td></tr>
+          <tr><td style="color:var(--gray);font-size:12px;padding-bottom:0">Meta広告・EC等への転用支援を行います。許諾取得サポートは別途ご相談ください。<br><small style="color:var(--gray);">※過去実績上、約<strong>80～90%</strong>のインフルエンサーから使用許諾を取得。殈10～20%は別途交渉・追加費用が発生する場合があります。</small></td></tr>
         </tbody>
       </table>
     </div>
