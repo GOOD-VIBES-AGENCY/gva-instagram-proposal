@@ -269,7 +269,7 @@ canvas{display:block}
 // ───────────────────────────
 const REEL_UNIT  = 70000; // ¥/名（FW avg 35,000人 × ¥2/FW）
 const UGC_UNIT   =  5600; // ¥/名（名目単価）
-const REEL_IMP   = 100000;
+const REEL_IMP   =  35000;
 const UGC_IMP    =   3000;
 const MAX_PEOPLE = 150;
 
@@ -515,7 +515,7 @@ function tOverview(){
       </div>
       <div class="card" style="border-top:3px solid var(--gold)">
         <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">1ヶ月目の目安成果（参考）</div>
-        <div style="font-size:11px;color:var(--gray);line-height:1.9">¥1,000,000プランの場合、1ヶ月目に推定25〜45万imp・116件のUGC投稿・3,000〜6,000件の保存数が発生。口コミ資産がゼロから116件まで積み上がる。</div>
+        <div style="font-size:11px;color:var(--gray);line-height:1.9">¥1,000,000プランの場合、1ヶ月目に推定40〜60万imp・116件のUGC投稿・3,000〜6,000件の保存数が発生。口コミ資産がゼロから116件まで積み上がる。</div>
       </div>
       <div class="card" style="border-top:3px solid var(--green)">
         <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">3ヶ月以降で検索流入が自走</div>
@@ -747,9 +747,9 @@ function tKpi(){
   const b = state.bgt;
   // 予算別KPI目標値（過去実績ベース）
   const targets = {
-    500:  { imp:'15〜25万', ugc:64,  eng:'1.5%以上', reach:'9〜15万', save:'1,500〜3,000' },
-    1000: { imp:'25〜45万', ugc:116, eng:'1.5%以上', reach:'15〜27万', save:'3,000〜6,000' },
-    1500: { imp:'35〜55万', ugc:140, eng:'1.5%以上', reach:'21〜33万', save:'5,000〜9,000' },
+    500:  { imp:'20〜30万', ugc:64,  eng:'1.5%以上', reach:'12〜18万', save:'1,500〜3,000' },
+    1000: { imp:'40〜60万', ugc:116, eng:'1.5%以上', reach:'24〜36万', save:'3,000〜6,000' },
+    1500: { imp:'60〜90万', ugc:140, eng:'1.5%以上', reach:'36〜54万', save:'5,000〜9,000' },
   };
   const t = targets[b];
   return`
